@@ -1,0 +1,11 @@
+@import "variables";
+@import "functions";
+
+.map {
+    height: 300px;
+    width: 100%;
+    @include min_pc {
+        width: 100%;
+        height: 500px;
+    }
+}

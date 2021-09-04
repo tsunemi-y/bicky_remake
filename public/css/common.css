@@ -1,0 +1,32 @@
+html {
+  height: 100%;
+}
+
+body {
+  background-color: #fff;
+  color: #333;
+  display: flex;
+  flex-flow: column;
+  font-family: "ten-mincho", serif;
+  font-size: 16px;
+  line-height: 30px;
+  min-height: 100%;
+}
+
+.container {
+  flex: 1;
+}
+
+h1,
+p {
+  margin: 0;
+}
+
+.main-title {
+  font-size: 2rem;
+  margin-bottom: 24px;
+}
+
+.table-height {
+  height: 4rem;
+}
