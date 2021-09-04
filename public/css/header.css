@@ -2,7 +2,7 @@
   background-color: #fdffe5;
 }
 .header__item {
-  height: 5rem;
+  height: 3rem;
   margin: 0 auto;
   position: relative;
 }
@@ -41,7 +41,7 @@
   align-items: center;
   background-color: #3584bb;
   display: flex;
-  height: 5rem;
+  height: 3rem;
   justify-content: center;
   width: 3rem;
   z-index: 3;
@@ -92,4 +92,8 @@
   .sp-header {
     display: none;
   }
+}
+
+.sp-header div:not(:last-child) {
+  margin-bottom: 1rem;
 }

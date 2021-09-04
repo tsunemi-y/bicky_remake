@@ -1,6 +1,6 @@
 @section('header')
 
-{{-- メニュー中身 --}}
+{{-- spメニュー中身 ここから　--}}
 <div class="align-items-center d-flex flex-column justify-content-center menu-inner position-fixed sp-header" id="js-menu-inner">
     <div><a href="{{ route("greeting")}}" class="menu-inner__link">ご挨拶</a></div>
     <div><a href="{{ route("fee") }}" class="menu-inner__link">料金・プラン</a></div>
@@ -8,6 +8,7 @@
     <div><a href="{{ route("introduction") }}" class="menu-inner__link">指導員紹介</a></div>
     <div><a href="{{ route("access") }}" class="menu-inner__link">アクセス</a></div>
 </div>
+{{-- spメニュー中身 ここまで　--}}
 
 <header class="header mb-4">
     <div class="align-items-center container d-flex header__item">
