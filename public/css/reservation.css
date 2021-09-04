@@ -1,0 +1,8 @@
+.input-w-md {
+  width: 100%;
+}
+@media screen and (min-width: 769px) {
+  .input-w-md {
+    width: 25%;
+  }
+}

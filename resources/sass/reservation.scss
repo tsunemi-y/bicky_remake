@@ -1,0 +1,9 @@
+@import "variables";
+@import "functions";
+
+.input-w-md {
+    width: 100%;
+    @include min_pc {
+        width: 25%;
+    }
+}

@@ -92,7 +92,7 @@
                         @endif
                     </div>
 
-                    <div class="mb-3 w-25">
+                    <div class="mb-3 input-w-md">
                         <label for="date" class="form-label">予約日</label>
                         <input type="date" class="form-control" id="date" name="date">
                         @if($errors->has('date'))
@@ -102,7 +102,7 @@
                         @endif
                     </div>
 
-                    <div class="mb-3 w-25">
+                    <div class="mb-3 input-w-md">
                         <label for="time" class="form-label">予約時間</label>
                         <select class="form-control" aria-label="Default select example" id="time" name="time">
                             <option value="11：00～11：40">11：00～11：40</option>
