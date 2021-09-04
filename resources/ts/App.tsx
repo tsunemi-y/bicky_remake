@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import Router from './admin/components/router';
+import { router } from './router';
+import { RouterProvider } from 'react-router-dom';
 
-const App: React.VFC = () => {
+const App = () => {
     return (
         <div>
-            <Router />
+            <RouterProvider router={router} />
         </div>
     )
 }

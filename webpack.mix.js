@@ -13,7 +13,7 @@ require('mix-tailwindcss');
  */
 
 mix.ts('resources/ts/index.tsx', 'public/js')
-    .react()
+    .react();
     // .sass('resources/sass/admin/app.scss', 'public/admin/css')
     // .sass('resources/sass/common.scss', 'public/css')
     // .sass('resources/sass/header.scss', 'public/css')
@@ -27,5 +27,5 @@ mix.ts('resources/ts/index.tsx', 'public/js')
     // .js('resources/js/reservation.js', 'public/js')
     // .js('resources/js/register.js', 'public/js')
     // .js('resources/js/login.js', 'public/js')
-    .tailwind();
+    // .tailwind();
     

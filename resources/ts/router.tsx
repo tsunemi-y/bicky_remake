@@ -1,49 +1,39 @@
-import {useState} from 'react';
-import { 
-    BrowserRouter, 
-    Switch,
-    Route
-} from 'react-router-dom';
+// router.tsx
+import { createBrowserRouter } from 'react-router-dom';
 
-import SideMenu from './admin/components/parts/SideMenu';
-import Header from './admin/components/parts/Header';
-import ReservatinTop from './admin/components/pages/ReservatinTop';
-import Receipt from './admin/components/pages/Receipt';
-import ReceiptSend from './admin/components/pages/ReceiptSend';
-import Evaluation from './admin/components/pages/Evaluation';
-import EvaluationSend from './admin/components/pages/EvaluationSend';
+// ユーザー
+import UserLayout from './features/user/components/UserLayout';
+import UserHome from './features/user/pages/Home';
+import UserReservation from './features/user/pages/Reservation';
+// import UserFee from './features/user/pages/Fee';
 
-const Router = () => {
-    const [toggle, setToggle] = useState<Boolean>(true);
+// // 管理者
+// import AdminLayout from './features/admin/components/AdminLayout';
+// import AdminDashboard from './features/admin/pages/Dashboard';
+// import UserManagement from './features/admin/pages/UserManagement';
 
-    // サイドメニュー表示・非表示
-    const toggleSideMunu = (): void => {
-        setToggle(!toggle);
-    }
+export const router = createBrowserRouter([
+  // 一般ユーザー画面ルート
+  {
+    path: '/',
+    element: <UserLayout />,
+    children: [
+      { index: true, element: <UserHome /> },
+      { path: 'reservation', element: <UserReservation /> },
+      // { path: 'fee', element: <UserFee /> },
+      // 他のユーザーページ
+    ]
+  },
+  // 管理画面ルート
+  // {
+  //   path: '/admin',
+  //   element: <AdminLayout />,
+  //   children: [
+  //     { index: true, element: <AdminDashboard /> },
+  //     { path: 'users', element: <UserManagement /> },
+  //     // 他の管理ページ
+  //   ]
+  // }
+]);
 
-    return (
-        <BrowserRouter>
-            <Header toggleSideMunu={ toggleSideMunu }/>
-
-            <div className="">
-                <div className={toggle ? "hidden" : "absolute bg-blue-900 min-h-full pt-5 text-white w-52"}>
-                    <SideMenu toggleSideMunu={ toggleSideMunu }/>
-                </div>
-
-                <div className="100vw bg-gray-200 h-screen pt-5">
-                    <div className="ml-2 mr-2">
-                        <Switch>
-                            <Route path='/admin/receipt/send/:id' render={ () => <ReceiptSend title={'領収書送信'}/> }/>
-                            <Route path='/admin/evaluation/send/:id' render={ () => <EvaluationSend title={'評価表送信'}/> }/>
-                            <Route path='/admin/reservation' render={ () => <ReservatinTop title={'予約一覧'} /> } />
-                            <Route path='/admin/receipt' render={ () => <Receipt title={'領収書'}/> }/>
-                            <Route path='/admin/evaluation' render={ () => <Evaluation title={'評価表'}/> }/>
-                        </Switch>
-                    </div>
-                </div>
-            </div>
-        </BrowserRouter>
-    )
-}
-
-export default Router
+export default router;
