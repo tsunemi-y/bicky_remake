@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="JR島本駅から徒歩5分!!言語聴覚士・保育士・高校教諭など複数の免許を持った指導員が訓練を行います。言葉の遅れ、発達障害、構音障害などのお子様の訓練を行います。">
+        <meta property="og:site_name" content="ビッキーことば塾">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{ asset('css/common.css') }}">
         <link rel="stylesheet" href="{{ asset('css/header.css') }}">
@@ -14,7 +15,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="https://unpkg.com/scrollreveal"></script>
-        <title>bicky</title>
+        <title>ビッキーことば塾</title>
         @yield('pageCss')
     </head>
     <body>
