@@ -22,6 +22,42 @@ p {
   margin: 0;
 }
 
+a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+.show {
+  display: "";
+  -webkit-animation: fadeIn 3s;
+          animation: fadeIn 3s;
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.hide {
+  display: none;
+}
+
+caption {
+  text-align: center;
+  caption-side: top;
+}
+
 .main-title {
   font-size: 2rem;
   margin-bottom: 24px;

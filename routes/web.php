@@ -34,5 +34,17 @@ Route::get('introduction', function () {
     return view('pages.introduction');
 })->name('introduction');
 
-Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation');
-Route::post('/reservation/sendmail', [ReservationController::class, 'sendMail'])->name('reservation.sendMail');
+Route::get('/reservation', [ReservationController::class, 'dispReservationTop'])->name('reservationTop');
+Route::get('/reservationForm', [ReservationController::class, 'dispReservationForm'])->name('reservationForm');
+Route::get('/reservationFormUsed', [ReservationController::class, 'dispReservationFormUsed'])->name('reservationFormUsed');
+
+// キャンセルコード認証画面
+Route::get('/dispCancelCodeVerify', [ReservationController::class, 'dispCancelCodeVerify'])->name('dispCancelCodeVerify');
+Route::post('/VerifyCancelCode', [ReservationController::class, 'VerifyCancelCode'])->name('VerifyCancelCode');
+
+// キャンセル画面
+Route::get('/dispReservationCancel/{reservation}', [ReservationController::class, 'dispReservationCancel'])->name('dispReservationCancel');
+Route::post('/cancelReservation/{reservation}', [ReservationController::class, 'cancelReservation'])->name('cancelReservation');
+
+Route::post('/createReservation', [ReservationController::class, 'createReservation'])->name('createReservation');
+Route::post('/reservation/sendmail', [ReservationController::class, 'sendMail'])->name('sendMail');

@@ -13,34 +13,28 @@
             <table border="1" class="text-center" width="100%">
                 <thead>
                     <tr class="table-header">
-                        <th width="10">No</th>
                         <th width="200">時間</th>
                         <th width="60">曜日</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="table-height">
-                        <th>1</th>
                         <th>11：00～11：40（40分）</th>
                         <th>水・木</th>
                     </tr>
                     <tr class="table-height">
-                        <th>2</th>
                         <th>13：00～13：40（40分）</th>
                         <th>水・木</th>
                     </tr>
                     <tr class="table-height">
-                        <th>3</th>
                         <th>14：00～14：40（40分）</th>
                         <th>水・木</th>
                     </tr>
                     <tr class="table-height">
-                        <th>4</th>
                         <th>15：00～15：40（40分）</th>
                         <th>水・木</th>
                     </tr>
                     <tr class="table-height">
-                        <th>5</th>
                         <th>16：00～16：40（40分）</th>
                         <th>水・木</th>
                     </tr>

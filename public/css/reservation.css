@@ -1,8 +1,49 @@
-.input-w-md {
+.reserv-table {
+  margin: 0 auto;
+  text-align: center;
   width: 100%;
 }
-@media screen and (min-width: 769px) {
-  .input-w-md {
-    width: 25%;
-  }
+
+.holiday {
+  color: #e64c30;
+}
+
+.saturday {
+  color: #3d90dd;
+}
+
+.circle {
+  cursor: pointer;
+  color: #00b900;
+}
+
+.cross {
+  color: #ff0000;
+}
+
+.hyphen {
+  color: #b4b4b4;
+}
+
+.table-time {
+  display: block;
+}
+
+.time-status {
+  border: 0.2rem dotted #fa0;
+}
+
+.time-status th {
+  border-right: 0.2rem dotted #fa0;
+  padding: 0.5rem 0;
+}
+
+.time-status td {
+  border-right: 0.2rem dotted #fa0;
+  border-top: 0.2rem dotted #fa0;
+  padding: 0.5rem 0;
+}
+
+.month-select {
+  color: #fa0;
 }

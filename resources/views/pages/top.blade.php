@@ -4,6 +4,18 @@
     <link rel="stylesheet" href="{{ asset('css/top.css') }}">
 @endsection
 @section('content')
+@if (session('successReservation'))
+        <div class="alert alert-success">
+            <p>{!! session('successReservation') !!}</p>
+        </div>   
+    @endif
+
+    @if (session('successCancel'))
+        <div class="alert alert-success">
+            <p>{{ session('successCancel') }}</p>
+        </div>   
+    @endif
+    
 <div class="row animation">
     <div class="col-md-6 mb-4">
         <div class="room-img text-center">

@@ -13,6 +13,7 @@ const mix = require('laravel-mix');
 
  mix.js('resources/js/app.js', 'public/js')
  .js('resources/js/top.js', 'public/js')
+ .js('resources/js/reservation.js', 'public/js')
  .sass('resources/sass/common.scss', 'public/css')
  .sass('resources/sass/header.scss', 'public/css')
  .sass('resources/sass/footer.scss', 'public/css')

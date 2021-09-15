@@ -22,13 +22,12 @@
     </head>
     <body>
         @yield('header')
+        
         <div class="container">
             <!-- コンテンツ -->
             @yield('content')
         </div>  
-        {{-- <footer class="align-middle footer mt-4">
-            <p class="footer__content">Copyright (c) bicky All Rights Reserved.</p>
-        </footer> --}}
+        
         @yield('footer')
         @yield('pageJs')
         <script src="{{ asset('js/header.js') }}"></script>  
