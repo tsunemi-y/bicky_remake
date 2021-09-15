@@ -114,8 +114,8 @@ class ReservationController extends Controller
                     時間処理　ここから
             ============================*/
             $reservatedTimeList = array_column($reservations, 'reservation_datetime');
-            $time .= "<table class='reserv-table day-$day hide time-status'>";
-            $time .= "<caption>時間選択</caption> ";
+            $time .= "<table class='reserv-table day-$day time-hide time-status'>";
+            $time .= "<caption>時間選択<span style='padding-left: 1rem'>$day<span>日<span></span></caption> ";
             $time .= "<thead> ";
             $time .= "<tr> ";
             foreach ($reservationTimes as $reservationTime) {

@@ -10,14 +10,14 @@ $('.day-ok').click(function() {
     const $timeStatus = $('.time-status')
 
     $timeStatus.each((index, elm) => {
-        if ($(elm).hasClass('show')){
-            $(elm).removeClass('show');
-            $(elm).addClass('hide');
+        if ($(elm).hasClass('time-show')){
+            $(elm).removeClass('time-show');
+            $(elm).addClass('time-hide');
         }
     });
 
-    $dayStatus.removeClass('hide');
-    $dayStatus.addClass('show');
+    $dayStatus.removeClass('time-hide');
+    $dayStatus.addClass('time-show');
 });
 
 $('.time-ok').click(function() {

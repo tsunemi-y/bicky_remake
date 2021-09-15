@@ -61,6 +61,8 @@ class ReservationFormRequest extends FormRequest
             return [
                 'name.required'              => '氏名をご入力ください',
                 'email.required'             => 'emailをご入力ください',
+                'reservation_date.required'  => '予約日をご入力ください',
+                'reservation_time.required'  => '予約時間をご入力ください',
             ];
         }
     }

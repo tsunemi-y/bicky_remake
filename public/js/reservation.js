@@ -13,13 +13,13 @@ $('.day-ok').click(function () {
   var $dayStatus = $('.' + day);
   var $timeStatus = $('.time-status');
   $timeStatus.each(function (index, elm) {
-    if ($(elm).hasClass('show')) {
-      $(elm).removeClass('show');
-      $(elm).addClass('hide');
+    if ($(elm).hasClass('time-show')) {
+      $(elm).removeClass('time-show');
+      $(elm).addClass('time-hide');
     }
   });
-  $dayStatus.removeClass('hide');
-  $dayStatus.addClass('show');
+  $dayStatus.removeClass('time-hide');
+  $dayStatus.addClass('time-show');
 });
 $('.time-ok').click(function () {
   var $yesBtnLink = $('#js-yesBtn');
