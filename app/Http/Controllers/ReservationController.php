@@ -176,7 +176,7 @@ class ReservationController extends Controller
         $validated = $request->validated();
         $validated['cancel_code'] = base_convert(mt_rand(pow(36, 5 - 1), pow(36, 5) - 1), 10, 36);
         $created = $reservationModel->create($validated);
-        $this->sendMail($created);
+        $this->sendMail($validated);
         return redirect(route('top'))->with('successReservation', '予約を受け付けました。</br>予約内容確認のメールをお送りしました。');
     }
 
