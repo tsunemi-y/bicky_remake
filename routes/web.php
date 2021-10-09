@@ -66,11 +66,6 @@ Route::post('/reservation/sendmail', [ReservationController::class, 'sendMail'])
 
 // ===============ユーザー画面　ここまで============
 
-// Auth::routes();
-Route::get('/pdf', function () {
-    return view('admin.emails.receiptPdf', ['name' => '田中太郎', 'reservation_date' => '2021/09/30', 'fee' => 6600]);
-});
-
 // ===============管理画面画面　ここから============
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -81,7 +76,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('/{any}', function () {
-        if (!empty(session('_token'))) {
+        \Log::debug(session('loginSession'));
+        if (!empty(session('loginSession'))) {
             return view('admin.app');
         } else {
             return redirect(url('admin/login'));
