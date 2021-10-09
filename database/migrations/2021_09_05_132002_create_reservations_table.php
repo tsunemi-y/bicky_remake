@@ -25,6 +25,7 @@ class CreateReservationsTable extends Migration
             $table->date('reservation_date')->nullable()->comment('予約日');
             $table->time('reservation_time')->nullable()->comment('予約時間');
             $table->string('cancel_code')->nullable()->comment('キャンセルコード');
+            $table->integer('fee')->nullable()->comment('料金');
             $table->timestamps();
         });
     }

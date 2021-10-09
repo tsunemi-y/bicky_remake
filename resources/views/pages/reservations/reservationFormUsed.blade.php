@@ -29,7 +29,7 @@
 
                   <div class="mb-3">
                       <label for="name" class="form-label">氏名</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="田中太郎">
+                      <input type="text" class="form-control" id="name" name="name" placeholder="田中太郎" value="{{ old('name') }}">
                       @if($errors->has('name'))
                           <div class="error text-danger">
                               <p>{{ $errors->first('name') }}</p>
@@ -39,7 +39,7 @@
 
                   <div class="mb-3">
                       <label for="email" class="form-label">email</label>
-                      <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+                      <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="{{ old('email') }}">
                       @if($errors->has('email'))
                           <div class="error text-danger">
                               <p>{{ $errors->first('email') }}</p>

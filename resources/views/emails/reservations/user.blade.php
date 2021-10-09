@@ -1,7 +1,6 @@
 ご予約を受け付けました。
-
 【予約日時】 {{ $reservation_date }}
-【予約時間】 {{ $reservation_time }}
+【予約時間】 {{ $reservation_time. ':00' }}
 
 予約キャンセルをご希望の場合は、下記からお願い致します。
 {{ route('dispCancelCodeVerify') }}

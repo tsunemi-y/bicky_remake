@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Admin\ReservationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/reservation', [ReservationController::class, 'getReservations'])->name('getReservation');
+    Route::put('/updateReservation/{reservation}', [ReservationController::class, 'updateReservation'])->name('updateReservation');
+    Route::post('/sendReceipt', [ReservationController::class, 'sendReceipt'])->name('sendReceipt');
 });

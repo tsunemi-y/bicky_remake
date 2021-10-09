@@ -21,6 +21,7 @@ class Reservation extends Model
         'reservation_date',
         'reservation_time',
         'cancel_code',
+        'fee',
     ];
 
     public function getReservations()
@@ -36,6 +37,7 @@ class Reservation extends Model
                 address,
                 introduction,
                 reservation_date,
+                to_char(reservation_time, 'hh24:mm') as reservation_time,
                 CONCAT(reservation_date, ' ', to_char(reservation_time, 'hh24:mm')) as reservation_datetime
             FROM reservations
         SQL;
@@ -53,5 +55,26 @@ class Reservation extends Model
     public function getReservationTimeAttribute($value)
     {
         return substr($value, 0, -3);
+    }
+
+    public function scopeEqualDate($query, $date)
+    {
+        if ($date != '') {
+            return $query->where('reservation_date', '=', $date);
+        }
+    }
+
+    public function scopeFuzzyName($query, $name)
+    {
+        if ($name != '') {
+            return $query->where('name', 'like', "%$name%");
+        }
+    }
+
+    public function scopeEqualId($query, $id)
+    {
+        if ($id != '') {
+            return $query->where('id', '=', $id);
+        }
     }
 }

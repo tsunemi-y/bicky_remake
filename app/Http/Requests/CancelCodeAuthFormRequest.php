@@ -24,8 +24,8 @@ class CancelCodeAuthFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'                => ['required',],
-            'cancel_code'       => ['required',],
+            'id'                => ['required', 'integer'],
+            'cancel_code'       => ['required', 'string'],
         ];
     }
 
@@ -33,7 +33,10 @@ class CancelCodeAuthFormRequest extends FormRequest
     {
         return [
             'id.required'              => 'idをご入力ください',
-            'cancel_code.required'               => 'キャンセルコードをご入力ください',
+            'id.integer'               => '数字でご入力ください',
+
+            'cancel_code.required'     => 'キャンセルコードをご入力ください',
+            'cancel_code.string'       => '文字でご入力ください',
         ];
     }
 }

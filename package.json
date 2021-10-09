@@ -1,21 +1,43 @@
 {
     "private": true,
     "scripts": {
-        "dev": "npm run development",
+        "dev": "NODE_ENV=development webpack --config=node_modules/laravel-mix/setup/webpack.config.js",
         "development": "mix",
-        "watch": "mix watch",
+        "watch": "NODE_ENV=development webpack --config=node_modules/laravel-mix/setup/webpack.config.js --watch",
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
-        "prod": "npm run production",
+        "prod": "NODE_ENV=production  webpack --config=node_modules/laravel-mix/setup/webpack.config.js",
         "production": "mix --production"
     },
     "devDependencies": {
+        "@babel/preset-react": "^7.13.13",
+        "@types/bootstrap": "^5.1.4",
+        "@types/react-dom": "^17.0.9",
+        "@types/react-router-dom": "^5.1.9",
         "axios": "^0.21",
-        "laravel-mix": "^6.0.6",
+        "bootstrap": "^4.6.0",
+        "gulp-postcss": "^9.0.1",
+        "jquery": "^3.6",
+        "laravel-mix": "^6.0.31",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14",
+        "mix-tailwindcss": "^1.3.0",
+        "popper.js": "^1.16.1",
+        "postcss": "^8.3.6",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
         "resolve-url-loader": "^3.1.2",
-        "sass": "^1.34.1",
-        "sass-loader": "^11.0.1"
+        "sass": "^1.32.11",
+        "sass-loader": "^11.0.1",
+        "tailwindcss": "^2.2.15",
+        "ts-loader": "^9.2.5",
+        "typescript": "^4.4.3"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.36",
+        "@fortawesome/free-solid-svg-icons": "^5.15.4",
+        "@fortawesome/react-fontawesome": "^0.1.15",
+        "@types/react": "^17.0.21",
+        "browser-sync-webpack-plugin": "^2.3.0",
+        "react-router-dom": "^5.3.0"
     }
 }

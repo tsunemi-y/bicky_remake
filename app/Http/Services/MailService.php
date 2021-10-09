@@ -4,7 +4,6 @@ namespace App\Http\Services;
 
 use Illuminate\Support\Facades\Mail;
 
-
 class MailService
 {
     /**
@@ -13,20 +12,15 @@ class MailService
      */
     public function sendMailVendor($params)
     {
+        // メールデータ作成
+        $mailData = [];
+        foreach ($params as $key => $value) {
+            $mailData[$key] = $value;
+        };
+
         Mail::send(
             ['text' => 'emails.reservations.vendor'],
-            [
-                "name"              => $params['name'],
-                "age"               => $params['age'],
-                "gender"            => $params['gender'],
-                "diagnosis"         => $params['diagnosis'],
-                "address"           => $params['address'],
-                "Introduction"      => $params['Introduction'],
-                "email"             => $params['email'],
-                "reservation_date"  => $params['reservation_date'],
-                "reservation_time"  => $params['reservation_time'],
-                "note"              => $params['note'],
-            ],
+            $mailData,
             function ($message) {
                 $message
                     ->to('tatataabcd@gmail.com')
@@ -39,29 +33,28 @@ class MailService
      * 利用者へのメール
      * @param $param
      */
-    public function sendMailUser($params)
+    public function sendMailToUser($params, $viewFile, $subject, $attachFile = null)
     {
-        Mail::send(
-            ['text' => 'emails.reservations.user'],
-            [
-                "name"              => $params['name'],
-                "age"               => $params['age'],
-                "gender"            => $params['gender'],
-                "diagnosis"         => $params['diagnosis'],
-                "address"           => $params['address'],
-                "Introduction"      => $params['Introduction'],
-                "email"             => $params['email'],
-                "reservation_date"  => $params['reservation_date'],
-                "reservation_time"  => $params['reservation_time'],
-                "note"              => $params['note'],
-                "id"                => $params['id'],
-                "cancel_code"       => $params['cancel_code'],
+        // メールデータ作成
+        $mailData = [];
+        foreach ($params as $key => $value) {
+            $mailData[$key] = $value;
+        };
 
-            ],
-            function ($message) use ($params) {
-                $message
-                    ->to($params['email'])
-                    ->subject("予約を受け付けました");
+        Mail::send(
+            ['text' => $viewFile],
+            $mailData,
+            function ($message) use ($params, $subject, $attachFile) {
+                if (!empty($attachFile)) {
+                    $message
+                        ->to($params['email'])
+                        ->subject($subject)
+                        ->attach(storage_path($attachFile));
+                } else {
+                    $message
+                        ->to($params['email'])
+                        ->subject($subject);
+                }
             }
         );
     }

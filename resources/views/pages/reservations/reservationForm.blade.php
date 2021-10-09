@@ -29,7 +29,7 @@
 
                   <div class="mb-3">
                       <label for="name" class="form-label">氏名</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="田中太郎">
+                      <input type="text" class="form-control" id="name" name="name" placeholder="田中太郎" value="{{ old('name') }}">
                       @if($errors->has('name'))
                           <div class="error text-danger">
                               <p>{{ $errors->first('name') }}</p>
@@ -39,7 +39,7 @@
 
                   <div class="mb-3 w-25">
                       <label for="age" class="form-label">年齢</label>
-                      <input type="text" class="form-control" id="age" name="age" placeholder="5">
+                      <input type="text" class="form-control" id="age" name="age" placeholder="5" value="{{ old('age') }}">
                       @if($errors->has('age'))
                           <div class="error text-danger">
                               <p>{{ $errors->first('age') }}</p>
@@ -70,7 +70,7 @@
 
                   <div class="mb-3">
                       <label for="email" class="form-label">email</label>
-                      <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+                      <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="{{ old('email') }}">
                       @if($errors->has('email'))
                           <div class="error text-danger">
                               <p>{{ $errors->first('email') }}</p>
@@ -80,7 +80,7 @@
 
                   <div class="mb-3">
                       <label for="diagnosis" class="form-label">診断名</label>
-                      <input type="text" class="form-control" id="diagnosis" name="diagnosis" placeholder="自閉症の疑い">
+                      <input type="text" class="form-control" id="diagnosis" name="diagnosis" placeholder="自閉症の疑い" value="{{ old('diagnosis') }}">
                       @if($errors->has('diagnosis'))
                           <div class="error text-danger">
                               <p>{{ $errors->first('diagnosis') }}</p>
@@ -90,7 +90,7 @@
 
                   <div class="mb-3">
                       <label for="address" class="form-label">住所</label>
-                      <input type="text" class="form-control" id="address" name="address" placeholder="〇〇区">
+                      <input type="text" class="form-control" id="address" name="address" placeholder="〇〇区" value="{{ old('address') }}">
                       @if($errors->has('address'))
                           <div class="error text-danger">
                               <p>{{ $errors->first('address') }}</p>
@@ -100,7 +100,7 @@
 
                   <div class="mb-3">
                       <label for="Introduction" class="form-label">紹介先</label>
-                      <input type="text" class="form-control" id="Introduction" name="Introduction" placeholder="〇〇区役所">
+                      <input type="text" class="form-control" id="Introduction" name="Introduction" placeholder="〇〇区役所" value="{{ old('Introduction') }}">
                       @if($errors->has('Introduction'))
                           <div class="error text-danger">
                               <p>{{ $errors->first('Introduction') }}</p>
@@ -110,7 +110,7 @@
 
                   <div class="mb-3">
                       <label for="note" class="form-label">その他</label>
-                      <textarea class="form-control" id="note" name="note" rows="3"></textarea>
+                      <textarea class="form-control" id="note" name="note" rows="3">{{ old('note') }}</textarea>
                   </div>
 
                   <div class="text-center mt-5">

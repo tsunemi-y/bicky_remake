@@ -30,4 +30,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'line' => [
+        'channel_token' => env('LINE_CHANNEL_TOKEN'),
+        'messenger_secret' => env('LINE_MESSENGER_SECRET'),
+        'admin_id' => env('LINE_ADMIN_ID'),
+    ],
+
 ];

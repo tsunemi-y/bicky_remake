@@ -7,7 +7,6 @@ use App\Http\Requests\CancelCodeAuthFormRequest;
 use App\Http\Services\MailService;
 use App\Models\Reservation;
 use App\Models\ReservationTime;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use \Yasumi\Yasumi;
 use Illuminate\Support\Facades\Cookie;
@@ -153,7 +152,6 @@ class ReservationController extends Controller
             $time .= "</thead> ";
             $time .= "</table> ";
 
-            // 関数化の際は$timeをreturnして$timeListに格納していく。
             $timeList[] = $time;
             $time = '';
             /*============================
@@ -175,7 +173,7 @@ class ReservationController extends Controller
         $reservationModel = new Reservation;
         $validated = $request->validated();
         $validated['cancel_code'] = base_convert(mt_rand(pow(36, 5 - 1), pow(36, 5) - 1), 10, 36);
-        $created = $reservationModel->create($validated);
+        $created = $reservationModel->create($validated)->toArray();
         $this->sendMail($created);
         return redirect(route('top'))->with('successReservation', '予約を受け付けました。</br>予約内容確認のメールをお送りしました。');
     }
@@ -189,7 +187,11 @@ class ReservationController extends Controller
     {
         $mailService = new MailService();
         $mailService->sendMailVendor($params);
-        $mailService->sendMailUser($params);
+
+        // 利用者へのメールに必要なデータ設定
+        $viewFile = 'emails.reservations.user';
+        $subject = '予約を受け付けました';
+        $mailService->sendMailToUser($params, $viewFile, $subject);
     }
 
     /**
