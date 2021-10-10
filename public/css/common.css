@@ -1,42 +1,45 @@
 html {
-  height: 100%;
+    height: 100%;
 }
 
 body {
-  background-color: #fff;
-  color: #333;
-  display: flex;
-  flex-flow: column;
-  font-family: "ten-mincho", serif;
-  font-size: 16px;
-  line-height: 30px;
-  min-height: 100%;
+    background-color: #fff;
+    color: #333;
+    /* display: flex; */
+    /* flex-flow: column; */
+    font-family: "Helvetica Neue", Helvetica, Arial, Verdana, Roboto,
+        "游ゴシック", "Yu Gothic", "游ゴシック体", "YuGothic",
+        "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "Meiryo UI",
+        "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    font-size: 16px;
+    line-height: 30px;
+    min-height: 100%;
 }
 
 .container {
-  flex: 1;
+    /* flex: 1; */
 }
 
 h1,
 p {
-  margin: 0;
+    margin: 0;
 }
 
 a:hover {
-  color: #333;
-  text-decoration: none;
+    color: #333;
+    text-decoration: none;
 }
 
 caption {
-  text-align: center;
-  caption-side: top;
+    text-align: center;
+    caption-side: top;
 }
 
 .main-title {
-  font-size: 2rem;
-  margin-bottom: 24px;
+    font-size: 2rem;
+    margin-bottom: 24px;
 }
 
 .table-height {
-  height: 4rem;
+    height: 4rem;
 }

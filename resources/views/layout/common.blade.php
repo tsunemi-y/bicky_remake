@@ -16,13 +16,18 @@
         <link rel="stylesheet" href="{{ asset('css/common.css') }}">
         <link rel="stylesheet" href="{{ asset('css/header.css') }}">
         <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
-
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">   
+        <link rel="shortcut icon" href="{{ asset('/favicon.png') }}">
+
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="https://unpkg.com/scrollreveal"></script>
+        
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
         <title>ビッキーことば塾</title>
 
@@ -41,6 +46,7 @@
     </head>
     <body>
         @yield('header')
+        @yield('heroImg')
         
         <div class="container">
             <!-- コンテンツ -->
@@ -51,5 +57,11 @@
         @yield('pageJs')
         <script src="{{ asset('js/header.js') }}"></script>  
         <script src="{{ asset('js/top.js') }}"></script>  
+
+        <script>
+            $(function() {
+                $('.hero-img').addClass('hero-img-show');
+            });
+         </script>
     </body>
 </html>
