@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col">
-            <h1 class="main-title text-center">ごあいさつ</h1>
+            <h1 class="main-title text-center">ご挨拶</h1>
             <p>
                 令和2年4月より大阪市指定事業児童発達支援事業「ビッキー療育センター」より、民間事業「ビッキーことば塾」に事業転換することになりました。<br>
                 どうぞ、よろしくお願いいたします。<br>

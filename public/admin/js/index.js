@@ -14230,6 +14230,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/sass/common.scss":
+/*!************************************!*\
+  !*** ./resources/sass/common.scss ***!
+  \************************************/
+/***/ (() => {
+
+throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nSassError: Undefined variable.\n  ╷\n8 │     background-color: $white;\r\n  │                       ^^^^^^\n  ╵\n  resources\\sass\\common.scss 8:23  root stylesheet\n    at processResult (C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\webpack\\lib\\NormalModule.js:721:19)\n    at C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\webpack\\lib\\NormalModule.js:827:5\n    at C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\loader-runner\\lib\\LoaderRunner.js:399:11\n    at C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\loader-runner\\lib\\LoaderRunner.js:251:18\n    at context.callback (C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\loader-runner\\lib\\LoaderRunner.js:124:13)\n    at C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\sass-loader\\dist\\index.js:54:7\n    at Function.call$2 (C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\sass\\sass.dart.js:95949:16)\n    at _render_closure1.call$2 (C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\sass\\sass.dart.js:83931:12)\n    at _RootZone.runBinary$3$3 (C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\sass\\sass.dart.js:28042:18)\n    at _FutureListener.handleError$1 (C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\sass\\sass.dart.js:26572:21)");
+
+/***/ }),
+
+/***/ "./resources/sass/fee.scss":
+/*!*********************************!*\
+  !*** ./resources/sass/fee.scss ***!
+  \*********************************/
+/***/ (() => {
+
+throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nSassError: Undefined variable.\n  ╷\n5 │     background-color: $mainColor;\r\n  │                       ^^^^^^^^^^\n  ╵\n  resources\\sass\\fee.scss 5:23  root stylesheet\n    at processResult (C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\webpack\\lib\\NormalModule.js:721:19)\n    at C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\webpack\\lib\\NormalModule.js:827:5\n    at C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\loader-runner\\lib\\LoaderRunner.js:399:11\n    at C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\loader-runner\\lib\\LoaderRunner.js:251:18\n    at context.callback (C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\loader-runner\\lib\\LoaderRunner.js:124:13)\n    at C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\sass-loader\\dist\\index.js:54:7\n    at Function.call$2 (C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\sass\\sass.dart.js:95949:16)\n    at _render_closure1.call$2 (C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\sass\\sass.dart.js:83931:12)\n    at _RootZone.runBinary$3$3 (C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\sass\\sass.dart.js:28042:18)\n    at _FutureListener.handleError$1 (C:\\Users\\tatat\\util\\bicky\\src\\bicky\\node_modules\\sass\\sass.dart.js:26572:21)");
+
+/***/ }),
+
 /***/ "./node_modules/object-assign/index.js":
 /*!*********************************************!*\
   !*** ./node_modules/object-assign/index.js ***!
@@ -49310,7 +49330,9 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["admin/css/app"], () => (__webpack_require__("./resources/ts/admin/components/index.tsx")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["admin/css/app"], () => (__webpack_require__("./resources/sass/admin/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["admin/css/app"], () => (__webpack_require__("./resources/sass/admin/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["admin/css/app"], () => (__webpack_require__("./resources/sass/common.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["admin/css/app"], () => (__webpack_require__("./resources/sass/fee.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

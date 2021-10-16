@@ -15,5 +15,7 @@ require('mix-tailwindcss');
 mix.ts('resources/ts/admin/components/index.tsx', 'public/admin/js')
     .react()
     .sass('resources/sass/admin/app.scss', 'public/admin/css')
+    .sass('resources/sass/common.scss', 'public/css')
+    .sass('resources/sass/fee.scss', 'public/css')
     .tailwind();
     

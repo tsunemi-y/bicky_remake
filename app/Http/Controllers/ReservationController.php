@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use \Yasumi\Yasumi;
 use Illuminate\Support\Facades\Cookie;
 
-
 class ReservationController extends Controller
 {
     /**
@@ -171,9 +170,11 @@ class ReservationController extends Controller
     public function createReservation(ReservationFormRequest $request)
     {
         $reservationModel = new Reservation;
+
         $validated = $request->validated();
         $validated['cancel_code'] = base_convert(mt_rand(pow(36, 5 - 1), pow(36, 5) - 1), 10, 36);
         $created = $reservationModel->create($validated)->toArray();
+
         $this->sendMail($created);
         return redirect(route('top'))->with('successReservation', '予約を受け付けました。</br>予約内容確認のメールをお送りしました。');
     }
@@ -226,16 +227,24 @@ class ReservationController extends Controller
     public function VerifyCancelCode(CancelCodeAuthFormRequest $request)
     {
         $reservation = Reservation::find($request->id);
-        if (!empty($reservation->cancel_code)) {
-            if ($request->cancel_code == $reservation->cancel_code) {
-                Cookie::queue('cancelCodedispFlag', $reservation->cancel_code);
-                return redirect(route('dispReservationCancel', ['reservation' => $request->id]));
-            } else {
-                return redirect(route('dispCancelCodeVerify'))->with('cancelError', 'キャンセルコードが間違っています');
-            }
-        } else {
-            return redirect(route('dispCancelCodeVerify'))->with('cancelError', 'idが間違っています');
-        }
+
+        if (empty($reservation->cancel_code)) return redirect(route('dispCancelCodeVerify'))->with('cancelError', 'idが間違っています');
+
+        if ($request->cancel_code != $reservation->cancel_code) return redirect(route('dispCancelCodeVerify'))->with('cancelError', 'キャンセルコードが間違っています');
+
+        Cookie::queue('cancelCodedispFlag', $reservation->cancel_code);
+        return redirect(route('dispReservationCancel', ['reservation' => $request->id]));
+
+        // if (!empty($reservation->cancel_code)) {
+        //     if ($request->cancel_code == $reservation->cancel_code) {
+        //         Cookie::queue('cancelCodedispFlag', $reservation->cancel_code);
+        //         return redirect(route('dispReservationCancel', ['reservation' => $request->id]));
+        //     } else {
+        //         return redirect(route('dispCancelCodeVerify'))->with('cancelError', 'キャンセルコードが間違っています');
+        //     }
+        // } else {
+        //     return redirect(route('dispCancelCodeVerify'))->with('cancelError', 'idが間違っています');
+        // }
     }
 
     /**

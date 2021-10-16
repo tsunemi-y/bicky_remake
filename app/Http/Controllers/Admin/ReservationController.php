@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Services\MailService;
-
 
 class ReservationController extends Controller
 {
@@ -56,20 +54,21 @@ class ReservationController extends Controller
         ];
 
         // メールデータ作成
+        $date = str_replace('-', '', $args['reservation_date']);
         $viewFile = 'admin.emails.receipt';
         $subject = '領収書のご送付';
-        $attachFile = 'pdfs/receipt.pdf';
+        $attachFile = "pdfs/領収書_{$date}.pdf";
 
         // 領収書を出力し、ストレージに配置
         $pdf = \PDF::loadView('admin/emails/receiptPdf', $args);
         $downloadedPdf = $pdf->output();
-        file_put_contents(storage_path('pdfs/receipt.pdf'), $downloadedPdf);
+        file_put_contents(storage_path("pdfs/領収書_{$date}.pdf"), $downloadedPdf);
 
         // 領収書送信
         $mailService = new MailService();
         $mailService->sendMailToUser($args, $viewFile, $subject, $attachFile);
 
         // 領収書削除
-        unlink(storage_path('pdfs/receipt.pdf'));
+        unlink(storage_path("pdfs/領収書_{$date}.pdf"));
     }
 }

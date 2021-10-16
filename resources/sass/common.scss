@@ -35,8 +35,11 @@ caption {
 }
 
 .main-title {
+    background-color: $menuColor;
+    color: $white;
     font-size: 2rem;
     margin-bottom: 24px;
+    text-align: center;
 }
 
 .table-height {

@@ -1,15 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\FeeController;
 
 // ログイン機能
-use App\Http\Controllers\Admin\Auth\LoginController;
-use App\Http\Controllers\Admin\Auth\ConfirmPasswordController;
-use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
-use App\Http\Controllers\Admin\Auth\ResetPasswordController;
-use App\Http\Controllers\Admin\Auth\RegisterController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\LineMessengerController;
+use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\Auth\RegisterController;
+use App\Http\Controllers\Admin\Auth\ResetPasswordController;
+use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
+use App\Http\Controllers\Admin\Auth\ConfirmPasswordController;
 
 
 /*
@@ -41,9 +42,8 @@ Route::get('access', function () {
     return view('pages.access');
 })->name('access');
 
-Route::get('fee', function () {
-    return view('pages.fee');
-})->name('fee');
+// 料金画面
+Route::get('fee', [FeeController::class, 'index'])->name('fee');
 
 Route::get('introduction', function () {
     return view('pages.introduction');
@@ -76,7 +76,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('/{any}', function () {
-        \Log::debug(session('loginSession'));
         if (!empty(session('loginSession'))) {
             return view('admin.app');
         } else {

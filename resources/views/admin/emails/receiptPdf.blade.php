@@ -64,7 +64,7 @@
             }
 
             .vendor-info p {
-                text-align: left;
+                text-align: right;
                 margin-left: auto;
                 margin-top: .4rem;
                 width: 33%;

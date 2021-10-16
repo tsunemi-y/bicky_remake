@@ -7,42 +7,30 @@
     <div class="row">
         <div class="col">
             <h1 class="main-title text-center">料金・プラン</h1>
-            <p>■開設日は<b>水曜</b>と<b>木曜</b>のみです</p>
-            <br>
+            <p class="mb-4">平日と休日にご利用いただけます。</p>
+            
             <p><b>■言語発達指導及びペアレント指導</b></p>
             <table border="1" class="text-center" width="100%">
                 <thead>
                     <tr class="table-header">
-                        <th width="200">時間</th>
-                        <th width="60">曜日</th>
+                        <th class="font-weight-bold" width="60">曜日</th>
+                        <th class="font-weight-bold" width="200">時間</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="table-height">
-                        <th>11：00～11：40（40分）</th>
-                        <th>水・木</th>
-                    </tr>
-                    <tr class="table-height">
-                        <th>13：00～13：40（40分）</th>
-                        <th>水・木</th>
-                    </tr>
-                    <tr class="table-height">
-                        <th>14：00～14：40（40分）</th>
-                        <th>水・木</th>
-                    </tr>
-                    <tr class="table-height">
-                        <th>15：00～15：40（40分）</th>
-                        <th>水・木</th>
-                    </tr>
-                    <tr class="table-height">
-                        <th>16：00～16：40（40分）</th>
-                        <th>水・木</th>
-                    </tr>
+                    @foreach ($reservationTimes as $rsvTime)
+                        
+                        <tr class="table-height">
+                            <th>月～金</th>
+                            <th>{{ $rsvTime['reservation_time_from']. '~'. $rsvTime['reservation_time_to']. '（50分）'}}</th>
+                        </tr>
+
+                    @endforeach
                 </tbody>
             </table>
             <br>
             <p>
-                <b>■毎回ご持参いただいている利用料について</b><br>
+                <b>■利用料について</b><br>
                 来年度からは、つきの回数に応じた月謝制になります。<br>
                 ◆例<br>
                 つき4回：　4,400円×4回＝17,600円<br>

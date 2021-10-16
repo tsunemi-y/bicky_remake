@@ -25,10 +25,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="https://unpkg.com/scrollreveal"></script>
         
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
         <title>ビッキーことば塾</title>
 
         <!-- グーグルアナリティクスここから -->
@@ -57,11 +53,5 @@
         @yield('pageJs')
         <script src="{{ asset('js/header.js') }}"></script>  
         <script src="{{ asset('js/top.js') }}"></script>  
-
-        <script>
-            $(function() {
-                $('.hero-img').addClass('hero-img-show');
-            });
-         </script>
     </body>
 </html>

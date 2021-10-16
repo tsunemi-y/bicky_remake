@@ -16,24 +16,20 @@ class ReservationTimesTableSeeder extends Seeder
     {
         $timeList = [
             [
+                'reservation_time_from' => '10:00',
+                'reservation_time_to' => '10:50',
+            ],
+            [
                 'reservation_time_from' => '11:00',
-                'reservation_time_to' => '12:00',
+                'reservation_time_to' => '11:50',
             ],
             [
                 'reservation_time_from' => '13:00',
-                'reservation_time_to' => '14:00',
+                'reservation_time_to' => '13:50',
             ],
             [
-                'reservation_time_from' => '15:00',
-                'reservation_time_to' => '16:00',
-            ],
-            [
-                'reservation_time_from' => '17:00',
-                'reservation_time_to' => '18:00',
-            ],
-            [
-                'reservation_time_from' => '19:00',
-                'reservation_time_to' => '20:00',
+                'reservation_time_from' => '14:00',
+                'reservation_time_to' => '14:50',
             ],
         ];
 
