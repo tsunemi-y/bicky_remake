@@ -11,10 +11,11 @@
 }
 
 .header-title {
-    font-size: 1rem;
-    width: 45%;
+    font-size: 1.2rem;
+    font-family: "メイリオ", Meiryo;
+    // width: 45%;
     a {
-        color: $black;
+        color: $menuColor;
     }
 }
 
@@ -97,6 +98,20 @@
     }
 }
 
+.sp-header div {
+    border-bottom: 1px dotted $white;
+    padding-bottom: 3px;
+    margin-left: 0.5rem;
+}
+
+.sp-header div:first-child {
+    margin-top: 5rem;
+}
+
 .sp-header div:not(:last-child) {
     margin-bottom: 1rem;
+}
+
+.sp-header div a {
+    display: block;
 }

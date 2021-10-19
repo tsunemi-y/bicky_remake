@@ -1,7 +1,7 @@
 @section('header')
 
 {{-- spメニュー中身 ここから　--}}
-<div class="align-items-center d-flex flex-column justify-content-center menu-inner position-fixed sp-header" id="js-menu-inner">
+<div class="menu-inner position-fixed sp-header" id="js-menu-inner">
     <div><a href="{{ route("greeting")}}" class="menu-inner__link">ご挨拶</a></div>
     <div><a href="{{ route("fee") }}" class="menu-inner__link">料金・プラン</a></div>
     <div><a href="{{ route("reservationTop") }}" class="menu-inner__link">予約</a></div>
@@ -18,9 +18,9 @@
 </div>
 {{-- ハンバーガーメニュー　ここまで --}}
 
-<header class="header mb-4">
+<header class="header">
     <div class="align-items-center container d-flex header__item">
-        <h1 class="header-title mr-2"><a href="{{ route("top")}}">ビッキーことば塾</a></h1>
+        <div class="header-title mr-2"><a href="{{ route("top")}}"><img src="{{ asset("img/logo.png") }}" alt=""></a></div>
         {{-- <div class="header-phone"><i class="fas fa-mobile-alt mr-1"></i><a href="tel:06‐6777‐9427">06-6777-9427</a></div> --}}
         {{-- pcメニュー　ここから --}}
         <div class="pc-header">
@@ -40,5 +40,14 @@
     <footer class="align-middle footer">
         <p class="footer__content">Copyright (c) bicky All Rights Reserved.</p>
     </footer>
+@endsection
+
+@section('heroImg')
+    <div class="hero-img mb-4">
+        <p class="hero-img__text">
+            可能性は、<br>
+            無限大
+        </p>
+    </div>
 @endsection
 

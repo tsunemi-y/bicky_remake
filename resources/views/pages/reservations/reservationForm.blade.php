@@ -9,7 +9,7 @@
 @section('content')
     <div class="row">
         <div class="col">
-          <h1 class="main-title text-center">予約フォーム</h1>
+          <h1 class="main-title">予約フォーム</h1>
           {{-- 予約フォーム ここから--}}
           <div>
               <form action="{{ route('createReservation') }}" method="post">

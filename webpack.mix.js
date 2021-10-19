@@ -16,6 +16,13 @@ mix.ts('resources/ts/admin/components/index.tsx', 'public/admin/js')
     .react()
     .sass('resources/sass/admin/app.scss', 'public/admin/css')
     .sass('resources/sass/common.scss', 'public/css')
+    .sass('resources/sass/header.scss', 'public/css')
+    .sass('resources/sass/footer.scss', 'public/css')
+    .sass('resources/sass/top.scss', 'public/css')
+    .sass('resources/sass/reservation.scss', 'public/css')
+    .sass('resources/sass/access.scss', 'public/css')
     .sass('resources/sass/fee.scss', 'public/css')
+    .js('resources/js/top.js', 'public/js')
+    .js('resources/js/reservation.js', 'public/js')
     .tailwind();
     

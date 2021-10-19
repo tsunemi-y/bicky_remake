@@ -9,7 +9,7 @@
 @section('content')
     <div class="row">
         <div class="col">
-          <h1 class="main-title text-center">キャンセルコード認証画面</h1>
+          <h1 class="main-title">キャンセルコード認証画面</h1>
             
             <form action="{{ route('VerifyCancelCode') }}" method="post" class="mx-auto w-100">
                 @csrf

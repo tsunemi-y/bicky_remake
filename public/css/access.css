@@ -2,6 +2,7 @@
   height: 300px;
   width: 100%;
 }
+
 @media screen and (min-width: 769px) {
   .map {
     width: 100%;

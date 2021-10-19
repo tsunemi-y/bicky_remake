@@ -9,7 +9,7 @@
 @section('content')
     <div class="row">
         <div class="col">
-          <h1 class="main-title text-center">予約キャンセル</h1>
+          <h1 class="main-title">予約キャンセル</h1>
         <form action="{{ route('cancelReservation', ['reservation' => $reservation->id] ) }}" method="post" class="w-100 mx-auto">
             @csrf
             <div>
