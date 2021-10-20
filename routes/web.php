@@ -3,14 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeeController;
 
-// ログイン機能
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\LineMessengerController;
 use App\Http\Controllers\Admin\Auth\LoginController;
-use App\Http\Controllers\Admin\Auth\RegisterController;
-use App\Http\Controllers\Admin\Auth\ResetPasswordController;
-use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
-use App\Http\Controllers\Admin\Auth\ConfirmPasswordController;
+
 
 
 /*
@@ -82,4 +79,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
             return redirect(url('admin/login'));
         }
     })->where('any', '^(?!login).+$')->name('top');
+});
+
+// サイトマップ
+// sitemap-indexのルート
+Route::get('sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+Route::group(['prefix' => 'sitemaps'], function () {
+    // sitemapのルート
+    Route::get('basics.xml', [SitemapController::class, 'basics'])->name('sitemap-basics');
+    // sitemapを増やす場合はココに追記していく。
 });
