@@ -42,7 +42,7 @@
 }
 
 .menu {
-  position: absolute;
+  position: fixed;
   right: 0;
   align-items: center;
   background-color: #72cc82;

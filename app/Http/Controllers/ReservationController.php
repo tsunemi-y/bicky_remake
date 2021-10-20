@@ -51,6 +51,7 @@ class ReservationController extends Controller
         $dayCount = date('t', $timestamp);
         $week = date('w', $timestamp);
         $saturdayNum = 6;
+        $sundayNum = 0;
         $nowDate = date('Y-m-d');
         $prevMonth = date('Y-m', strtotime('-1 month', $timestamp));
         $nextMonth = date('Y-m', strtotime('+1 month', $timestamp));
@@ -89,7 +90,7 @@ class ReservationController extends Controller
             $calender .= '>' . $day;
             if ($reservedFlag) {
                 $calender .= "<p class='cross'>×</p>";
-            } else if (strtotime($date) <= strtotime($nowDate) || strtotime($date) > strtotime("$nowDate +1 months")) {
+            } else if ((strtotime($date) <= strtotime($nowDate) || strtotime($date) > strtotime("$nowDate +1 months") || ($week == $sundayNum || $week == $saturdayNum))) {
                 $calender .= "<p class='hyphen'>-</p>";
             } else {
                 $calender .= "<p class='circle day-ok' data-day='day-$day'>○</p>";
@@ -171,12 +172,24 @@ class ReservationController extends Controller
     {
         $reservationModel = new Reservation;
 
+        // 同じ日時に予約があるときはエラー
+        $reservedDate = $reservationModel
+            ->where('reservation_date', $request->reservation_date)
+            ->where('reservation_time', $request->reservation_time)
+            ->first();
+
+        if (!empty($reservedDate)) {
+            return redirect(route('reservationTop'))
+                ->with('differentReservation', '違う日時でご予約ください。');
+        }
+
         $validated = $request->validated();
         $validated['cancel_code'] = base_convert(mt_rand(pow(36, 5 - 1), pow(36, 5) - 1), 10, 36);
         $created = $reservationModel->create($validated)->toArray();
 
         $this->sendMail($created);
-        return redirect(route('top'))->with('successReservation', '予約を受け付けました。</br>予約内容確認のメールをお送りしました。');
+        return redirect(route('top'))
+            ->with('successReservation', '予約を受け付けました。</br>予約内容確認のメールをお送りしました。');
     }
 
     /**

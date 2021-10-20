@@ -15,7 +15,7 @@
                 @csrf
 
                 @if (session('cancelError'))
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger top-alert">
                         <p>{{ session('cancelError') }}</p>
                     </div>   
                 @endif

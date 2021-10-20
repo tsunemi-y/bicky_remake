@@ -38,7 +38,7 @@
 }
 
 .menu {
-    @include position($position: absolute, $right: 0);
+    @include position($position: fixed, $right: 0);
     align-items: center;
     background-color: $menuColor;
     display: flex;
