@@ -2,4 +2,3 @@ User-agent: *
 Disallow:
 
 Sitemap: https://bicky.herokuapp.com/sitemap.xml
-Sitemap: https://bicky.herokuapp.com/sitemaps/basics.xml
