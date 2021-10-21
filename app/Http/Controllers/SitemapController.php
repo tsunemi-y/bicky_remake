@@ -60,7 +60,7 @@ class SitemapController extends Controller
             );
         }
         // XML形式で出力
-        return $sitemap->store('xml', 'mysitemap');
+        return $sitemap->render('xml');
     }
 
     // sitemapを出力する
