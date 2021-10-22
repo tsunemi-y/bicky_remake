@@ -6,6 +6,7 @@
 @section('content')
     <div class="row">
         <div class="col">
+            <x-breadcrumb item="TOP" item2="指導員紹介" url="https://bicky.herokuapp.com/introduction" />
             <h1 class="main-title">指導員紹介</h1>
             <div class="text-center">
                 <img src="{{ asset('img/staff.png') }}" alt="">

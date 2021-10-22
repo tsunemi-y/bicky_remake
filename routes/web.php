@@ -81,11 +81,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     })->where('any', '^(?!login).+$')->name('top');
 });
 
-// サイトマップ
-// sitemap-indexのルート
-Route::get('sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
-Route::group(['prefix' => 'sitemaps'], function () {
-    // sitemapのルート
-    Route::get('basics.xml', [SitemapController::class, 'basics'])->name('sitemap-basics');
-    // sitemapを増やす場合はココに追記していく。
-});
+// // サイトマップ
+// // sitemap-indexのルート
+// Route::get('sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+// Route::group(['prefix' => 'sitemaps'], function () {
+//     // sitemapのルート
+//     Route::get('basics.xml', [SitemapController::class, 'basics'])->name('sitemap-basics');
+//     // sitemapを増やす場合はココに追記していく。
+// });

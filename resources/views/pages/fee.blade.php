@@ -6,6 +6,7 @@
 @section('content')
     <div class="row">
         <div class="col">
+            <x-breadcrumb item="TOP" item2="料金・プラン" url="https://bicky.herokuapp.com/fee" />
             <h1 class="main-title">料金・プラン</h1>
             <p class="mb-4">
                 平日と休日によって料金・時間が異なります。<br>

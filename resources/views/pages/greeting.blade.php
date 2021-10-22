@@ -3,7 +3,9 @@
 @section('content')
     <div class="row">
         <div class="col">
+            <x-breadcrumb item="TOP" item2="ご挨拶" url="https://bicky.herokuapp.com/greeting" />
             <h1 class="main-title">ご挨拶</h1>
+
             <p class="mb-4">
                 令和2年4月より大阪市指定事業児童発達支援事業「ビッキー療育センター」より、民間事業「ビッキーことば塾」に事業転換することになりました。<br>
                 どうぞ、よろしくお願いいたします。<br>

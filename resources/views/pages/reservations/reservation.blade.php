@@ -16,6 +16,7 @@
 
     <div class="row">
         <div class="col">
+            <x-breadcrumb item="TOP" item2="予約" url="https://bicky.herokuapp.com/reservation" />
             <h1 class="main-title">予約</h1>
 
             {{-- 2022/4まで ここから--}}

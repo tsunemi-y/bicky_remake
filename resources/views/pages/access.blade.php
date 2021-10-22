@@ -6,6 +6,7 @@
 @section('content')
     <div class="row">
         <div class="col">
+            <x-breadcrumb item="TOP" item2="アクセス" url="https://bicky.herokuapp.com/access" />
             <h1 class="main-title">アクセス</h1>
 
             <section class="mb-4">
