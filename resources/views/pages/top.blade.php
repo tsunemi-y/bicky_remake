@@ -1,5 +1,8 @@
 @extends('layout.common')
 @include('layout.header')
+@section('title')
+    <title>ビッキーことば塾 ｜ 島本町・大山崎町・高槻市 | 発達障害/自閉症/ADHD/発達や言葉の遅れが気になる子供の訓練</title>
+@endsection
 @section('pageCss')
     <link rel="stylesheet" href="{{ asset('css/top.css') }}">
 @endsection

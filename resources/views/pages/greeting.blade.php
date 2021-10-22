@@ -1,5 +1,8 @@
 @extends('layout.common')
 @include('layout.header')
+@section('title')
+    <title>ご挨拶 | ビッキーことば塾 | 島本町・大山崎町・高槻市 | 発達障害や言葉の遅れが気になる子供の訓練 </title>
+@endsection
 @section('content')
     <div class="row">
         <div class="col">

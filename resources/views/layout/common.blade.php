@@ -25,7 +25,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="https://unpkg.com/scrollreveal"></script>
         
-        <title>ビッキーことば塾</title>
+        @yield('title')
 
         <!-- グーグルアナリティクスここから -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-GJKN48921H"></script>
