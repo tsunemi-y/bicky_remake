@@ -21,7 +21,7 @@
     @endif
     
 <div class="row animation">
-    <div class="col-md-6">
+    <div class="col">
         <section class="mb-4">
             <h2>コンセプト</h2>
             <p>
