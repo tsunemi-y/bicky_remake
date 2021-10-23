@@ -12,7 +12,7 @@
             <x-breadcrumb item="TOP" item2="指導員紹介" url="https://bicky.herokuapp.com/introduction" />
             <h1 class="main-title">指導員紹介</h1>
             <div class="text-center">
-                <img src="{{ asset('img/staff.png') }}" alt="">
+                <img src="{{ asset('img/staff.png') }}" alt="言語聴覚士・保育士・高等学校教諭の免許を持った指導員です。">
             </div>
 
             <section class="mb-4">
