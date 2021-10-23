@@ -1,14 +1,21 @@
 @extends('layout.common')
 @include('layout.header')
+@section('description')
+    <meta name="description" content="平日・休日の訓練を受け付けます。言葉の遅れ、発達障害、構音障害などが気になられましたらご予約ください。">
+@endsection
+
 @section('title')
     <title>予約 | ビッキーことば塾 | 島本町・大山崎町・高槻市 | 発達障害や言葉の遅れが気になる子供の訓練</title>
 @endsection
+
 @section('pageCss')
     <link rel="stylesheet" href="{{ asset('css/reservation.css') }}">
 @endsection
+
 @section('pageJs')
     <script src="{{ asset('js/reservation.js') }}"></script>  
 @endsection
+
 @section('content')
 
     @if (session('differentReservation'))

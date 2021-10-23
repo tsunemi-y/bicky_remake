@@ -1,11 +1,18 @@
 @extends('layout.common')
 @include('layout.header')
+
+@section('description')
+    <meta name="description" content="言語聴覚士・保育士・高校教諭など複数の免許を持った指導員が、言葉の遅れ、発達障害、構音障害などのお子様の訓練を行います。">
+@endsection
+
 @section('title')
     <title>指導員紹介 | ビッキーことば塾 | 島本町・大山崎町・高槻市 | 発達障害や言葉の遅れが気になる子供の訓練</title>
 @endsection
+
 @section('pageCss')
     <link rel="stylesheet" href="{{ asset('css/introduction.css') }}">
 @endsection
+
 @section('content')
     <div class="row">
         <div class="col">

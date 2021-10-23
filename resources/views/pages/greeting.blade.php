@@ -1,8 +1,14 @@
 @extends('layout.common')
 @include('layout.header')
+
+@section('description')
+    <meta name="description" content="ビッキーことば塾では、得意なことを伸ばして苦手なことにもチャレンジできる強い心と安定した心を養い人間力（社会で生きていくための力）を鍛えます。お子様の性格や特性の理解、発達段階に応じた訓練計画を立案します。">
+@endsection
+
 @section('title')
     <title>ご挨拶 | ビッキーことば塾 | 島本町・大山崎町・高槻市 | 発達障害や言葉の遅れが気になる子供の訓練 </title>
 @endsection
+
 @section('content')
     <div class="row">
         <div class="col">
