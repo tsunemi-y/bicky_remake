@@ -30,7 +30,7 @@
             <h1 class="main-title">予約</h1>
 
             {{-- 2022/4まで ここから--}}
-            <p>
+            {{-- <p>
               本事業所は、2022年4月1日から開設致します。<br/>
               新規申し込みについては、必要事項をご入力の上、<br>
               下記メールアドレス宛にご送信ください。<br>
@@ -43,7 +43,7 @@
               <br>
               <b>■メールアドレス</b><br>
               <a href="mailto:hattatsushien@gmail.com">hattatsushien@gmail.com</a>
-            </p>
+            </p> --}}
             {{-- 2022/4まで ここまで--}}
 
 
@@ -54,16 +54,16 @@
 
 
             {{-- 2022/4から下記コード反映 --}}
-            {{-- <p class="mb-4">下記手順でご予約ください。<br>
+            <p class="mb-4">下記手順でご予約ください。<br>
               1.日時を指定<br>
               2.初回予約か2回目以降の予約かを選択<br>
               3.必要情報をフォームに入力<br>
               <span class="d-inline-block mb-1">※初回予約時は、氏名・メールアドレス以外も入力して頂く必要がございます。</span><br>
               <span class="text-danger">※休日のご予約は下記メールアドレスからお願い致します。</span><br>
               <a href="mailto:hattatsushien@gmail.com">hattatsushien@gmail.com</a>
-            </p> --}}
+            </p>
             {{-- 予約カレンダー ここから--}}
-            {{-- <table class="reserv-table">
+            <table class="reserv-table">
                 <caption><a href="?ym={{ $calenderInfo['prevMonth'] }}" class="month-select" style="padding-right: 1.5rem">&lt;</a>{{ $calenderInfo['calenderTitle'] }}<a href="?ym={{ $calenderInfo['nextMonth'] }}" class="month-select" style="padding-left: 1.5rem">&gt;</a></caption>
                 <thead>
                     <tr>
@@ -81,13 +81,13 @@
                         {!! $calender !!}
                     @endforeach
                 </tbody>
-            </table> --}}
+            </table>
             {{-- 予約カレンダー ここまで--}}
 
             {{-- 予約時間 ここから--}}
-            {{-- @foreach($calenderInfo['timeList'] as $time)
+            @foreach($calenderInfo['timeList'] as $time)
                 {!! $time !!}
-            @endforeach --}}
+            @endforeach
             {{-- 予約時間 ここまで--}}
         </div>
     </div>
