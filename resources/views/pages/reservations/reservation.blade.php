@@ -29,31 +29,6 @@
             <x-breadcrumb item="TOP" item2="予約" url="https://bicky.herokuapp.com/reservation" />
             <h1 class="main-title">予約</h1>
 
-            {{-- 2022/4まで ここから--}}
-            {{-- <p>
-              本事業所は、2022年4月1日から開設致します。<br/>
-              新規申し込みについては、必要事項をご入力の上、<br>
-              下記メールアドレス宛にご送信ください。<br>
-              <br>
-              <b>■必要事項</b><br>
-              ・親御様の氏名<br>
-              ・お子様の氏名<br>
-              ・お子様の年齢<br>
-              ・住所<br>
-              <br>
-              <b>■メールアドレス</b><br>
-              <a href="mailto:hattatsushien@gmail.com">hattatsushien@gmail.com</a>
-            </p> --}}
-            {{-- 2022/4まで ここまで--}}
-
-
-
-
-
-
-
-
-            {{-- 2022/4から下記コード反映 --}}
             <p class="mb-4">下記手順でご予約ください。<br>
               1.日時を指定<br>
               2.初回予約か2回目以降の予約かを選択<br>
@@ -85,32 +60,40 @@
             {{-- 予約カレンダー ここまで--}}
 
             {{-- 予約時間 ここから--}}
-            @foreach($calenderInfo['timeList'] as $time)
+            {{-- @foreach($calenderInfo['avaTimes'] as $avaTime)
                 {!! $time !!}
-            @endforeach
+            @endforeach --}}
             {{-- 予約時間 ここまで--}}
         </div>
     </div>
 
 　{{-- 初回確認モーダル --}}
-  <div class="modal fade" id="firstCheckModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="avaTimeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">初回確認</h5>
+          <h5 class="modal-title" id="exampleModalLabel">下記時間からご選択ください。</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          初めてのご利用ですか？
+          <form action="{{ route('createReservation') }}" method="post" id="jsAvaTime">
+            @csrf
+            <input type="hidden" value="" id="jsRequestedAvaDate" name="avaDate">
+            <input type="hidden" value="" id="jsRequestedAvaTime" name="avaTime">
+          </form>
         </div>
         <div class="modal-footer">
-          <a href="{{ route('reservationForm', ['targetDate' => '', 'targetTime' => '' ]) }}" id="js-noBtn"><button type="button" class="btn btn-secondary">いいえ</button></a>
-          <a href="{{ route('reservationForm', ['targetDate' => '', 'targetTime' => '', 'modalBtn' => '']) }}" id="js-yesBtn"><button type="button" class="btn btn-primary">はい</button></a>
+          
+
         </div>
       </div>
     </div>
   </div>
+
+    <script>
+      const avaTimes = @json($calenderInfo['avaTimes']);
+    </script>  
     
 @endsection

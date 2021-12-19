@@ -2,6 +2,10 @@
 
 {{-- spメニュー中身 ここから　--}}
 <div class="menu-inner position-fixed sp-header" id="js-menu-inner">
+    <@if (!Auth::check())
+        <div class=""><a href="{{ route("register")}}" class="pc-header__item">新規登録</a></div>
+        <div class=""><a href="{{ route("login")}}" class="pc-header__item">ログイン</a></div>
+    @endif
     <div><a href="{{ route("greeting")}}" class="menu-inner__link">ご挨拶</a></div>
     <div><a href="{{ route("fee") }}" class="menu-inner__link">料金・プラン</a></div>
     <div><a href="{{ route("reservationTop") }}" class="menu-inner__link">予約</a></div>
@@ -21,10 +25,12 @@
 <header class="header">
     <div class="align-items-center container d-flex header__item">
         <div class="header-title mr-2"><a href="{{ route("top")}}"><img src="{{ asset("img/logo.png") }}" alt=""></a></div>
-        {{-- <div class="header-phone"><i class="fas fa-mobile-alt mr-1"></i><a href="tel:06‐6777‐9427">06-6777-9427</a></div> --}}
         {{-- pcメニュー　ここから --}}
         <div class="pc-header">
-            <div class=""><a href="{{ route("greeting")}}" class="pc-header__item">ご挨拶</a></div>
+            @if (!Auth::check())
+                <div class=""><a href="{{ route("register")}}" class="pc-header__item">新規登録</a></div>
+                <div class=""><a href="{{ route("login")}}" class="pc-header__item">ログイン</a></div>
+            @endif
             <div class=""><a href="{{ route("fee") }}" class="pc-header__item">料金・プラン</a></div>
             <div class=""><a href="{{ route("reservationTop") }}" class="pc-header__item">予約</a></div>
             <div class=""><a href="{{ route("introduction") }}" class="pc-header__item">指導員紹介</a></div>

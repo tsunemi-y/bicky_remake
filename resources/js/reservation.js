@@ -1,47 +1,28 @@
-$(function(){
-    const $yesBtnLink = $('#firstCheckModal').find('#js-yesBtn');
-    initUrl = $yesBtnLink.attr('href');
-});
-
 // 対象日の予約時間表示
 $('.day-ok').click(function() {
-    const day = $(this).data('day');
-    const $dayStatus = $('.' + day);
-    const $timeStatus = $('.time-status')
-
-    $timeStatus.each((index, elm) => {
-        if ($(elm).hasClass('time-show')){
-            $(elm).removeClass('time-show');
-            $(elm).addClass('time-hide');
-        }
-    });
-
-    $dayStatus.removeClass('time-hide');
-    $dayStatus.addClass('time-show');
+    $avaTime = $('#jsAvaTime');
+    const date = $(this).data('date');
+    $requestedAvaDate = $('#jsRequestedAvaDate');
+    $requestedAvaDate.val(date);
+    const timesPerTargetDate = avaTimes[date];
+    for (i = 0; i < timesPerTargetDate.length; i++) {
+        $avaTime.append(`<button class="btn mb-3 ava-time">${timesPerTargetDate[i]}</button>`);
+    }
+    $('#avaTimeModal').modal();
 });
 
-$('.time-ok').click(function() {
-    const $yesBtnLink = $('#js-yesBtn');
-    const $noBtnLink = $('#js-noBtn');
-    setQueryStr($(this), $yesBtnLink);
-    setQueryStr($(this), $noBtnLink);
-    $('#firstCheckModal').modal();
+// 利用時間選択モーダル閉じた時、利用時間をリセット
+// ※再度、本モーダルを開くたび、時間が追加されていくため
+$('#avaTimeModal').on('hidden.bs.modal', function () {
+    $('.ava-time').remove();
+})
+
+// appendで追加した要素は、dom要素.clickでのクリックイベントは効かない
+// なので、on関数を使ってクリックイベントを発火させる
+$(document).on("click",".ava-time", function() {
+    const avaTime = $(this).text();
+    $requestedAvaTime = $('#jsRequestedAvaTime');
+    $requestedAvaTime.val(avaTime);
 });
 
-$('#js-yesBtn').click(function() {
-    replaceQueryStr('yes', $(this), 'modalBtn=');
-});
 
-// クエリストリングセット
-function setQueryStr(targetElm, modalBtn) {
-    modalBtn.attr('href', initUrl);
-    replaceQueryStr(targetElm.data('target_date'), modalBtn, 'targetDate=');
-    replaceQueryStr(targetElm.data('target_time'), modalBtn, 'targetTime=');
-}
-
-// クエリストリング置き換え
-function replaceQueryStr(value, elm, key) {
-    const url = elm.attr('href');
-    const afterLink = url.replace(key, key + value);
-    elm.attr('href', afterLink);
-}

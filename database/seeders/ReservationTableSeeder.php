@@ -15,6 +15,7 @@ class ReservationTableSeeder extends Seeder
     public function run()
     {
         Reservation::create([
+            'user_id'          => 1,
             'reservation_date' => '2021/9/21',
             'reservation_time' => '11:00:00',
         ]);

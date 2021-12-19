@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use \Yasumi\Yasumi;
+use App\Models\Reservation;
+use Illuminate\Http\Request;
+use App\Models\ReservationTime;
+use App\Http\Services\MailService;
+use Illuminate\Support\Facades\Cookie;
+use App\Models\AvailableReservationTime;
 use App\Http\Requests\ReservationFormRequest;
 use App\Http\Requests\CancelCodeAuthFormRequest;
-use App\Http\Services\MailService;
-use App\Models\Reservation;
-use App\Models\ReservationTime;
-use Illuminate\Http\Request;
-use \Yasumi\Yasumi;
-use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\DB;
 
 class ReservationController extends Controller
 {
@@ -25,19 +27,88 @@ class ReservationController extends Controller
     }
 
     /**
+     * 予約可能日時テーブルから予約可能日時取得
+     *
+     * @return Array
+     */
+    private function getTmpAvailableReservationDatetimes()
+    {
+        $availableReservationDates = DB::table('available_reservation_dates as dates');
+        $avaReserveDatetimes = $availableReservationDates
+            ->join('available_reservation_times as times', 'dates.id', 'times.available_reservation_date_id')
+            ->get(['dates.available_date', 'times.available_time']);
+        $avaTimes = [];
+        foreach ($avaReserveDatetimes as $avaReserveDateTime) {
+            $avaTimes[$avaReserveDateTime->available_date][] = $avaReserveDateTime->available_time;
+        }
+        return $avaTimes;
+    }
+
+    /**
+     * 重複しない日付をキー、日付に対応した値を配列である連想配列を取得
+     *
+     * @return Array
+     */
+    public function getAvailableReservationDatetimes($tmpAvaDatetimes, $reserveDateTimes)
+    {
+        // 利用可能日時と予約されている時間日時を比較し、被っているものがあれば配列から削除
+        $avaDatetimes = [];
+        $avaDates = array_keys($tmpAvaDatetimes);
+
+        foreach ($tmpAvaDatetimes as $avaDate => $avaTimes) {
+            $avaDatetimes[$avaDate] = $avaTimes;
+
+            // ビューに表示する日付を設定
+            foreach ($reserveDateTimes as $reserveDate => $reserveTimes) {
+                if ($avaDate !== $reserveDate) continue;
+                if (count($avaTimes) === count($reserveTimes)) {
+                    $keysDeleteTargetDate = array_search($avaDate, $avaDates);
+                    unset($avaDates[$keysDeleteTargetDate]);
+                }
+
+                // ビューに表示する日付に紐づく時間を設定
+                foreach ($reserveTimes as $reserveTime) {
+                    $keyDeleteTargetTime = array_search($reserveTime, $avaDatetimes[$avaDate]);
+                    if ($keyDeleteTargetTime == '') continue;
+                    unset($avaDatetimes[$avaDate][$keyDeleteTargetTime]);
+                }
+            }
+        }
+
+        return compact('avaDatetimes', 'avaDates');
+    }
+
+    /**
+     * 予約テーブルから予約日時取得
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    private function getReservationDatetimes()
+    {
+        $reservations = Reservation::all();
+        $reserveDateTimes = [];
+        foreach ($reservations as $reservation) {
+            $reserveDateTimes[$reservation->reservation_date][] = $reservation->reservation_time;
+        }
+        return $reserveDateTimes;
+    }
+
+    /**
      * カレンダー作成
      */
     public function createCalender($request)
     {
 
-        // 予約テーブル情報取得
-        $reservationModel = new Reservation;
-        $reservations = $reservationModel->getReservations();
-        $reservationDateList = array_column($reservations, 'reservation_date');
+        // 予約可能日時取得
+        $tmpAvaDatetimes = $this->getTmpAvailableReservationDatetimes();
 
-        // 予約時間情報取得
-        $reservationTimes = ReservationTime::all()->toArray();
-        $reservationTimesCount = count($reservationTimes);
+        // 予約されている日時取得
+        $reserveDateTimes = $this->getReservationDatetimes();
+
+        $avaDatetimes = $this->getAvailableReservationDatetimes($tmpAvaDatetimes, $reserveDateTimes);
+        $avaDates = $avaDatetimes['avaDates'];
+        $avaTimes = $avaDatetimes['avaDatetimes'];
+
 
         // カレンダーに必要な情報取得
         if (!empty($request->ym)) {
@@ -45,6 +116,8 @@ class ReservationController extends Controller
         } else {
             $targetYearMonth = date('Y-m');
         }
+
+        // カレンダーに必要な情報取得
         $timestamp = strtotime($targetYearMonth . '-01');
         $today = date('Y-m-j');
         $calenderTitle = date('Y年n月', $timestamp);
@@ -74,26 +147,23 @@ class ReservationController extends Controller
                     日付処理　ここから
             ============================*/
             $day = str_pad($day, 2, '0', STR_PAD_LEFT); //　一桁の日の場合、０詰め
-            $date = $targetYearMonth . '-' . $day;
+            $displayedDate = $targetYearMonth . '-' . $day;
 
-            // 同日の予約可能時間が埋まっている場合、予約済みフラグ設定
-            $targetDateReservationCount = count($reservationModel->where('reservation_date', '=', $date)->get());
-            $reservedFlag = false;
-            if ($targetDateReservationCount == $reservationTimesCount) $reservedFlag == true;
+            $isAvailableDate = false;
+            if (in_array($displayedDate, $avaDates, true)) $isAvailableDate = true;
 
             // 条件に応じてクラス付与
             $calender .= '<td ';
-            if ($today == $date) $calender .= 'class="today" ';
-            if ($holidays->isHoliday(new \DateTime($date)) || $week == 0) $calender .= 'class="holiday" ';
+            if ($today == $displayedDate) $calender .= 'class="today" ';
+            if ($holidays->isHoliday(new \DateTime($displayedDate)) || $week == 0) $calender .= 'class="holiday" ';
             if ($week == $saturdayNum) $calender .= 'class="saturday" ';
-            if ($reservedFlag) $calender .= 'class="reserved" ';
             $calender .= '>' . $day;
-            if ($reservedFlag) {
-                $calender .= "<p class='cross'>×</p>";
-            } else if ((strtotime($date) <= strtotime($nowDate) || strtotime($date) > strtotime("$nowDate +1 months") || ($week == $sundayNum || $week == $saturdayNum))) {
+            if ($isAvailableDate) {
+                $calender .= "<p class='circle day-ok' data-date='$displayedDate'>○</p>";
+            } else if (strtotime($displayedDate) <= strtotime($nowDate) || strtotime($displayedDate) > strtotime("$nowDate +1 months")) {
                 $calender .= "<p class='hyphen'>-</p>";
             } else {
-                $calender .= "<p class='circle day-ok' data-day='day-$day'>○</p>";
+                $calender .= "<p class='cross'>×</p>";
             }
 
             $calender .= '</td>';
@@ -109,58 +179,9 @@ class ReservationController extends Controller
                     日付処理　ここまで
             ============================*/
 
-            /*============================
-                    時間処理　ここから
-            ============================*/
-            $reservatedTimeList = array_column($reservations, 'reservation_datetime');
-            $time .= "<table class='reserv-table day-$day time-hide time-status'>";
-            $time .= "<caption>時間選択<span style='padding-left: 1rem'>$day<span>日<span></span></caption> ";
-            $time .= "<thead> ";
-            $time .= "<tr> ";
-            foreach ($reservationTimes as $reservationTime) {
-                $reservationTimeFrom = $reservationTime['reservation_time_from'];
-                $reservationTimeTo = $reservationTime['reservation_time_to'];
-
-                $time .= "<th> ";
-                $time .= "<span class='table-time reserve-time' data-reserveTime='$reservationTimeFrom'>$reservationTimeFrom</span> ";
-                $time .= "<span class='table-time'>~</span> ";
-                $time .= "<span class='table-time'>$reservationTimeTo</span> ";
-                $time .= "</th> ";
-            }
-            $time .= "</tr> ";
-            $time .= "</thead> ";
-            $time .= "<tbody> ";
-            $time .= "<tr> ";
-
-            $dateTime = '';
-            foreach ($reservationTimes as $reservationTime) {
-                $reservationTimeFrom = $reservationTime['reservation_time_from'];
-                $dateTime = $date . ' ' . $reservationTimeFrom;
-                $reservationCompleteFlag = in_array($dateTime, $reservatedTimeList, true); // 予約済みフラグ
-
-                if ($reservationCompleteFlag) {
-                    $time .= "<td ";
-                    $time .= "class='cross'>×";
-                } else {
-                    $time .= "<td ";
-                    $time .= "class='circle time-ok' data-target_date='$date' data-target_time='$reservationTimeFrom'>○";
-                }
-                $time .= "</td>";
-            }
-            $time .= "</tr> ";
-            $time .= "</tbody> ";
-            $time .= "</thead> ";
-            $time .= "</table> ";
-
-            $timeList[] = $time;
-            $time = '';
-            /*============================
-                    時間処理　ここまで
-            ============================*/
             if ($week == $saturdayNum) $week = -1; // 土曜日の次は改行
         }
-
-        return compact('calenders', 'calenderTitle', 'timeList', 'reservationTimes', 'prevMonth', 'nextMonth');
+        return compact('calenders', 'calenderTitle', 'prevMonth', 'nextMonth', 'avaTimes');
     }
 
     /**
@@ -168,8 +189,13 @@ class ReservationController extends Controller
      * @param App\Http\Requests\ReservationFormRequest
      * @return void
      */
-    public function createReservation(ReservationFormRequest $request)
+    public function createReservation(Request $request)
     {
+        // todo
+        // ログイン機能実装
+        // ユーザID取得
+        // 非ログイン者は処理終了
+        // ユーザID・日・時間をインサート
         $reservationModel = new Reservation;
 
         // 同じ日時に予約があるときはエラー

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReservationTimesTable extends Migration
+class CreateFeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateReservationTimesTable extends Migration
      */
     public function up()
     {
-        Schema::create('reservation_times', function (Blueprint $table) {
+        Schema::create('fees', function (Blueprint $table) {
             $table->id();
-            $table->time('reservation_time_from');
-            $table->time('reservation_time_to');
+            $table->integer('fee')->nullable()->comment('料金');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateReservationTimesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reservation_times');
+        Schema::dropIfExists('fees');
     }
 }

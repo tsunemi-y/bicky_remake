@@ -61,6 +61,9 @@ Route::post('/cancelReservation/{reservation}', [ReservationController::class, '
 Route::post('/createReservation', [ReservationController::class, 'createReservation'])->name('createReservation');
 Route::post('/reservation/sendmail', [ReservationController::class, 'sendMail'])->name('sendMail');
 
+// auth
+Auth::routes();
+
 // ===============ユーザー画面　ここまで============
 
 // ===============管理画面画面　ここから============
@@ -80,12 +83,3 @@ Route::prefix('admin')->name('admin.')->group(function () {
         }
     })->where('any', '^(?!login).+$')->name('top');
 });
-
-// // サイトマップ
-// // sitemap-indexのルート
-// Route::get('sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
-// Route::group(['prefix' => 'sitemaps'], function () {
-//     // sitemapのルート
-//     Route::get('basics.xml', [SitemapController::class, 'basics'])->name('sitemap-basics');
-//     // sitemapを増やす場合はココに追記していく。
-// });
