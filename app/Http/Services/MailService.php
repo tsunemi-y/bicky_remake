@@ -10,7 +10,7 @@ class MailService
      * 従業員へのメール
      * @param $param
      */
-    public function sendMailVendor($params)
+    public function sendMailToVendor($params)
     {
         // メールデータ作成
         $mailData = [];

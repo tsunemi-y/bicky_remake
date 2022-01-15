@@ -4,4 +4,5 @@ module.exports = {
             backgroundColor: ['odd'],
         }
     },
+    important: true
 }

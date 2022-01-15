@@ -15,12 +15,6 @@
 
 @section('content')
 
-    @if (session('successReservation'))
-        <div class="alert alert-success top-alert">
-            <p>{!! session('successReservation') !!}</p>
-        </div>   
-    @endif
-
     @if (session('successCancel'))
         <div class="alert alert-success top-alert">
             <p>{{ session('successCancel') }}</p>

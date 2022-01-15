@@ -1,3 +1,18 @@
+$(function() {
+    // フラッシュメッセージ表示
+    if (isSuccessedReservation) {
+        $('#successedReservation').modal();
+    }
+
+    if (isFailedReservation) {
+        $('#failedReservation').modal();
+    }
+
+    if (isCanceledReservation) {
+        $('#reservationCancel').modal();
+    }
+})
+
 // 対象日の予約時間表示
 $('.day-ok').click(function() {
     $avaTime = $('#jsAvaTime');
@@ -20,9 +35,22 @@ $('#avaTimeModal').on('hidden.bs.modal', function () {
 // appendで追加した要素は、dom要素.clickでのクリックイベントは効かない
 // なので、on関数を使ってクリックイベントを発火させる
 $(document).on("click",".ava-time", function() {
+    const avaDate = $('#jsRequestedAvaDate').val();
     const avaTime = $(this).text();
-    $requestedAvaTime = $('#jsRequestedAvaTime');
-    $requestedAvaTime.val(avaTime);
+    const formatedDateTime = getFormatedDateTime(avaDate, avaTime);
+    const isDoneReservation = confirm(formatedDateTime + 'に予約してよろしいですか？');
+    if (isDoneReservation) {
+        $requestedAvaTime = $('#jsRequestedAvaTime');
+        $requestedAvaTime.val(avaTime);
+        $('#jsAvaTimeForm').trigger('submit');
+    }
 });
+
+function getFormatedDateTime(avaDate, avaTime) {
+    const month = avaDate.slice(5, 7) + '月';
+    const day = avaDate.slice(8, 10) + '日';
+    const hour = avaTime.slice(0, 2) + '時';
+    return month + day + hour;
+}
 
 

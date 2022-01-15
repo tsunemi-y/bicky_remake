@@ -96,14 +96,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($reservationTimes as $rsvTime)
+                            {{-- @foreach ($reservationTimes as $rsvTime) --}}
                                 
                                 <tr class="table-height">
                                     <th>月～金</th>
-                                    <th>{{ $rsvTime['reservation_time_from']. '~'. $rsvTime['reservation_time_to']. '（50分）'}}</th>
+                                    {{-- <th>{{ $rsvTime['reservation_time_from']. '~'. $rsvTime['reservation_time_to']. '（50分）'}}</th> --}}
                                 </tr>
         
-                            @endforeach
+                            {{-- @endforeach --}}
                         </tbody>
                     </table>
                 </section>

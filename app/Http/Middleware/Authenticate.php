@@ -14,9 +14,8 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        // セッション持てなかったらログイン飛ばす
-        if (empty(session('_token'))) {
-            return route('admin.login');
+        if (!$request->expectsJson()) {
+            return route('login');
         }
     }
 }

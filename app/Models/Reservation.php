@@ -2,48 +2,29 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Reservation extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'age',
-        'gender',
-        'email',
-        'diagnosis',
-        'address',
-        'introduction',
+        'user_id',
         'reservation_date',
         'reservation_time',
-        'cancel_code',
-        'fee',
     ];
 
-    public function getReservations()
+    /**
+     * ユーザテーブルとのリレーション
+     *
+     * @return void
+     */
+    public function user()
     {
-        // 予約情報取得
-        $sql = <<<SQL
-            SELECT 
-                name,
-                age,
-                gender,
-                email,
-                diagnosis,
-                address,
-                introduction,
-                reservation_date,
-                to_char(reservation_time, 'hh24:mm') as reservation_time,
-                CONCAT(reservation_date, ' ', to_char(reservation_time, 'hh24:mm')) as reservation_datetime
-            FROM reservations
-        SQL;
-
-        $reservations = DB::select($sql);
-        return $reservations;
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -52,10 +33,10 @@ class Reservation extends Model
      * @param  string  $value
      * @return string
      */
-    public function getReservationTimeAttribute($value)
-    {
-        return substr($value, 0, -3);
-    }
+    // public function getReservationTimeAttribute($value)
+    // {
+    //     return substr($value, 0, -3);
+    // }
 
     public function scopeEqualDate($query, $date)
     {

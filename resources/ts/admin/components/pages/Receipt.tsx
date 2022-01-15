@@ -19,7 +19,7 @@ const initialInputData: InputData = {
 
 interface RData {
     id: number
-    name: string
+    childName: string
     reservation_date: string
     reservation_time: string
     email: string
@@ -28,7 +28,7 @@ interface RData {
 
 const rData: RData = {
     id: 0,
-    name: '',
+    childName: '',
     reservation_date: '',
     reservation_time: '',
     email: '',
@@ -56,7 +56,8 @@ const Receipt: React.FC<Props> = (props) => {
             setLoadingDispFlag(true);
             const response = await axios.get(`/api/admin/reservation?reservationDate=${data.reservationDate}&reservationName=${data.reservationName}`);
             getReservations(response.data);
-            setLoadingDispFlag(false);
+            console.log(response.data);
+            setLoadingDispFlag  (false);
         } catch (err) {
             alert('エラーです。やり直してください。');
             setLoadingDispFlag(false);
@@ -88,7 +89,7 @@ const Receipt: React.FC<Props> = (props) => {
                         <tbody key={index}>
                             <tr className="border-b-2 border-gray-500 border-solid bg-white h-16">
                                 <td key={index}>
-                                    <Link to={`/admin/receipt/send/${rsv.id}`}>{rsv.name}</Link>
+                                    <Link to={`/admin/receipt/send/${rsv.id}`}>{rsv.childName}</Link>
                                 </td>
                                 <td>{rsv.reservation_date}</td>
                                 <td>{rsv.reservation_time}</td>

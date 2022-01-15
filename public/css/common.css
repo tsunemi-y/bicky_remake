@@ -92,6 +92,7 @@ caption {
   position: absolute;
   top: 3rem;
   width: 100vw;
+  z-index: 2;
 }
 
 #breadcrumb {
