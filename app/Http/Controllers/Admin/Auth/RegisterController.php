@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Auth;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -50,9 +50,16 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'parentName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
+            'childName' => ['required', 'string', 'max:255'],
+            'age' => ['required', 'integer'],
+            'gender' => ['required'],
+            'diagnosis' => ['required', 'string'],
+            'address' => ['required', 'string'],
+            'introduction' => ['nullable', 'string'],
         ]);
     }
 
@@ -65,9 +72,15 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'parentName' => $data['parentName'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'childName' => $data['childName'],
+            'age' => $data['age'],
+            'gender' => $data['gender'],
+            'diagnosis' => $data['diagnosis'],
+            'address' => $data['address'],
+            'introduction' => $data['introduction'],
         ]);
     }
 }

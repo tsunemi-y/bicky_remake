@@ -100,40 +100,18 @@ class ReservationController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * 領収書送信するためのユーザ情報取得
      */
-    public function getReservations(Request $request)
+    public function getUserInfoSendReciept(Request $request)
     {
         $reservationModel = new Reservation;
-
-        //======予約可能日時取得　ここから======
-
-        // 予約可能日時取得
-        $tmpAvaDatetimes = $this->getTmpAvailableReservationDatetimes();
-        // 予約されている日時取得
-        $reserveDateTimes = $this->getReservationDatetimes();
-        $avaDatetimes = $this->getAvailableReservationDatetimes($tmpAvaDatetimes, $reserveDateTimes);
-
-        $avaTimes = $avaDatetimes['avaDatetimes'];
-
-        //======予約可能日時取得　ここまで======
-
-        //======予約情報取得　ここから======
-        $tmpReservations = $reservationModel
-            ->join('users', 'reservations.user_id', 'users.id')
-            ->get(['childName', 'reservation_date', 'reservation_time']);
-        $reservations = [];
-        foreach ($tmpReservations as $tr) {
-            $reservations[$tr->reservation_date] = [
-                'reservationName' => $tr->childName,
-                'reservationTime' => $tr->reservation_time
-            ];
-        }
-        //======予約情報取得　ここまで======
-
-        return compact('avaTimes', 'reservations');
+        $reservations = $reservationModel
+            ->joinUsers()
+            ->equalDate($request->reservationDate)
+            ->fuzzyName($request->reservationName)
+            ->equalId($request->id)
+            ->get();
+        return $reservations;
     }
 
     /**

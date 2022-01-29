@@ -9,6 +9,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    @yield('bootstrap')
+
     <!-- Scripts -->
     <script src="{{ asset('admin/js/index.js') }}" defer></script>
 
@@ -20,7 +22,9 @@
     <link href="{{ asset('admin/css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="index">
-    </div>
+    @yield('top')
+    @yield('login')
+    {{-- <div id="index">
+    </div> --}}
 </body>
 </html>

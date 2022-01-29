@@ -9,7 +9,7 @@ interface Props {
 
 interface RData {
     id: number | null
-    name: string
+    childName: string
     reservation_date: string
     reservation_time: string
     email: string
@@ -22,7 +22,7 @@ interface urlParam {
 
 const rData: RData = {
     id: null,
-    name: '',
+    childName: '',
     reservation_date: '',
     reservation_time: '',
     email: '',
@@ -47,7 +47,7 @@ const ReceiptSend: React.FC<Props> = (props) => {
     const sendReceipt = async () =>  {
         setLoadingDispFlag(true);
         const args = {
-            name: reservations.name,
+            name: reservations.childName,
             date: reservations.reservation_date,
             time: reservations.reservation_time,
             email: reservations.email,
@@ -61,7 +61,7 @@ const ReceiptSend: React.FC<Props> = (props) => {
         const fetchReservationById = async () => {
             try {
                 setLoadingDispFlag(true);
-                const response = await axios.get(`/api/admin/reservation?id=${id}`);
+                const response = await axios.get(`/api/admin/getUserInfoSendReciept?id=${id}`);
                 setReservations(response.data[0]);
                 setLoadingDispFlag(false);
             } catch (err) {
@@ -76,7 +76,7 @@ const ReceiptSend: React.FC<Props> = (props) => {
         <>
             <h1　className="font-bold text-left text-2xl">{props.title}</h1>
             <div className="bg-white mt-3 p-4 w-3/4">
-               <p><span className="inline-block w-32">【氏名】</span>{reservations.name}</p>
+               <p><span className="inline-block w-32">【氏名】</span>{reservations.childName}</p>
                <p className="mt-3"><span className="inline-block w-32">【予約日】</span>{reservations.reservation_date}</p>
                <p className="mt-3"><span className="inline-block w-32">【予約時間】</span>{reservations.reservation_time}</p>
                <p className="mt-3"><span className="inline-block w-32">【メール】</span>{reservations.email}</p>

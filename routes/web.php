@@ -8,8 +8,6 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\LineMessengerController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,16 +64,12 @@ Auth::routes();
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    // ルーティング
+    //　ログイン画面
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [LoginController::class, 'login']);
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
 
+    // react画面
     Route::get('/{any}', function () {
-        if (empty(session('loginSession'))) {
-            return view('admin.app');
-        } else {
-            return redirect(url('admin/login'));
-        }
-    })->where('any', '^(?!login).+$')->name('top');
+        return view('admin.top');
+    })->where('any', '^(?!login).+$')->name('top')->middleware('auth:admin');
 });

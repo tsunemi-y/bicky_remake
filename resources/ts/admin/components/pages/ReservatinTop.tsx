@@ -9,37 +9,31 @@ import _Modal from '../parts/Modal';
 interface Props {
     title: string
 }
-
-interface InputData {
-    reservationDate: string
-}
-
-const initialInputData: InputData = {
-    reservationDate: '',
-}
-
 interface RData {
     name: string
     reservation_time: string
 }
 
-const rData: RData = {
+interface TileContent {
+    date: Date,
+    view: string
+  }
+
+const rData = {
     name: '',
     reservation_time: ''
 }
 
 const ReservatinTop: React.FC<Props> = (props) => {
 
-    const [reservations, setReservations] = useState([rData]);
-    const [avaTimes, setAvaTimes] = useState([rData]);
-    const [loadingDispFlag, setLoadingDispFlag] = useState<Boolean>(false);
+    const [avaTimes, setAvaTimes] = useState<any>(rData);
     const [date, setDate] = useState<Date>(new Date());
-    const [datetime, setDatetime] = useState<String>('');
-    const [isShownModal, setIsShownModal] = useState<boolean>(false);
+    const [datetime, setDatetime] = useState<any>('');
     const [deletedTargetAvaTimes, setDeletedTargetAvaTimes] = useState<any>([]);
-
-    const ref = useRef('abc');
-
+    const [isShownModal, setIsShownModal] = useState<boolean>(false);
+    const [loadingDispFlag, setLoadingDispFlag] = useState<Boolean>(false);
+    const [reservations, setReservations] = useState<any>(rData);
+    
     const fetchReservations = async () => {
         try {
             setLoadingDispFlag(true);
@@ -54,10 +48,10 @@ const ReservatinTop: React.FC<Props> = (props) => {
     }
 
     useEffect(() => {
-        fetchReservations();
+        // fetchReservations();
     },[]);
 
-    const getTileContent = ({ date, view }) => {
+    const getTileContent = ({ date, view }: TileContent): any  => {
         if (view !== 'month') return null;
         const formatDate: string | never = dayjs(date).format('YYYY-MM-DD');
 
@@ -69,7 +63,7 @@ const ReservatinTop: React.FC<Props> = (props) => {
             avaTimeList.push(<p key={ i }>{ targetAvaTimes && targetAvaTimes[i] }</p>);
         }
 
-        if (targetReservation && targetAvaTimes) {
+        if (targetReservation && avaTimeList.length) {
             return (
                 <div>
                     <div>
@@ -102,7 +96,7 @@ const ReservatinTop: React.FC<Props> = (props) => {
         }
     }
 
-    const onChangeDatetime = (event: React.ChangeEvent<HTMLInputElement>) =>  {
+    const onChangeDatetime = (event: React.ChangeEvent<HTMLInputElement>): void =>  {
         const value: string = event.target.value;
         setDatetime(value);
     }
@@ -133,7 +127,7 @@ const ReservatinTop: React.FC<Props> = (props) => {
         for(var i in targetAvaTimes){
             avaTimeList.push(
                 <div className="bg-red-500 mt-3 p-1 rounded text-center text-white w-20">
-                    <button key={i} data-date={selectedDay} onClick={(e) => deleteDatetime(selectedDay, e.target.innerText) }>{targetAvaTimes[i]}</button>
+                    <button key={i} data-date={selectedDay} onClick={(e) => deleteDatetime(selectedDay, e.target.innerText ) }>{targetAvaTimes[i]}</button>
                 </div>
             );
         }

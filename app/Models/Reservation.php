@@ -38,6 +38,11 @@ class Reservation extends Model
     //     return substr($value, 0, -3);
     // }
 
+    public function scopeJoinUsers($query)
+    {
+        return $query->join('users', 'users.id', '=', 'reservations.user_id');
+    }
+
     public function scopeEqualDate($query, $date)
     {
         if ($date != '') {
@@ -55,7 +60,7 @@ class Reservation extends Model
     public function scopeEqualId($query, $id)
     {
         if ($id != '') {
-            return $query->where('id', '=', $id);
+            return $query->where('reservations.id', '=', $id);
         }
     }
 }

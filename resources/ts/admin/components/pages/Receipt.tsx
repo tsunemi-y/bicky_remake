@@ -26,7 +26,7 @@ interface RData {
     fee: number
 }
 
-const rData: RData = {
+const rData = {
     id: 0,
     childName: '',
     reservation_date: '',
@@ -37,7 +37,7 @@ const rData: RData = {
 
 const Receipt: React.FC<Props> = (props) => {
 
-    const [reservations, getReservations] = useState([rData]);
+    const [reservations, getReservations] = useState<RData>(rData);
     const [data, setData] = useState<InputData>(initialInputData);
     const [loadingDispFlag, setLoadingDispFlag] = useState<Boolean>(false);
 
@@ -54,9 +54,8 @@ const Receipt: React.FC<Props> = (props) => {
     const onClickSearchBtn = async () => {
         try {
             setLoadingDispFlag(true);
-            const response = await axios.get(`/api/admin/reservation?reservationDate=${data.reservationDate}&reservationName=${data.reservationName}`);
+            const response = await axios.get(`/api/admin/getUserInfoSendReciept?reservationDate=${data.reservationDate}&reservationName=${data.reservationName}`);
             getReservations(response.data);
-            console.log(response.data);
             setLoadingDispFlag  (false);
         } catch (err) {
             alert('エラーです。やり直してください。');
@@ -79,13 +78,13 @@ const Receipt: React.FC<Props> = (props) => {
                     <thead>
                         <tr className="border-b-2 border-gray-500 border-solid text-blue-400">
                             <th>氏名</th>
-                            <th>予約日時</th>
+                            <th>予約日</th>
                             <th>予約時間</th>
                             <th>メールアドレス</th>
                             <th>料金</th>
                         </tr>
                     </thead>
-                    {reservations[0] && reservations[0].name !='' && reservations.map((rsv, index) =>
+                    {reservations[0] && reservations[0].childName !='' && reservations.map((rsv, index) =>
                         <tbody key={index}>
                             <tr className="border-b-2 border-gray-500 border-solid bg-white h-16">
                                 <td key={index}>
