@@ -73,7 +73,7 @@
     </head>
     <body>
         <div class="container">
-            <p class="title">訓練利用料領収書（{{ date('Y年m月', strtotime(time())) }}）分</p>
+            <p class="title">訓練利用料領収書（{{ date('Y年m月') }}）分</p>
             <p class="name">{{ $name }}　様</p>
 
             <div class="receipt" style="width: 100%;">

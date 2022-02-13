@@ -39,7 +39,7 @@ class UserController extends Controller
         ];
 
         // メールデータ作成
-        $date = date('Ymd', strtotime(time()));
+        $date = date('Ymd');
         $viewFile = 'admin.emails.receipt';
         $subject = '領収書のご送付';
         $attachFile = "app/領収書_{$date}.pdf";

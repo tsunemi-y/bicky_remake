@@ -188,7 +188,7 @@ class ReservationController extends Controller
      * 予約キャンセル画面表示
      * @return void
      */
-    public function dispReservationCancel()
+    public function dispReservationCancel(Reservation $reservation)
     {
         return view('pages.reservations.reservationCancel', compact('reservation'));
     }
