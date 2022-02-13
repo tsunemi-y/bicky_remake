@@ -61,26 +61,26 @@ class LineMessengerController extends Controller
     }
 
     // 新規登録者のメッセージ作成
-    public function sendRegistrationMessage()
+    public function sendRegistrationMessage($user)
     {
         $userId = config('services.line.admin_id');
-        $today = date("Y-m-d H:i:s");
-        $reservationModel = new Reservation;
-        $todayReservationList = $reservationModel->where('reservation_date', '=', $today)->get();
-        if (count($todayReservationList) == 0) {
-            $message = '本日の予約者はいません。';
-        } else {
-            // 本日の予約者がいる場合、名前と時間をスタッフに送信
-            $todayReservationListCount = count($todayReservationList);
-            $message = '本日の予約者は下記の通りです。' . "\n" . "\n";
-            foreach ($todayReservationList as $key => $rsv) {
-                $message .= $rsv->name . ': ' . $rsv->reservation_time;
+        $coursePlan = convertCourseFeeToName($user->fee);
 
-                if ($todayReservationListCount != $key + 1) {
-                    $message .= "\n" . "\n";
-                }
-            }
-        }
+        $message = '新規登録を受付ました。' . "\n" . "\n";
+        $message .= "保護者氏名：　$user->parentName" . "\n";
+        $message .= "利用児氏名：　$user->childName" . "\n";
+        $message .= "年齢：　$user->age" . "\n";
+        $message .= "性別：　$user->gender" . "\n";
+        if (!empty($user->diagnosis)) $message .= "診断名：　$user->diagnosis" . "\n";
+        if (!empty($user->childName2)) $message .= "利用児氏名2：　$user->childName2" . "\n";
+        if (!empty($user->age2)) $message .= "年齢2：　$user->age2" . "\n";
+        if (!empty($user->gender2)) $message .= "性別2：　$user->gender2" . "\n";
+        if (!empty($user->diagnosis2)) $message .= "診断名2：　$user->diagnosis2" . "\n";
+        $message .= "住所：　$user->address" . "\n";
+        if (!empty($user->introduction)) $message .= "紹介先：　$user->introduction" . "\n";
+        if (!empty($user->consaltation)) $message .= "相談内容：　$user->consaltation" . "\n";
+        $message .= "ご利用プラン：　{$coursePlan}" . "\n";
+        $message .= "料金：　$user->fee";
 
         $this->sendMessage($userId, $message);
     }

@@ -7,14 +7,6 @@
 <div class="row">
     <div class="col">
       <x-breadcrumb item="TOP" item2="新規登録" url="https://bicky.herokuapp.com/register" />
-      {{-- バリデーションエラーメッセージ表示 --}}
-      @if ($errors->any())
-      <div class="error text-danger mb-4">
-          @foreach ($errors->all() as $error)
-              <p>{{ $error }}</p>
-          @endforeach
-      </div>
-  @endif
       <h1 class="main-title">新規登録</h1>
       {{-- 新規登録フォーム ここから--}}
       <div>
@@ -66,9 +58,9 @@
                 @endif
               </div>
 
-              <div class="mb-3 w-25">
+              <div class="mb-3">
                   <label for="age" class="form-label">利用児年齢<span class="text-danger">【必須】</span></label>
-                  <input type="text" class="form-control" id="age" name="age" placeholder="5" value="{{ old('age') }}">
+                  <input type="text" class="form-control w-25" id="age" name="age" placeholder="5" value="{{ old('age') }}">
                   @if($errors->has('age'))
                       <div class="error text-danger">
                           <p>{{ $errors->first('age') }}</p>
@@ -117,9 +109,9 @@
                 @endif
               </div>
 
-              <div class="mb-3 w-25 d-none" id="age2">
+              <div class="mb-3 d-none" id="age2">
                   <label for="age2" class="form-label">利用児年齢2 ※兄弟児で利用の場合にのみ入力</label>
-                  <input type="text" class="form-control" name="age2" placeholder="5" value="{{ old('age2') }}">
+                  <input type="text" class="form-control w-25" name="age2" placeholder="5" value="{{ old('age2') }}">
                   @if($errors->has('age2'))
                       <div class="error text-danger">
                           <p>{{ $errors->first('age2') }}</p>

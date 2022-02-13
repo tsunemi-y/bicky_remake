@@ -36,7 +36,8 @@
         },
         "files": [
             "app/Helpers/formattedTime.php",
-            "app/Helpers/formattedDate.php"
+            "app/Helpers/formattedDate.php",
+            "app/Helpers/convertCourseFeeToName.php"
         ]
     },
     "autoload-dev": {

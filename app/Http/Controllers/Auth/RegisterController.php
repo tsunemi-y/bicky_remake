@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Controllers\LineMessengerController;
 use App\Http\Requests\UserRegistrationFormRequest;
 
 class RegisterController extends Controller
@@ -44,43 +45,43 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'parentName'   => ['required', 'string', 'max:255'],
-            'email'        => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password'     => ['required', new AlphaNumHalf, 'min:8', 'confirmed'],
-            'childName'    => ['required', 'string', 'max:255'],
-            'age'          => ['required', 'integer'],
-            'gender'       => ['required', 'integer'],
-            'diagnosis'    => ['required', 'string', 'max:255'],
-            'childName2'   => ['nullable', 'string', 'max:255'],
-            'age2'         => ['nullable', 'integer'],
-            'gender2'      => ['nullable', 'string', 'max:255'],
-            'address'      => ['required', 'string', 'max:255'],
-            'coursePlan'   => ['required', 'integer'],
-            'introduction' => ['nullable', 'string', 'max:255'],
-            'consaltation' => ['nullable', 'string'],
-        ]);
-    }
+    // /**
+    //  * Get a validator for an incoming registration request.
+    //  *
+    //  * @param  array  $data
+    //  * @return \Illuminate\Contracts\Validation\Validator
+    //  */
+    // protected function validator(array $data)
+    // {
+    //     return Validator::make($data, [
+    //         'parentName'   => ['required', 'string', 'max:255'],
+    //         'email'        => ['required', 'string', 'email', 'max:255', 'unique:users'],
+    //         'password'     => ['required', new AlphaNumHalf, 'min:8', 'confirmed'],
+    //         'childName'    => ['required', 'string', 'max:255'],
+    //         'age'          => ['required', 'integer'],
+    //         'gender'       => ['required', 'integer'],
+    //         'diagnosis'    => ['required', 'string', 'max:255'],
+    //         'childName2'   => ['nullable', 'string', 'max:255'],
+    //         'age2'         => ['nullable', 'integer'],
+    //         'gender2'      => ['nullable', 'string', 'max:255'],
+    //         'address'      => ['required', 'string', 'max:255'],
+    //         'coursePlan'   => ['required', 'integer'],
+    //         'introduction' => ['nullable', 'string', 'max:255'],
+    //         'consaltation' => ['nullable', 'string'],
+    //     ]);
+    // }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return \App\Models\User
+     * @param  Array  $data
+     * @return App\Models\User
      */
     protected function create(array $data)
     {
-        $courseFee = $this->getFeeByCourse((int) $data['numberOfUse'], (int) $data['coursePlan'], $data['childName2']);
+        $coursePlan = $this->getFeeByCourse((int) $data['numberOfUse'], (int) $data['coursePlan'], $data['childName2']);
 
-        return User::create([
+        $user = User::create([
             'parentName'   => $data['parentName'],
             'email'        => $data['email'],
             'password'     => Hash::make($data['password']),
@@ -96,8 +97,13 @@ class RegisterController extends Controller
             'introduction' => $data['introduction'],
             'coursePlan'   => $data['coursePlan'],
             'consaltation' => $data['consaltation'],
-            'fee' => $courseFee,
+            'fee' => $coursePlan,
         ]);
+
+        $lineModel = new LineMessengerController();
+        $lineModel->sendRegistrationMessage($user);
+
+        return $user;
     }
 
     /**
