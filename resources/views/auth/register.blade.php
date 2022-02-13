@@ -100,7 +100,7 @@
               </div>
 
               <div class="mb-3">
-                <label for="childName2" class="form-label">利用児氏名2 ※兄弟児で利用の場合にのみ入力</label>
+                <label for="childName2" class="form-label">利用児氏名2<span class="text-danger">【兄弟児でご利用の場合にのみ入力】</span></label>
                 <input type="text" class="form-control" name="childName2" id="childName2" placeholder="田中太郎" value="{{ old('childName2') }}">
                 @if($errors->has('childName2'))
                     <div class="error text-danger">
@@ -110,7 +110,7 @@
               </div>
 
               <div class="mb-3 d-none" id="age2">
-                  <label for="age2" class="form-label">利用児年齢2 ※兄弟児で利用の場合にのみ入力</label>
+                  <label for="age2" class="form-label">利用児年齢2<span class="text-danger">【必須】</span></label>
                   <input type="text" class="form-control w-25" name="age2" placeholder="5" value="{{ old('age2') }}">
                   @if($errors->has('age2'))
                       <div class="error text-danger">
@@ -120,7 +120,7 @@
               </div>
 
               <div class="mb-3 d-none" id="gender2">
-                  <label for="gender2" class="form-label d-block">性別2 ※兄弟児で利用の場合にのみ入力</label>
+                  <label for="gender2" class="form-label d-block">性別2<span class="text-danger">【必須】</span></label>
                   <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="gender2" id="male2" value="男の子" checked>
                       <label class="form-check-label" for="male2">

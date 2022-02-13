@@ -53,7 +53,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
 
-        return Validator::make($data, [
+        $validationConditionList = [
             'parentName'   => ['required', 'string', 'max:255'],
             'email'        => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password'     => ['required', new AlphaNumHalf, 'min:8', 'confirmed'],
@@ -64,12 +64,19 @@ class RegisterController extends Controller
             'childName2'   => ['nullable', 'string', 'max:255'],
             'age2'         => ['nullable', 'integer'],
             'gender2'      => ['nullable', 'string', 'max:255'],
-            'diagnosis2'    => ['nullable', 'string', 'max:255'],
+            'diagnosis2'   => ['nullable', 'string', 'max:255'],
             'address'      => ['required', 'string', 'max:255'],
             'coursePlan'   => ['required', 'integer'],
             'introduction' => ['nullable', 'string', 'max:255'],
             'consaltation' => ['nullable', 'string', 'max:255'],
-        ]);
+        ];
+
+        if (!empty($data['childName2'])) {
+            array_unshift($validationConditionList['age2'], 'required');
+            array_unshift($validationConditionList['gender2'], 'required');
+        }
+
+        return Validator::make($data, $validationConditionList);
     }
 
     /**
