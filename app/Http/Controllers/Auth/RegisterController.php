@@ -59,7 +59,7 @@ class RegisterController extends Controller
             'password'     => ['required', new AlphaNumHalf, 'min:8', 'confirmed'],
             'childName'    => ['required', 'string', 'max:255'],
             'age'          => ['required', 'integer'],
-            'gender'       => ['required', 'string'],
+            'gender'       => ['required', 'string', 'max:255'],
             'diagnosis'    => ['nullable', 'string', 'max:255'],
             'childName2'   => ['nullable', 'string', 'max:255'],
             'age2'         => ['nullable', 'integer'],
@@ -68,7 +68,7 @@ class RegisterController extends Controller
             'address'      => ['required', 'string', 'max:255'],
             'coursePlan'   => ['required', 'integer'],
             'introduction' => ['nullable', 'string', 'max:255'],
-            'consaltation' => ['nullable', 'string'],
+            'consaltation' => ['nullable', 'string', 'max:255'],
         ]);
     }
 
