@@ -81,8 +81,10 @@ class ReservationController extends Controller
      */
     public function deleteDatetime(Request $request)
     {
+        $time = date('H:i:s', strtotime(str_replace(['時', '分'], [':', ''], $request['time']))); // フロントから送られる形式は〇〇時〇〇分なので変換
+
         $avaDateId = AvailableReservationDatetime::where('available_date', $request['date'])
-            ->where('available_time', $request['time'])
+            ->where('available_time', $time)
             ->get('id')
             ->toArray()[0]['id'];
 
@@ -140,18 +142,18 @@ class ReservationController extends Controller
         $date = str_replace('-', '', $args['reservation_date']);
         $viewFile = 'admin.emails.receipt';
         $subject = '領収書のご送付';
-        $attachFile = "pdfs/領収書_{$date}.pdf";
+        $attachFile = "app/領収書_{$date}.pdf";
 
         // 領収書を出力し、ストレージに配置
         $pdf = \PDF::loadView('admin/emails/receiptPdf', $args);
         $downloadedPdf = $pdf->output();
-        file_put_contents(storage_path("pdfs/領収書_{$date}.pdf"), $downloadedPdf);
+        file_put_contents(storage_path("app/領収書_{$date}.pdf"), $downloadedPdf);
 
         // 領収書送信
         $mailService = new MailService();
         $mailService->sendMailToUser($args, $viewFile, $subject, $attachFile);
 
         // 領収書削除
-        unlink(storage_path("pdfs/領収書_{$date}.pdf"));
+        unlink(storage_path("app/領収書_{$date}.pdf"));
     }
 }
