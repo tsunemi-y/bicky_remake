@@ -10,8 +10,6 @@ interface Props {
 interface RData {
     id: number | null
     parentName: string
-    reservation_date: string
-    reservation_time: string
     email: string
     fee: number | undefined
 }
@@ -23,13 +21,12 @@ interface urlParam {
 const rData: RData = {
     id: null,
     parentName: '',
-    reservation_date: '',
-    reservation_time: '',
     email: '',
     fee: undefined,
 }
 
 const EvaluationSend: React.FC<Props> = (props) => {
+    const { title } = props;
 
     const [user, setUser] = useState(rData);
     const [fileObj, setFileObj] = useState({});
@@ -42,24 +39,29 @@ const EvaluationSend: React.FC<Props> = (props) => {
     }
 
     const sendReceipt = async () =>  {
-        console.log(fileObj);
         const result: boolean = confirm(`${fileObj[0].name}を${user.parentName}さんに送信します。よろしいですか？`);
         if (result === false) return;
+        try {
         setLoadingDispFlag(true);
-        const params = new FormData();
-        params.append('name', user.parentName);
-        params.append('email', user.email);
-        params.append('file', fileObj[0]);
-        await axios.post('/api/admin/sendEvaluation', params, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            }
-        });
-        setLoadingDispFlag(false);
+            const params = new FormData();
+            params.append('name', user.parentName);
+            params.append('email', user.email);
+            params.append('file', fileObj[0]);
+            await axios.post('/api/admin/sendEvaluation', params, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
+            alert('評価表の送信に成功しました。');
+            setLoadingDispFlag(false);
+        } catch {
+            alert('評価表の送信に失敗しました。');
+            setLoadingDispFlag(false);
+        }
     }
 
     useEffect(() => {
-        const fetchReservationById = async () => {
+        const fetchUsersById = async () => {
             try {
                 setLoadingDispFlag(true);
                 const response = await axios.get(`/api/admin/users?id=${id}`);
@@ -70,12 +72,12 @@ const EvaluationSend: React.FC<Props> = (props) => {
                 setLoadingDispFlag(false);
             }
         }
-        fetchReservationById();
+        fetchUsersById();
     },[]);
     
     return (
         <>
-            <h1　className="font-bold text-left text-2xl">{props.title}</h1>
+            <h1　className="font-bold text-left text-2xl">{title}</h1>
             <div className="bg-white mt-3 p-4 w-3/4">
                <p><span className="inline-block w-32">【氏名】</span>{user.parentName}</p>
                <p className="mt-3"><span className="inline-block w-32">【メール】</span>{user.email}</p>

@@ -18219,271 +18219,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var _parts_Loading__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../parts/Loading */ "./resources/ts/admin/components/parts/Loading.tsx");
-
-
-function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
-}
-
-function _iterableToArrayLimit(arr, i) {
-  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-
-  if (_i == null) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-
-  var _s, _e;
-
-  try {
-    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
-var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-  function adopt(value) {
-    return value instanceof P ? value : new P(function (resolve) {
-      resolve(value);
-    });
-  }
-
-  return new (P || (P = Promise))(function (resolve, reject) {
-    function fulfilled(value) {
-      try {
-        step(generator.next(value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function rejected(value) {
-      try {
-        step(generator["throw"](value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function step(result) {
-      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-    }
-
-    step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-};
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _MailList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MailList */ "./resources/ts/admin/components/pages/MailList.tsx");
 
 
 
-
-
-
-var initialInputData = {
-  name: ''
-};
-var rData = {
-  id: 0,
-  name: '',
-  email: ''
-};
-
-var Evaluation = function Evaluation(props) {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(rData),
-      _useState2 = _slicedToArray(_useState, 2),
-      users = _useState2[0],
-      setUsers = _useState2[1];
-
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(initialInputData),
-      _useState4 = _slicedToArray(_useState3, 2),
-      data = _useState4[0],
-      setData = _useState4[1];
-
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
-      _useState6 = _slicedToArray(_useState5, 2),
-      loadingDispFlag = _useState6[0],
-      setLoadingDispFlag = _useState6[1];
-
-  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useHistory)();
-
-  var fetchUsers = function fetchUsers() {
-    return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      var response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              setLoadingDispFlag(true);
-              _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_3___default().get("/api/admin/users?name=".concat(data.name));
-
-            case 3:
-              response = _context.sent;
-              setUsers(response.data);
-              setLoadingDispFlag(false);
-
-            case 6:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-  };
-
-  var handleOnClick = function handleOnClick(userId) {
-    history.push("/admin/evaluation/send/".concat(userId));
-  };
-
-  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
-    try {
-      fetchUsers();
-    } catch (err) {
-      alert('エラーです。やり直してください。');
-      setLoadingDispFlag(false);
-    }
-  }, []);
-
-  var onChangeName = function onChangeName(event) {
-    var value = event.target.value;
-    setData(Object.assign(Object.assign({}, data), {
-      name: value
-    }));
-  };
-
-  var onClickSearchBtn = function onClickSearchBtn() {
-    return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              try {
-                fetchUsers();
-              } catch (err) {
-                alert('エラーです。やり直してください。');
-                setLoadingDispFlag(false);
-              }
-
-            case 1:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2);
-    }));
-  };
-
-  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
-    children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", Object.assign({
-      className: "font-bold text-left text-2xl"
-    }, {
-      children: props.title
-    }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", Object.assign({
-      className: "mt-3"
-    }, {
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", Object.assign({
-        className: "font-bold"
-      }, {
-        children: "\u6C0F\u540D\uFF1A"
-      }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
-        className: "border-2 border-black border-solid p-0.5 rounded",
-        type: "text",
-        value: data.name,
-        onChange: onChangeName
-      }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", Object.assign({
-        className: "bg-blue-900 mt-3 p-1 rounded text-center text-white w-20"
-      }, {
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", Object.assign({
-          className: "w-full",
-          onClick: onClickSearchBtn
-        }, {
-          children: "\u691C\u7D22"
-        }), void 0)
-      }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("table", Object.assign({
-        className: "text-left mt-5",
-        width: "70%"
-      }, {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("thead", {
-          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("tr", Object.assign({
-            className: "border-b-2 border-gray-500 border-solid text-blue-400"
-          }, {
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
-              children: "\u6C0F\u540D"
-            }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
-              children: "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9"
-            }, void 0)]
-          }), void 0)
-        }, void 0), users[0] && users[0].id != '' && users.map(function (user, index) {
-          return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("tbody", Object.assign({
-            onClick: function onClick() {
-              return handleOnClick(user.id);
-            }
-          }, {
-            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("tr", Object.assign({
-              className: "border-b-2 border-gray-500 border-solid bg-white h-16"
-            }, {
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
-                children: user.parentName
-              }, index), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
-                children: user.email
-              }, void 0)]
-            }), void 0)
-          }), index);
-        })]
-      }), void 0)]
-    }), void 0), loadingDispFlag && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_parts_Loading__WEBPACK_IMPORTED_MODULE_4__["default"], {}, void 0)]
+var Receipt = function Receipt(props) {
+  var title = props.title;
+  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_MailList__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      title: title,
+      detailUrl: '/admin/evaluation/send/'
+    }, void 0)
   }, void 0);
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Evaluation);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Receipt);
 
 /***/ }),
 
@@ -18609,13 +18360,13 @@ var __awaiter = undefined && undefined.__awaiter || function (thisArg, _argument
 var rData = {
   id: null,
   parentName: '',
-  reservation_date: '',
-  reservation_time: '',
   email: '',
   fee: undefined
 };
 
 var EvaluationSend = function EvaluationSend(props) {
+  var title = props.title;
+
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(rData),
       _useState2 = _slicedToArray(_useState, 2),
       user = _useState2[0],
@@ -18658,17 +18409,17 @@ var EvaluationSend = function EvaluationSend(props) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              console.log(fileObj);
               result = confirm("".concat(fileObj[0].name, "\u3092").concat(user.parentName, "\u3055\u3093\u306B\u9001\u4FE1\u3057\u307E\u3059\u3002\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F"));
 
               if (!(result === false)) {
-                _context2.next = 4;
+                _context2.next = 3;
                 break;
               }
 
               return _context2.abrupt("return");
 
-            case 4:
+            case 3:
+              _context2.prev = 3;
               setLoadingDispFlag(true);
               params = new FormData();
               params.append('name', user.parentName);
@@ -18682,19 +18433,28 @@ var EvaluationSend = function EvaluationSend(props) {
               });
 
             case 11:
+              alert('評価表の送信に成功しました。');
+              setLoadingDispFlag(false);
+              _context2.next = 19;
+              break;
+
+            case 15:
+              _context2.prev = 15;
+              _context2.t0 = _context2["catch"](3);
+              alert('評価表の送信に失敗しました。');
               setLoadingDispFlag(false);
 
-            case 12:
+            case 19:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2);
+      }, _callee2, null, [[3, 15]]);
     }));
   };
 
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
-    var fetchReservationById = function fetchReservationById() {
+    var fetchUsersById = function fetchUsersById() {
       return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -18728,13 +18488,13 @@ var EvaluationSend = function EvaluationSend(props) {
       }));
     };
 
-    fetchReservationById();
+    fetchUsersById();
   }, []);
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", Object.assign({
       className: "font-bold text-left text-2xl"
     }, {
-      children: props.title
+      children: title
     }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", Object.assign({
       className: "bg-white mt-3 p-4 w-3/4"
     }, {
@@ -18783,10 +18543,10 @@ var EvaluationSend = function EvaluationSend(props) {
 
 /***/ }),
 
-/***/ "./resources/ts/admin/components/pages/Receipt.tsx":
-/*!*********************************************************!*\
-  !*** ./resources/ts/admin/components/pages/Receipt.tsx ***!
-  \*********************************************************/
+/***/ "./resources/ts/admin/components/pages/MailList.tsx":
+/*!**********************************************************!*\
+  !*** ./resources/ts/admin/components/pages/MailList.tsx ***!
+  \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -18903,23 +18663,19 @@ var __awaiter = undefined && undefined.__awaiter || function (thisArg, _argument
 
 
 var initialInputData = {
-  reservationDate: '',
-  reservationName: ''
+  name: ''
 };
 var rData = {
   id: 0,
-  parentName: '',
-  reservation_date: '',
-  reservation_time: '',
-  email: '',
-  fee: 0
+  name: '',
+  email: ''
 };
 
-var Receipt = function Receipt(props) {
+var MailList = function MailList(props) {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(rData),
       _useState2 = _slicedToArray(_useState, 2),
-      reservations = _useState2[0],
-      getReservations = _useState2[1];
+      users = _useState2[0],
+      setUsers = _useState2[1];
 
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(initialInputData),
       _useState4 = _slicedToArray(_useState3, 2),
@@ -18931,92 +18687,74 @@ var Receipt = function Receipt(props) {
       loadingDispFlag = _useState6[0],
       setLoadingDispFlag = _useState6[1];
 
+  var title = props.title,
+      detailUrl = props.detailUrl;
   var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useHistory)();
-  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
-    var fetchUserInfoSendReciiept = function fetchUserInfoSendReciiept() {
-      return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                setLoadingDispFlag(true);
-                _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default().get("/api/admin/getUserInfoSendReciept");
 
-              case 3:
-                response = _context.sent;
-                getReservations(response.data);
-                console.log(response.data);
-                setLoadingDispFlag(false);
+  var fetchUsers = function fetchUsers() {
+    return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              setLoadingDispFlag(true);
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_3___default().get("/api/admin/users?name=".concat(data.name));
 
-              case 7:
-              case "end":
-                return _context.stop();
-            }
+            case 3:
+              response = _context.sent;
+              setUsers(response.data);
+              setLoadingDispFlag(false);
+
+            case 6:
+            case "end":
+              return _context.stop();
           }
-        }, _callee);
-      }));
-    };
+        }
+      }, _callee);
+    }));
+  };
 
+  var handleOnClick = function handleOnClick(userId) {
+    history.push("".concat(detailUrl).concat(userId));
+  };
+
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
     try {
-      fetchUserInfoSendReciiept();
+      fetchUsers();
     } catch (err) {
       alert('エラーです。やり直してください。');
       setLoadingDispFlag(false);
     }
   }, []);
 
-  var handleOnClick = function handleOnClick(rsvId) {
-    console.log(rsvId);
-    history.push("/admin/receipt/send/".concat(rsvId));
-  };
-
-  var onChangeRsvDate = function onChangeRsvDate(event) {
+  var onChangeName = function onChangeName(event) {
     var value = event.target.value;
     setData(Object.assign(Object.assign({}, data), {
-      reservationDate: value
-    }));
-  };
-
-  var onChangeRsvName = function onChangeRsvName(event) {
-    var value = event.target.value;
-    setData(Object.assign(Object.assign({}, data), {
-      reservationName: value
+      name: value
     }));
   };
 
   var onClickSearchBtn = function onClickSearchBtn() {
     return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-      var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.prev = 0;
-              setLoadingDispFlag(true);
-              _context2.next = 4;
-              return axios__WEBPACK_IMPORTED_MODULE_3___default().get("/api/admin/getUserInfoSendReciept?reservationDate=".concat(data.reservationDate, "&reservationName=").concat(data.reservationName));
+              try {
+                fetchUsers();
+              } catch (err) {
+                alert('エラーです。やり直してください。');
+                setLoadingDispFlag(false);
+              }
 
-            case 4:
-              response = _context2.sent;
-              getReservations(response.data);
-              setLoadingDispFlag(false);
-              _context2.next = 13;
-              break;
-
-            case 9:
-              _context2.prev = 9;
-              _context2.t0 = _context2["catch"](0);
-              alert('エラーです。やり直してください。');
-              setLoadingDispFlag(false);
-
-            case 13:
+            case 1:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[0, 9]]);
+      }, _callee2);
     }));
   };
 
@@ -19024,28 +18762,19 @@ var Receipt = function Receipt(props) {
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", Object.assign({
       className: "font-bold text-left text-2xl"
     }, {
-      children: props.title
+      children: title
     }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", Object.assign({
       className: "mt-3"
     }, {
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", Object.assign({
         className: "font-bold"
       }, {
-        children: "\u4E88\u7D04\u65E5\uFF1A"
-      }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
-        className: "border-2 border-black border-solid p-0.5 rounded",
-        type: "date",
-        value: data.reservationDate,
-        onChange: onChangeRsvDate
-      }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", Object.assign({
-        className: "font-bold ml-4"
-      }, {
         children: "\u6C0F\u540D\uFF1A"
       }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
         className: "border-2 border-black border-solid p-0.5 rounded",
         type: "text",
-        value: data.reservationName,
-        onChange: onChangeRsvName
+        value: data.name,
+        onChange: onChangeName
       }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", Object.assign({
         className: "bg-blue-900 mt-3 p-1 rounded text-center text-white w-20"
       }, {
@@ -19066,40 +18795,58 @@ var Receipt = function Receipt(props) {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
               children: "\u6C0F\u540D"
             }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
-              children: "\u4E88\u7D04\u65E5"
-            }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
-              children: "\u4E88\u7D04\u6642\u9593"
-            }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
               children: "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9"
-            }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
-              children: "\u6599\u91D1"
             }, void 0)]
           }), void 0)
-        }, void 0), reservations[0] && reservations[0].parentName != '' && reservations.map(function (rsv, index) {
+        }, void 0), users[0] && users[0].id != '' && users.map(function (user, index) {
           return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("tbody", Object.assign({
             onClick: function onClick() {
-              return handleOnClick(rsv.id);
+              return handleOnClick(user.id);
             }
           }, {
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("tr", Object.assign({
               className: "border-b-2 border-gray-500 border-solid bg-white h-16"
             }, {
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
-                children: rsv.parentName
-              }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
-                children: rsv.reservation_date
-              }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
-                children: rsv.reservation_time
-              }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
-                children: rsv.email
-              }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
-                children: rsv.fee
+                children: user.parentName
+              }, index), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+                children: user.email
               }, void 0)]
             }), void 0)
           }), index);
         })]
       }), void 0)]
     }), void 0), loadingDispFlag && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_parts_Loading__WEBPACK_IMPORTED_MODULE_4__["default"], {}, void 0)]
+  }, void 0);
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MailList);
+
+/***/ }),
+
+/***/ "./resources/ts/admin/components/pages/Receipt.tsx":
+/*!*********************************************************!*\
+  !*** ./resources/ts/admin/components/pages/Receipt.tsx ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _MailList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MailList */ "./resources/ts/admin/components/pages/MailList.tsx");
+
+
+
+var Receipt = function Receipt(props) {
+  var title = props.title;
+  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_MailList__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      title: title,
+      detailUrl: '/admin/receipt/send/'
+    }, void 0)
   }, void 0);
 };
 
@@ -19227,19 +18974,18 @@ var __awaiter = undefined && undefined.__awaiter || function (thisArg, _argument
 
 
 var rData = {
-  id: null,
   parentName: '',
-  reservation_date: '',
-  reservation_time: '',
   email: '',
   fee: undefined
 };
 
 var ReceiptSend = function ReceiptSend(props) {
+  var title = props.title;
+
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(rData),
       _useState2 = _slicedToArray(_useState, 2),
-      reservations = _useState2[0],
-      setReservations = _useState2[1];
+      user = _useState2[0],
+      setUser = _useState2[1];
 
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       _useState4 = _slicedToArray(_useState3, 2),
@@ -19256,25 +19002,34 @@ var ReceiptSend = function ReceiptSend(props) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              _context.prev = 0;
               setLoadingDispFlag(true);
               value = parseInt(event.target.value, 10);
-              setReservations(Object.assign(Object.assign({}, reservations), {
+              setUser(Object.assign(Object.assign({}, user), {
                 fee: value
               }));
-              _context.next = 5;
-              return axios__WEBPACK_IMPORTED_MODULE_3___default().put("/api/admin/updateReservation/".concat(id), {
+              _context.next = 6;
+              return axios__WEBPACK_IMPORTED_MODULE_3___default().put("/api/admin/updateFee/".concat(id), {
                 fee: value
               });
 
-            case 5:
+            case 6:
+              setLoadingDispFlag(false);
+              _context.next = 13;
+              break;
+
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](0);
+              alert('料金の変更に失敗しました。');
               setLoadingDispFlag(false);
 
-            case 6:
+            case 13:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee);
+      }, _callee, null, [[0, 9]]);
     }));
   };
 
@@ -19288,11 +19043,9 @@ var ReceiptSend = function ReceiptSend(props) {
               _context2.prev = 0;
               setLoadingDispFlag(true);
               args = {
-                name: reservations.parentName,
-                date: reservations.reservation_date,
-                time: reservations.reservation_time,
-                email: reservations.email,
-                fee: reservations.fee
+                name: user.parentName,
+                email: user.email,
+                fee: user.fee
               };
               _context2.next = 5;
               return axios__WEBPACK_IMPORTED_MODULE_3___default().post('/api/admin/sendReceipt', args);
@@ -19319,7 +19072,7 @@ var ReceiptSend = function ReceiptSend(props) {
   };
 
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
-    var fetchReservationById = function fetchReservationById() {
+    var fetchUsersById = function fetchUsersById() {
       return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -19329,11 +19082,11 @@ var ReceiptSend = function ReceiptSend(props) {
                 _context3.prev = 0;
                 setLoadingDispFlag(true);
                 _context3.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default().get("/api/admin/getUserInfoSendReciept?id=".concat(id));
+                return axios__WEBPACK_IMPORTED_MODULE_3___default().get("/api/admin/users?id=".concat(id));
 
               case 4:
                 response = _context3.sent;
-                setReservations(response.data[0]);
+                setUser(response.data[0]);
                 setLoadingDispFlag(false);
                 _context3.next = 13;
                 break;
@@ -19353,13 +19106,13 @@ var ReceiptSend = function ReceiptSend(props) {
       }));
     };
 
-    fetchReservationById();
+    fetchUsersById();
   }, []);
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", Object.assign({
       className: "font-bold text-left text-2xl"
     }, {
-      children: props.title
+      children: title
     }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", Object.assign({
       className: "bg-white mt-3 p-4 w-3/4"
     }, {
@@ -19368,31 +19121,15 @@ var ReceiptSend = function ReceiptSend(props) {
           className: "inline-block w-32"
         }, {
           children: "\u3010\u6C0F\u540D\u3011"
-        }), void 0), reservations.parentName]
+        }), void 0), user.parentName]
       }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", Object.assign({
         className: "mt-3"
       }, {
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", Object.assign({
           className: "inline-block w-32"
         }, {
-          children: "\u3010\u4E88\u7D04\u65E5\u3011"
-        }), void 0), reservations.reservation_date]
-      }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", Object.assign({
-        className: "mt-3"
-      }, {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", Object.assign({
-          className: "inline-block w-32"
-        }, {
-          children: "\u3010\u4E88\u7D04\u6642\u9593\u3011"
-        }), void 0), reservations.reservation_time]
-      }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", Object.assign({
-        className: "mt-3"
-      }, {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", Object.assign({
-          className: "inline-block w-32"
-        }, {
           children: "\u3010\u30E1\u30FC\u30EB\u3011"
-        }), void 0), reservations.email]
+        }), void 0), user.email]
       }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", Object.assign({
         className: "mt-3"
       }, {
@@ -19403,7 +19140,7 @@ var ReceiptSend = function ReceiptSend(props) {
         }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
           className: "border rounded",
           onBlur: onChangeFee,
-          defaultValue: reservations.fee
+          defaultValue: user.fee
         }, void 0)]
       }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", Object.assign({
         className: "bg-blue-900 mt-3 p-1 rounded text-center text-white w-20"
