@@ -2,8 +2,7 @@
 
 namespace App\Consts;
 
-// usersで使う定数
-class User
+class ConstUser
 {
     // コース、月の利用回数
     public const ONE_USE = 1;

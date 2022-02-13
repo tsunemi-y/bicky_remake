@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Consts\ConstUser;
 use App\Rules\AlphaNumHalf;
-use App\Consts\User as constUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
@@ -118,14 +118,14 @@ class RegisterController extends Controller
      */
     private function getFeeByCourse($numberOfUse, $coursePlan, $siblingUse)
     {
-        if ($numberOfUse === constUser::ONE_USE) {
-            if (!empty($siblingUse)) return constUser::FEE_ONE_SIBLING;
-            if ($coursePlan === constUser::COURSE_WEEKDAY) return constUser::FEE_ONE_WEEKDAY;
-            if ($coursePlan === constUser::COURSE_HOLIDAY) return constUser::FEE_ONE_HOLIDAY;
-        } else if ($numberOfUse === constUser::TWO_USE) {
-            if (!empty($siblingUse)) return constUser::FEE_TWO_SIBLING;
-            if ($coursePlan === constUser::COURSE_WEEKDAY) return constUser::FEE_TWO_WEEKDAY;
-            if ($coursePlan === constUser::COURSE_HOLIDAY) return constUser::FEE_TWO_HOLIDAY;
+        if ($numberOfUse === ConstUser::ONE_USE) {
+            if (!empty($siblingUse)) return ConstUser::FEE_ONE_SIBLING;
+            if ($coursePlan === ConstUser::COURSE_WEEKDAY) return ConstUser::FEE_ONE_WEEKDAY;
+            if ($coursePlan === ConstUser::COURSE_HOLIDAY) return ConstUser::FEE_ONE_HOLIDAY;
+        } else if ($numberOfUse === ConstUser::TWO_USE) {
+            if (!empty($siblingUse)) return ConstUser::FEE_TWO_SIBLING;
+            if ($coursePlan === ConstUser::COURSE_WEEKDAY) return ConstUser::FEE_TWO_WEEKDAY;
+            if ($coursePlan === ConstUser::COURSE_HOLIDAY) return ConstUser::FEE_TWO_HOLIDAY;
         }
     }
 }
