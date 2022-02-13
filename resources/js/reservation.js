@@ -41,7 +41,8 @@ $(document).on("click",".ava-time", function() {
     const isDoneReservation = confirm(formatedDateTime + 'に予約してよろしいですか？');
     if (isDoneReservation) {
         $requestedAvaTime = $('#jsRequestedAvaTime');
-        $requestedAvaTime.val(avaTime);
+        const restoredTimeFormat = moment(avaTime, 'HH:mm:ss').format('HH:mm:ss'); // サーバ側でエラーにならないようフォーマットをもとに戻す
+        $requestedAvaTime.val(restoredTimeFormat);
         $('#jsAvaTimeForm').trigger('submit');
     }
 });
@@ -50,7 +51,8 @@ function getFormatedDateTime(avaDate, avaTime) {
     const month = avaDate.slice(5, 7) + '月';
     const day = avaDate.slice(8, 10) + '日';
     const hour = avaTime.slice(0, 2) + '時';
-    return month + day + hour;
+    const miniute = avaTime.slice(3, 5) + '分';
+    return month + day + hour + miniute;
 }
 
 

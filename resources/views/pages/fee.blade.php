@@ -20,7 +20,7 @@
             <h1 class="main-title">料金・プラン</h1>
 
             <p class="mb-2">
-                ビッキーことば塾では、毎週、訓練中に評価した内容を文書にしてお渡ししております。
+                ビッキーことば塾では、毎月、訓練中に評価した内容を文書にしてお渡ししております。
                 下記記載の料金は、評価書作成代も含めての料金になります。
             </p>
 
@@ -29,105 +29,48 @@
                 違いについては下記をご覧ください。
             </p>
             
-            {{-- 平日予約 --}}
+            {{-- 料金・プラン --}}
             <section class="mb-4">
-                <h2>平日の料金・プラン</h2>
-
+                <h2>料金・プラン</h2>
                 <section class="mb-4">
-                    <h3>1.予約方法</h3>
-                    <p>下記手順でご予約ください。<br>
-                        1.本ページ上部のメニューから予約ページへ移動<br>
-                        2.日時を指定<br>
-                        3.初回予約か2回目以降の予約かを選択<br>
-                        4.必要情報をフォームに入力<br>
-                        ※初回予約時は、氏名・メールアドレス以外も入力して頂く必要がございます。
-                    </p>
-                </section>
-
-                <section class="mb-4">
-                    <h3>2.料金</h3>
+                    <h3>料金</h3>
                     <p class="mb-2">
-                        月の訓練回数に応じた月謝制になります。<br>
-                        月によって料金が異なりますのでご注意くださいませ。<br>
-                        一回あたりの利用料は、4,400円（税込み）になります。
+                        訓練回数は月一回または二回のどちらかをご選択いただけます。<br>
+                        月二回の場合は、月一回の倍の料金になります。<br>
+                        どのプランをご選択されても月4回のLINE相談は付属しております。<br>
+                        ※月一回、二回どちらでもLINE相談の回数は変わりません
                     <p>
                     <table border="1" class="text-center mb-2" width="100%">
                         <thead>
                             <tr class="table-header">
-                                <th class="font-weight-bold">月4回時</th>
-                                <th class="font-weight-bold">月5回時</th>
+                                <th class="bg-white"></th>
+                                <th class="font-weight-bold">平日利用</th>
+                                <th class="font-weight-bold">休日利用</th>
+                                <th class="font-weight-bold">兄弟同時利用</th>
                             </tr>
                         </thead>
                         <tbody>    
                             <tr class="table-height">
+                                <th style="background-color: #fdffe5;">月一回</th>
+                                <th>7,700円</th>
+                                <th>8,800円</th>
+                                <th>13,200円（6,600円/人）</th>
+                            </tr>
+                            <tr class="table-height">
+                                <th style="background-color: #fdffe5;">月二回</th>
+                                <th>15,400円</th>
                                 <th>17,600円</th>
-                                <th>22,000円</th>
+                                <th>26,400円（13,200円/人）</th>
                             </tr>
                         </tbody>
                     </table>
 
                     <p class="mb-2">
                         <span class="font-weight-bold">■お支払い方法について</span><br>
-                        下記のいずれかの方法でお願い致します。<br>
-                        お支払日は、月末になります。<br>
-                        ・現金<br>
-                        ・銀行振込(振込手数料はお客様にご負担いただきます)
+                        現金のみ受け付けております。
+                        来所時にお支払いをよろしくお願い致します。
                     </p>
 
-                    <p class="mb-2">
-                        <span class="font-weight-bold">■返金について</span><br>
-                        ※こちらの都合でお休みになった日はご利用料を返金対応させて頂きます。<br>
-                        ご利用者様都合でお休みされる場合は返金や減額ができませんので、予めご了承くださいますようお願い申しあげます。<br>
-                    </p>
-
-                    <p>
-                        <span class="font-weight-bold">■振替について</span><br>
-                        ご希望の方は、スタッフにご相談ください。<br>
-                    </p>
-                </section>
-
-                <section>
-                    <h3>3.ご予約可能日時</h3>
-                    <table border="1" class="text-center" width="100%">
-                        <thead>
-                            <tr class="table-header">
-                                <th class="font-weight-bold" width="60">曜日</th>
-                                <th class="font-weight-bold" width="200">時間</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{-- @foreach ($reservationTimes as $rsvTime) --}}
-                                
-                                <tr class="table-height">
-                                    <th>月～金</th>
-                                    {{-- <th>{{ $rsvTime['reservation_time_from']. '~'. $rsvTime['reservation_time_to']. '（50分）'}}</th> --}}
-                                </tr>
-        
-                            {{-- @endforeach --}}
-                        </tbody>
-                    </table>
-                </section>
-
-            </section>
-           
-            {{-- 休日予約 --}}
-            <section>
-                <h2>休日の料金・プラン</h2>
-
-                <section class="mb-4">
-                    <h3>1.予約方法</h3>
-                    <p>
-                        休日予約は月1回のみご利用可能です。<br>
-                        ご希望のご利用者様は下記メールアドレスまでご連絡ください<br>
-                        <a href="mailto:hattatsushien@gmail.com">hattatsushien@gmail.com</a>
-                    </p>
-                </section>
-
-                <section class="mb-4">
-                    <h3>2.料金</h3>
-                    <p class="mb-2">
-                        一回あたりの利用料は、6,600円（税込み）になります。
-                    <p>
                 </section>
 
             </section>

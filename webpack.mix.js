@@ -24,5 +24,6 @@ mix.ts('resources/ts/admin/components/index.tsx', 'public/admin/js')
     .sass('resources/sass/fee.scss', 'public/css')
     .js('resources/js/top.js', 'public/js')
     .js('resources/js/reservation.js', 'public/js')
+    .js('resources/js/register.js', 'public/js')
     .tailwind();
     

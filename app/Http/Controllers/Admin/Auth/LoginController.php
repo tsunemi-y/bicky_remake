@@ -44,7 +44,7 @@ class LoginController extends Controller
      * ガードの認証方法を指定
      * ※auth/configに設定したモデルを見に行くようになる
      *
-     * @return void
+     * @return string
      */
     protected function guard()
     {

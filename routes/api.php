@@ -1,12 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UsersController;
-
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ReservationController;
-use App\Http\Controllers\Admin\MeController;
-use App\Http\Controllers\Admin\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,14 +23,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/getUserInfoSendReciept', [ReservationController::class, 'getUserInfoSendReciept'])->name('getUserInfoSendReciept');
     Route::post('/sendReceipt', [ReservationController::class, 'sendReceipt'])->name('sendReceipt');
 
-
-    //sanctum関連
-    Route::post('/login', [LoginController::class, 'login']);
-
-    Route::group(['middleware' => ['auth:sanctum']], function () {
-        Route::get('/user', function (Request $request) {
-            \DebugBar::info($request);
-            return $request->user();
-        });
-    });
+    Route::get('/users', [UserController::class, 'getUsers'])->name('users');
+    Route::post('/sendEvaluation', [UserController::class, 'sendEvaluation'])->name('sendEvaluation');
 });

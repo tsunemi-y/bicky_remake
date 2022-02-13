@@ -11,7 +11,8 @@
 @section('login')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-8 mt-4">
+            <h1 class="text-center mb-4" style="font-size: 2rem">ログイン画面</h1>
             <div class="card">
 
                 <div class="card-body">

@@ -29,7 +29,6 @@
             }
 
             .name {
-                margin-left: 2.5rem;
                 margin-top: 4rem;
             }
 
@@ -74,16 +73,16 @@
     </head>
     <body>
         <div class="container">
-            <p class="title">訓練利用料領収書（{{ date('m月d日', strtotime($reservation_date)) }}）分</p>
+            <p class="title">訓練利用料領収書（{{ date('Y年m月', strtotime($reservation_date)) }}）分</p>
             <p class="name">{{ $name }}　様</p>
 
-            <div class="receipt">
+            <div class="receipt" style="width: 100%;">
                 <p class="receipt__title">金額</p>
                 <p class="receipt__fee">¥{{ number_format($fee) }}</p>
             </div>
 
             <div class="vendor-info">
-                <p>  <span class="vendor-info__content">{{ date('Y年m月d日', strtotime($reservation_date)) }}</span></p>
+                <p>  <span class="vendor-info__content">{{ date('Y年m月d日', time()) }}</span></p>
                 <p>    <span class="vendor-info__content">〒618-0015</p></span>
                 <p>        <span class="vendor-info__content">大阪府三島郡島本町青葉1-7-6</p></span>
                 <p>    <span class="vendor-info__content">ビッキーことば塾</p></span>

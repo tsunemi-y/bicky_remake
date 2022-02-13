@@ -1,6 +1,7 @@
 {
     "/js/top.js": "/js/top.js",
     "/js/reservation.js": "/js/reservation.js",
+    "/js/register.js": "/js/register.js",
     "/admin/js/index.js": "/admin/js/index.js",
     "/css/header.css": "/css/header.css",
     "/css/common.css": "/css/common.css",

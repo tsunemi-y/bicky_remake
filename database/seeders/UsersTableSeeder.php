@@ -15,17 +15,21 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::create([
-            'parentName' => '松岡太郎',
-            'email' => 'tatataabcdaa@gmail.com',
+            'parentName' => '松岡親太郎',
+            'email' => 'tatataabcd@gmail.com',
             'password' => \Hash::make('tarou0208'),
-            'childName' => '松岡祐太',
+            'childName' => '松岡子太郎',
             'age' => '5',
             'gender' => '男',
             'diagnosis' => 'ASD',
+            'childName2' => '松岡2子太郎',
+            'age2' => '3',
+            'gender2' => '女',
+            'diagnosis2' => 'ADHD',
             'address' => '大阪',
             'introduction' => '区役所',
-            'parentName' => '松岡太郎',
-            'parentName' => '松岡太郎',
+            'coursePlan' => 1,
+            'fee' => '7700',
         ]);
     }
 }

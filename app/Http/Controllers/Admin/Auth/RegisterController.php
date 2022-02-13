@@ -82,5 +82,8 @@ class RegisterController extends Controller
             'address' => $data['address'],
             'introduction' => $data['introduction'],
         ]);
+
+        // 管理者に新規会員情報をLINE送信
+
     }
 }

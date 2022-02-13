@@ -21,12 +21,19 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             // 追加　start
-            $table->string('childName')->nullable()->comment('利用児氏名');
-            $table->integer('age')->nullable()->comment('年齢');
-            $table->string('gender')->nullable()->comment('性別');
+            $table->string('childName')->comment('利用児氏名');
+            $table->integer('age')->comment('年齢');
+            $table->string('gender')->comment('性別');
             $table->string('diagnosis')->nullable()->comment('診断名');
-            $table->string('address')->nullable()->comment('住所');
+            $table->string('childName2')->nullable()->comment('利用児氏名2');
+            $table->integer('age2')->nullable()->comment('年齢2');
+            $table->string('gender2')->nullable()->comment('性別2');
+            $table->string('diagnosis2')->nullable()->comment('診断2');
+            $table->string('address')->comment('住所');
             $table->string('introduction')->nullable()->comment('紹介先');
+            $table->integer('coursePlan')->comment('コースプラン');
+            $table->string('consaltation')->nullable()->comment('相談内容');
+            $table->string('fee')->nullable()->comment('料金');
             // 追加　end
             $table->timestamps();
         });

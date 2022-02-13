@@ -23,6 +23,15 @@
             <x-breadcrumb item="TOP" item2="予約" url="https://bicky.herokuapp.com/reservation" />
             <h1 class="main-title">予約</h1>
 
+            <div class="mb-4">
+              <h3>予約方法</h3>
+              <p>1.本HPの予約ページへ移動<br>
+                  2.予約カレンダーから日付を指定<br>
+                  　※○になっている日付のみ選択可能<br>
+                  3.時間を選択<br>
+              </p>
+            </div>
+
             {{-- 予約カレンダー ここから--}}
             <table class="reserv-table">
                 <caption><a href="?ym={{ $calenderInfo['prevMonth'] }}" class="month-select" style="padding-right: 1.5rem">&lt;</a>{{ $calenderInfo['calenderTitle'] }}<a href="?ym={{ $calenderInfo['nextMonth'] }}" class="month-select" style="padding-left: 1.5rem">&gt;</a></caption>
@@ -47,7 +56,7 @@
         </div>
     </div>
 
-　{{-- 初回確認モーダル --}}
+　{{-- 予約時間選択モーダル --}}
   <div class="modal fade" id="avaTimeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">

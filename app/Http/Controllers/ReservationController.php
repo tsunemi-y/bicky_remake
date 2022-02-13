@@ -5,25 +5,21 @@ namespace App\Http\Controllers;
 use \Yasumi\Yasumi;
 use App\Models\User;
 use App\Models\Reservation;
-use Illuminate\Http\Request;
-use App\Models\ReservationTime;
 use App\Http\Services\MailService;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cookie;
-use App\Models\AvailableReservationDatetime;
-use App\Http\Requests\ReservationFormRequest;
-use App\Http\Requests\CancelCodeAuthFormRequest;
 use App\Http\Traits\Reservationable;
+
+use App\Http\Requests\ReservationCalenderFormRequest;
+use App\Http\Requests\ReservationFormRequest;
 
 class ReservationController extends Controller
 {
     use Reservationable;
     /**
-     * Display a listing of the resource.
+     * 予約画面表示.
      *
      * @return \Illuminate\Http\Response
      */
-    public function dispReservationTop(Request $request)
+    public function dispReservationTop(ReservationCalenderFormRequest $request)
     {
         $calenderInfo = $this->createCalender($request);
         return view('pages.reservations.reservation', compact('calenderInfo'));
@@ -137,7 +133,7 @@ class ReservationController extends Controller
      * @param App\Http\Requests\ReservationFormRequest
      * @return void
      */
-    public function createReservation(Request $request)
+    public function createReservation(ReservationFormRequest $request)
     {
         $reservationModel = new Reservation;
 
@@ -161,22 +157,28 @@ class ReservationController extends Controller
             'reservationId' => $reservedInfo->id,
         ];
 
-        $this->sendMail($mailData);
+        $this->sendReservationMessage($mailData);
         return redirect(route('reservationTop'))
             ->with('successReservation', '予約を受け付けました。</br>予約内容確認のメールをお送りしました。');
     }
 
     /**
-     * メール送信
-     * @param App\Http\Requests\ReservationFormRequest
-     * @return \Illuminate\Http\Response
+     * 予約メッセージ送信
+     * @param $param
+     * @return void
      */
-    public function sendMail($params)
+    public function sendReservationMessage($params)
     {
-        $mailService = new MailService();
-        $mailService->sendMailToVendor($params);
+        // 日時のフォーマット変更
+        $params['reservationTime'] = formatTime($params['reservationTime']);
+        $params['reservationDate'] = formatDate($params['reservationDate']);
+
+        // 管理者へLINEメッセージ送信
+        $lineMessenger = new LineMessengerController();
+        $lineMessenger->sendReservationMessage($params['childName'], $params['reservationDate'], $params['reservationTime']);
 
         // 利用者へのメールに必要なデータ設定
+        $mailService = new MailService();
         $viewFile = 'emails.reservations.user';
         $subject = '予約を受け付けました';
         $mailService->sendMailToUser($params, $viewFile, $subject);
@@ -184,18 +186,17 @@ class ReservationController extends Controller
 
     /**
      * 予約キャンセル画面表示
-     * @param App\Http\Requests\ReservationFormRequest
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function dispReservationCancel(Reservation $reservation)
+    public function dispReservationCancel()
     {
         return view('pages.reservations.reservationCancel', compact('reservation'));
     }
 
     /**
      * 予約キャンセル
-     * @param App\Http\Requests\ReservationFormRequest
-     * @return \Illuminate\Http\Response
+     * @param App\Models\Reservation
+     * @return void
      */
     public function cancelReservation(Reservation $reservation)
     {

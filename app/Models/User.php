@@ -25,8 +25,16 @@ class User extends Authenticatable
         'age',
         'gender',
         'diagnosis',
+        'childName2',
+        'age2',
+        'gender2',
+        'diagnosis2',
         'address',
         'introduction',
+        'coursePlan',
+        'consaltation',
+        'introduction',
+        'fee',
     ];
 
     /**
@@ -55,6 +63,34 @@ class User extends Authenticatable
      */
     public function reservations()
     {
-        return $this->hasMany(Reservation::class);
+        return $this->hasOne(Reservation::class);
+    }
+
+    /**
+     * 利用児の曖昧検索
+     *
+     * @param [type] $query
+     * @param [type] $name
+     * @return void
+     */
+    public function scopeFuzzyName($query, $name)
+    {
+        if ($name != '') {
+            return $query->where('name', 'like', "%$name%");
+        }
+    }
+
+    /**
+     * 引数の指定値に対応したレコード取得
+     *
+     * @param [type] $query
+     * @param [type] $id
+     * @return void
+     */
+    public function scopeEqualId($query, $id)
+    {
+        if ($id != '') {
+            return $query->where('id', '=', $id);
+        }
     }
 }

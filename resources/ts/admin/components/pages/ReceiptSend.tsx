@@ -9,7 +9,7 @@ interface Props {
 
 interface RData {
     id: number | null
-    childName: string
+    parentName: string
     reservation_date: string
     reservation_time: string
     email: string
@@ -22,7 +22,7 @@ interface urlParam {
 
 const rData: RData = {
     id: null,
-    childName: '',
+    parentName: '',
     reservation_date: '',
     reservation_time: '',
     email: '',
@@ -45,16 +45,22 @@ const ReceiptSend: React.FC<Props> = (props) => {
     }
 
     const sendReceipt = async () =>  {
-        setLoadingDispFlag(true);
-        const args = {
-            name: reservations.childName,
-            date: reservations.reservation_date,
-            time: reservations.reservation_time,
-            email: reservations.email,
-            fee: reservations.fee
+        try {
+            setLoadingDispFlag(true);
+            const args = {
+                name: reservations.parentName,
+                date: reservations.reservation_date,
+                time: reservations.reservation_time,
+                email: reservations.email,
+                fee: reservations.fee
+            }
+            await axios.post('/api/admin/sendReceipt', args);
+            alert('領収書の送信に成功しました。');
+            setLoadingDispFlag(false);
+        }catch (err) {
+            alert('エラーです。やり直してください。');
+            setLoadingDispFlag(false);
         }
-        await axios.post('/api/admin/sendReceipt', args);
-        setLoadingDispFlag(false);
     }
 
     useEffect(() => {
@@ -76,7 +82,7 @@ const ReceiptSend: React.FC<Props> = (props) => {
         <>
             <h1　className="font-bold text-left text-2xl">{props.title}</h1>
             <div className="bg-white mt-3 p-4 w-3/4">
-               <p><span className="inline-block w-32">【氏名】</span>{reservations.childName}</p>
+               <p><span className="inline-block w-32">【氏名】</span>{reservations.parentName}</p>
                <p className="mt-3"><span className="inline-block w-32">【予約日】</span>{reservations.reservation_date}</p>
                <p className="mt-3"><span className="inline-block w-32">【予約時間】</span>{reservations.reservation_time}</p>
                <p className="mt-3"><span className="inline-block w-32">【メール】</span>{reservations.email}</p>

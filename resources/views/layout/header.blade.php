@@ -2,9 +2,9 @@
 
 {{-- spメニュー中身 ここから　--}}
 <div class="menu-inner position-fixed sp-header" id="js-menu-inner">
-    <@if (!Auth::check())
-        <div class=""><a href="{{ route("register")}}" class="pc-header__item">新規登録</a></div>
-        <div class=""><a href="{{ route("login")}}" class="pc-header__item">ログイン</a></div>
+    @if (!Auth::check())
+        <div><a href="{{ route("register")}}" class="menu-inner__link">新規登録</a></div>
+        <div><a href="{{ route("login")}}" class="menu-inner__link">ログイン</a></div>
     @endif
     <div><a href="{{ route("greeting")}}" class="menu-inner__link">ご挨拶</a></div>
     <div><a href="{{ route("fee") }}" class="menu-inner__link">料金・プラン</a></div>

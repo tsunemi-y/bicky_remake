@@ -4,7 +4,6 @@ namespace App\Http\Traits;
 
 use App\Models\AvailableReservationDatetime;
 use App\Models\Reservation;
-use Illuminate\Support\Facades\DB;
 
 trait Reservationable
 {
@@ -79,6 +78,12 @@ trait Reservationable
             // 日付に対応する時間配列を再作成（unsetで添字がずれたため）
             // 添字がずれている場合、ビューに渡した配列がオブジェクト形式になってしまう
             $avaDatetimes[$avaDate] = array_values($avaDatetimes[$avaDate]);
+
+            // 時間形式をhh時ss秒に変更
+            foreach ($avaDatetimes[$avaDate] as $key => $time) {
+                $formattedTime = formatTime($time);
+                $avaDatetimes[$avaDate][$key] = $formattedTime; // フォーマット前時間をフォーマット後時間で上書き
+            }
         }
 
         return compact('avaDatetimes', 'avaDates');

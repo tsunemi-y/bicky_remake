@@ -28,7 +28,11 @@ class Reservation extends Model
     }
 
     /**
-     * 予約時間の取得
+     * 予約時間フォーマット変換
+     * ※秒数部分を削除
+     * 
+     * <実例>
+     * 21:00:00　⇛　21:00
      *
      * @param  string  $value
      * @return string

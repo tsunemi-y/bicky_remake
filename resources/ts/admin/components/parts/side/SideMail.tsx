@@ -5,7 +5,7 @@ import { faEnvelope, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 
 const SideMail: React.FC = () => {
-    const [toggle, setToggle] = useState<Boolean>(false);
+    const [toggle, setToggle] = useState<Boolean>(true);
 
     return (
         <>
@@ -18,6 +18,9 @@ const SideMail: React.FC = () => {
                 <ul className={toggle ? "transition duration-700 h-8" : "h-0 overflow-hidden"}>
                     <li>
                         <Link to="/admin/receipt">領収書</Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/evaluation">評価表</Link>
                     </li>
                 </ul>
             </li>

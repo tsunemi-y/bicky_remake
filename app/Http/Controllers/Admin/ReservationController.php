@@ -7,21 +7,20 @@ use Illuminate\Http\Request;
 use App\Http\Services\MailService;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\Reservationable;
-use App\Models\AvailableReservationDate;
 use App\Models\AvailableReservationDatetime;
-
-use Illuminate\Support\Facades\Log;
+use App\Http\Requests\CreateAvailableFormRequest;
 
 class ReservationController extends Controller
 {
     use Reservationable;
 
     /**
-     * Display a listing of the resource.
+     * 予約画面表示
+     * @param Illuminate\Http\Request
      *
      * @return \Illuminate\Http\Response
      */
-    public function getReservations(Request $request)
+    public function getReservations()
     {
         $reservationModel = new Reservation;
 
@@ -40,11 +39,11 @@ class ReservationController extends Controller
         //======予約情報取得　ここから======
         $tmpReservations = $reservationModel
             ->join('users', 'reservations.user_id', 'users.id')
-            ->get(['childName', 'reservation_date', 'reservation_time']);
+            ->get(['parentName', 'reservation_date', 'reservation_time']);
         $reservations = [];
         foreach ($tmpReservations as $tr) {
             $reservations[$tr->reservation_date] = [
-                'reservationName' => $tr->childName,
+                'reservationName' => $tr->parentName,
                 'reservationTime' => $tr->reservation_time
             ];
         }
@@ -57,8 +56,10 @@ class ReservationController extends Controller
      * 利用可能日時登録
      *
      * @param \Illuminate\Http\Request
+     * 
+     * @return void
      */
-    public function saveDatetime(Request $request)
+    public function saveDatetime(CreateAvailableFormRequest $request)
     {
         $datetime = $request['datetime'];
         $date = substr($datetime, 0, 10);
@@ -73,9 +74,10 @@ class ReservationController extends Controller
     }
 
     /**
-     * 利用可能日時削除
-     *
+     * 利用可能日時削除　todo: バリデ
      * @param \Illuminate\Http\Request
+     * 
+     * @return void
      */
     public function deleteDatetime(Request $request)
     {
@@ -88,13 +90,16 @@ class ReservationController extends Controller
     }
 
     /**
-     * 料金更新
-     *
-     * @return \Illuminate\Http\Response
+     * 料金更新 todo: バリデ
+     * @param Illuminate\Http\Request
+     * @param App\Models\Reservation
+     * 
+     * @return void
      */
     public function updateReservation(Request $request, Reservation $reservation)
     {
-        $reservation->update([
+        // todo 個別ユーザインスタンスのuser_idに紐づくユーザidを対象に、料金を更新
+        $reservation->user->update([
             'fee' => $request->fee,
         ]);
     }
@@ -110,12 +115,13 @@ class ReservationController extends Controller
             ->equalDate($request->reservationDate)
             ->fuzzyName($request->reservationName)
             ->equalId($request->id)
-            ->get();
+            ->get(['reservations.id as id', 'parentName', 'reservation_date', 'reservation_time', 'email', 'fee']);
         return $reservations;
     }
 
     /**
-     * 領収書送信
+     * 領収書送信 todo：　共通化　評価表も送るため pdfじゃないと送れないようにバリで
+     * @param Illuminate\Http\Request
      *
      * @return \Illuminate\Http\Response
      */

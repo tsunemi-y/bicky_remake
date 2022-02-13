@@ -5,7 +5,7 @@ import { faCalendarCheck, faAngleDown } from "@fortawesome/free-solid-svg-icons"
 
 
 const SideReservation: React.FC = () => {
-    const [toggle, setToggle] = useState<Boolean>(false);
+    const [toggle, setToggle] = useState<Boolean>(true);
 
     return (
         <>

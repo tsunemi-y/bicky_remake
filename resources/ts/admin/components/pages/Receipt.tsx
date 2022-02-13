@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useHistory  } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Loading from '../parts/Loading';
 
@@ -19,7 +20,7 @@ const initialInputData: InputData = {
 
 interface RData {
     id: number
-    childName: string
+    parentName: string
     reservation_date: string
     reservation_time: string
     email: string
@@ -28,7 +29,7 @@ interface RData {
 
 const rData = {
     id: 0,
-    childName: '',
+    parentName: '',
     reservation_date: '',
     reservation_time: '',
     email: '',
@@ -40,6 +41,29 @@ const Receipt: React.FC<Props> = (props) => {
     const [reservations, getReservations] = useState<RData>(rData);
     const [data, setData] = useState<InputData>(initialInputData);
     const [loadingDispFlag, setLoadingDispFlag] = useState<Boolean>(false);
+
+    const history = useHistory(); 
+
+    useEffect(() => {
+        const fetchUserInfoSendReciiept = async () => {
+            setLoadingDispFlag(true);
+            const response = await axios.get(`/api/admin/getUserInfoSendReciept`);
+            getReservations(response.data);
+            console.log(response.data);
+            setLoadingDispFlag  (false);
+        }
+        try {
+            fetchUserInfoSendReciiept();
+        } catch (err) {
+            alert('エラーです。やり直してください。');
+            setLoadingDispFlag(false);
+        }
+    },[]);
+
+    const handleOnClick = (rsvId: Number) => {
+        console.log(rsvId);
+        history.push(`/admin/receipt/send/${rsvId}`);
+    }
 
     const onChangeRsvDate = (event: React.ChangeEvent<HTMLInputElement>) =>  {
         const value: string = event.target.value;
@@ -84,12 +108,10 @@ const Receipt: React.FC<Props> = (props) => {
                             <th>料金</th>
                         </tr>
                     </thead>
-                    {reservations[0] && reservations[0].childName !='' && reservations.map((rsv, index) =>
-                        <tbody key={index}>
+                    {reservations[0] && reservations[0].parentName !='' && reservations.map((rsv, index) =>
+                        <tbody key={index} onClick={() => handleOnClick(rsv.id)}>
                             <tr className="border-b-2 border-gray-500 border-solid bg-white h-16">
-                                <td key={index}>
-                                    <Link to={`/admin/receipt/send/${rsv.id}`}>{rsv.childName}</Link>
-                                </td>
+                                <td>{rsv.parentName}</td>
                                 <td>{rsv.reservation_date}</td>
                                 <td>{rsv.reservation_time}</td>
                                 <td>{rsv.email}</td>

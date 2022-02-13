@@ -25,18 +25,18 @@ class ReservationFormRequest extends FormRequest
     {
 
         return [
-            'reservation_date'  => ['required', 'date'],
-            'reservation_time'  => ['required',],
+            'avaDate'  => ['required', 'date'],
+            'avaTime'  => ['required',],
         ];
     }
 
     public function messages()
     {
         return [
-            'reservation_date.required'  => '予約日をご入力ください',
-            'reservation_date.date'      => '日付形式でご入力ください',
+            'avaDate.required'  => '予約日をご入力ください',
+            'avaDate.date'      => '日付形式でご入力ください',
 
-            'reservation_time.required'  => '予約時間をご入力ください',
+            'avaTime.required'  => '予約時間をご入力ください',
         ];
     }
 }
