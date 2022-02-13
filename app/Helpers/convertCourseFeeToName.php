@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 if (!function_exists('convertCourseFeeToName')) {
     /**
-     * 時間をユーザが見やすい形にフォーマット
+     * コース料金をコース名に変換
      * @return string
      */
     function convertCourseFeeToName($fee)
