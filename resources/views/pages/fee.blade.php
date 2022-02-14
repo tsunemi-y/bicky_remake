@@ -19,14 +19,9 @@
             <x-breadcrumb item="TOP" item2="料金・プラン" url="https://bicky.herokuapp.com/fee" />
             <h1 class="main-title">料金・プラン</h1>
 
-            <p class="mb-2">
-                ビッキーことば塾では、毎月、訓練中に評価した内容を文書にしてお渡ししております。
-                下記記載の料金は、評価書作成代も含めての料金になります。
-            </p>
-
             <p class="mb-4">
-                平日と休日によって料金・時間が異なります。<br>
-                違いについては下記をご覧ください。
+                ビッキーことば塾では、訓練中に評価した内容を文書にしてお渡ししております。
+                下記記載の料金は、評価書作成代も含めての料金になります。
             </p>
             
             {{-- 料金・プラン --}}
@@ -34,10 +29,10 @@
                 <h2>料金・プラン</h2>
                 <section class="mb-4">
                     <p class="mb-2">
-                        訓練回数は月一回または二回のどちらかをご選択いただけます。<br>
-                        月二回の場合は、月一回の倍の料金になります。<br>
-                        どのプランをご選択されても月4回のLINE相談は付属しております。<br>
-                        ※月一回、二回どちらでもLINE相談の回数は変わりません
+                        訓練回数は月1回または2回のどちらかをご選択いただけます。<br>
+                        月2回の場合は、月1回の倍の料金になります。<br>
+                        月2回の場合は、来所での訓練が月2回（隔週）、評価表が2回分になります。<br>
+                        LINEでの相談は、2回以上で4回までご利用可能です。
                     <p>
                     <table border="1" class="text-center mb-2" width="100%">
                         <thead>
@@ -50,13 +45,13 @@
                         </thead>
                         <tbody>    
                             <tr class="table-height">
-                                <th style="background-color: #fdffe5;">月一回</th>
+                                <th style="background-color: #fdffe5;">月1回</th>
                                 <th>7,700円</th>
                                 <th>8,800円</th>
                                 <th>13,200円（6,600円/人）</th>
                             </tr>
                             <tr class="table-height">
-                                <th style="background-color: #fdffe5;">月二回</th>
+                                <th style="background-color: #fdffe5;">月2回</th>
                                 <th>15,400円</th>
                                 <th>17,600円</th>
                                 <th>26,400円（13,200円/人）</th>
