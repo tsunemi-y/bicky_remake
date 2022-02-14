@@ -37,6 +37,10 @@ Route::get('access', function () {
     return view('pages.access');
 })->name('access');
 
+Route::get('overview', function () {
+    return view('pages.overview');
+})->name('overview');
+
 // 料金画面
 Route::get('fee', [FeeController::class, 'index'])->name('fee');
 
