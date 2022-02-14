@@ -16,6 +16,7 @@ class UserController extends Controller
      */
     public function getUsers(Request $request)
     {
+        \Debugbar::info($request);
         $userModel = new User();
         $users = $userModel
             ->fuzzyName($request->name)

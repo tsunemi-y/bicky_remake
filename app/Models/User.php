@@ -76,7 +76,7 @@ class User extends Authenticatable
     public function scopeFuzzyName($query, $name)
     {
         if ($name != '') {
-            return $query->where('name', 'like', "%$name%");
+            return $query->where('parentName', 'like', "%$name%");
         }
     }
 

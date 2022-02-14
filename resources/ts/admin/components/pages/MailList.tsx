@@ -39,6 +39,7 @@ const MailList: React.FC<Props> = (props) => {
     const history = useHistory(); 
 
     const fetchUsers = async () => {
+        console.log(data);
         setLoadingDispFlag(true);
         const response = await axios.get(`/api/admin/users?name=${data.name}`);
         setUsers(response.data);
