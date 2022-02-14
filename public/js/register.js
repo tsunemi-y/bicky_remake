@@ -7,6 +7,11 @@ var __webpack_exports__ = {};
 // ※兄弟児がいる場合のみ入力する項目が対象
 showedOrHidedTargetElementList = [$('#age2'), $('#gender2'), $('#diagnosis2')];
 $(function () {
+  // フラッシュメッセージ表示
+  if (isRegistration) {
+    $('#registration').modal();
+  }
+
   showOrHideTargetElementList($('#childName2').val(), showedOrHidedTargetElementList);
 });
 $('#childName2').change(function () {

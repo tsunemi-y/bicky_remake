@@ -18698,16 +18698,17 @@ var MailList = function MailList(props) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              console.log(data);
               setLoadingDispFlag(true);
-              _context.next = 3;
+              _context.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_3___default().get("/api/admin/users?name=".concat(data.name));
 
-            case 3:
+            case 4:
               response = _context.sent;
               setUsers(response.data);
               setLoadingDispFlag(false);
 
-            case 6:
+            case 7:
             case "end":
               return _context.stop();
           }

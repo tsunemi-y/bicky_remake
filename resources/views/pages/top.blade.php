@@ -14,12 +14,6 @@
 @endsection
 
 @section('content')
-
-    @if (session('successCancel'))
-        <div class="alert alert-success top-alert">
-            <p>{{ session('successCancel') }}</p>
-        </div>   
-    @endif
     
 <div class="row animation">
     <div class="col">
@@ -44,5 +38,22 @@
         </div>
     </div>
 </div>
+
+{{-- 会員登録後モーダル --}}
+@if (session('registration'))
+<div class="modal fade" id="registration" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>{!! session('registration') !!}</p>
+      </div>
+    </div>
+  </div>
+</div>
+@endif
+
+<script>
+  const isRegistration = @json(!empty(session('registration')));
+</script>  
 
 @endsection

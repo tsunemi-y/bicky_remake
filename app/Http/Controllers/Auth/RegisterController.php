@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use App\Consts\ConstUser;
 use App\Rules\AlphaNumHalf;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -107,13 +110,36 @@ class RegisterController extends Controller
             'introduction' => $data['introduction'],
             'coursePlan'   => $data['coursePlan'],
             'consaltation' => $data['consaltation'],
-            'fee' => $coursePlan,
+            'fee'          => $coursePlan,
         ]);
 
         $lineModel = new LineMessengerController();
         $lineModel->sendRegistrationMessage($user);
 
         return $user;
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 201)
+            : redirect($this->redirectPath())->with('registration', '会員登録に成功しました。</br>ご予約をご希望の方は予約画面からお願い致します。');
     }
 
     /**

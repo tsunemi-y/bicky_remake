@@ -8,6 +8,12 @@ showedOrHidedTargetElementList = [
 ];
 
 $(function() {
+
+    // フラッシュメッセージ表示
+    if (isRegistration) {
+        $('#registration').modal();
+    }
+
     showOrHideTargetElementList($('#childName2').val(), showedOrHidedTargetElementList);
 });
 
