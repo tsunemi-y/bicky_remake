@@ -8,7 +8,10 @@
 /***/ (() => {
 
 $(function () {
-  $('.hero-img').addClass('hero-img-show');
+  // フラッシュメッセージ表示
+  if (isRegistration) {
+    $('#registration').modal();
+  }
 });
 
 /***/ }),

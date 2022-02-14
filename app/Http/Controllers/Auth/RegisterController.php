@@ -90,7 +90,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $this->validator($data);
+        // $this->validator($data);
 
         $coursePlan = $this->getFeeByCourse((int) $data['numberOfUse'], (int) $data['coursePlan'], $data['childName2']);
 
