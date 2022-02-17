@@ -35,7 +35,7 @@
 
               <div class="mb-3">
                 <label for="tel" class="form-label" style="margin-bottom: 0;">電話番号<span class="text-danger">【必須】</span></label>
-                <p class="small">※ハイフンなしでご入力ください</p>
+                <p class="small" style="margin-bottom: .5rem;>※ハイフンなしでご入力ください</p>
                 <input type="tel" class="form-control" id="tel" name="tel" placeholder="08012345678" value="{{ old('tel') }}">
                 @if($errors->has('tel'))
                     <div class="error text-danger">
@@ -46,7 +46,7 @@
 
               <div class="mb-3">
                 <label for="password" class="form-label" style="margin-bottom: 0;">パスワード<span class="text-danger">【必須】</span></label>
-                <p class="small">※8桁の半角英数字でご入力ください</p>
+                <p class="small" style="margin-bottom: .5rem;>※8桁の半角英数字でご入力ください</p>
                 <input type="password" class="form-control" id="password" name="password">
                 @if($errors->has('password'))
                     <div class="error text-danger">
