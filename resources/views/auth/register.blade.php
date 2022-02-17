@@ -34,6 +34,16 @@
               </div>
 
               <div class="mb-3">
+                <label for="tel" class="form-label">電話番号<span class="text-danger">【必須】</span></label>
+                <input type="tel" class="form-control" id="tel" name="tel" placeholder="name@example.com" value="{{ old('tel') }}">
+                @if($errors->has('tel'))
+                    <div class="error text-danger">
+                        <p>{{ $errors->first('tel') }}</p>
+                    </div>
+                @endif
+              </div>
+
+              <div class="mb-3">
                 <label for="password" class="form-label">パスワード<span class="text-danger">【必須】</span></label>
                 <input type="password" class="form-control" id="password" name="password">
                 @if($errors->has('password'))

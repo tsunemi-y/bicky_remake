@@ -59,6 +59,7 @@ class RegisterController extends Controller
         $validationConditionList = [
             'parentName'   => ['required', 'string', 'max:255'],
             'email'        => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'tel'          => ['required', 'numeric', 'digits_between:10,11'],
             'password'     => ['required', new AlphaNumHalf, 'min:8', 'confirmed'],
             'childName'    => ['required', 'string', 'max:255'],
             'age'          => ['required', 'integer'],
@@ -97,6 +98,7 @@ class RegisterController extends Controller
         $user = User::create([
             'parentName'   => $data['parentName'],
             'email'        => $data['email'],
+            'tel'          => $data['tel'],
             'password'     => Hash::make($data['password']),
             'childName'    => $data['childName'],
             'age'          => $data['age'],
@@ -111,6 +113,7 @@ class RegisterController extends Controller
             'coursePlan'   => $data['coursePlan'],
             'consaltation' => $data['consaltation'],
             'fee'          => $coursePlan,
+            'userAgent'    => $_SERVER['HTTP_USER_AGENT'],
         ]);
 
         $lineModel = new LineMessengerController();

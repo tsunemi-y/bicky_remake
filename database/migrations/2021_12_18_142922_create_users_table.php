@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('parentName')->comment('保護者氏名');
             $table->string('email')->unique();
+            $table->string('tel');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
@@ -34,6 +35,7 @@ class CreateUsersTable extends Migration
             $table->integer('coursePlan')->comment('コースプラン');
             $table->string('consaltation')->nullable()->comment('相談内容');
             $table->string('fee')->nullable()->comment('料金');
+            $table->string('userAgent')->nullable()->comment('ユーザエージェント');
             // 追加　end
             $table->timestamps();
         });
