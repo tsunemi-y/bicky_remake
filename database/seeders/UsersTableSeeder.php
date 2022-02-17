@@ -17,6 +17,7 @@ class UsersTableSeeder extends Seeder
         User::create([
             'parentName' => '松岡親太郎',
             'email' => 'tatataabcd@gmail.com',
+            'tel' => '08099999999',
             'password' => \Hash::make('tarou0208'),
             'childName' => '松岡子太郎',
             'age' => '5',
