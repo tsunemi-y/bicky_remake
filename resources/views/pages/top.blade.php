@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="{{ asset('css/top.css') }}">
 @endsection
 
+@section('pageJs')
+  <script src="{{ asset('js/top.js') }}"></script> 
+@endsection
+
 @section('content')
     
 <div class="row animation">

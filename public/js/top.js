@@ -81,6 +81,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/sass/overview.scss":
+/*!**************************************!*\
+  !*** ./resources/sass/overview.scss ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/sass/admin/app.scss":
 /*!***************************************!*\
   !*** ./resources/sass/admin/app.scss ***!
@@ -210,6 +223,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 			"css/header": 0,
 /******/ 			"css/common": 0,
 /******/ 			"admin/css/app": 0,
+/******/ 			"css/overview": 0,
 /******/ 			"css/fee": 0,
 /******/ 			"css/access": 0,
 /******/ 			"css/reservation": 0,
@@ -264,15 +278,16 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/js/top.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/admin/app.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/common.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/header.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/footer.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/top.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/reservation.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/access.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/fee.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/overview","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/js/top.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/overview","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/admin/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/overview","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/common.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/overview","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/header.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/overview","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/footer.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/overview","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/top.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/overview","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/reservation.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/overview","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/access.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/overview","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/fee.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/header","css/common","admin/css/app","css/overview","css/fee","css/access","css/reservation","css/top","css/footer"], () => (__webpack_require__("./resources/sass/overview.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

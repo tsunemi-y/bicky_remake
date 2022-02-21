@@ -55,6 +55,5 @@
         @yield('footer')
         @yield('pageJs')
         <script src="{{ asset('js/header.js') }}"></script>  
-        <script src="{{ asset('js/top.js') }}"></script>  
     </body>
 </html>

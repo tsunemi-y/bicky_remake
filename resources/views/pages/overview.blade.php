@@ -6,21 +6,18 @@
 @endsection
 
 @section('title')
-    <title>概要 | ビッキーことば塾 | 島本町・大山崎町・高槻市 | 発達障害や言葉の遅れが気になる子供の訓練 </title>
+    <title>訓練 | ビッキーことば塾 | 島本町・大山崎町・高槻市 | 発達障害や言葉の遅れが気になる子供の訓練 </title>
+@endsection
+
+@section('pageCss')
+    <link rel="stylesheet" href="{{ asset('css/overview.css') }}">
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col">
-            <x-breadcrumb item="TOP" item2="概要" url="https://bicky.herokuapp.com/overview" />
-            <h1 class="main-title">概要</h1>
-
-            {{-- <p class="mb-4">
-                令和4年4月から島本町の地で、民間事業ビッキーことば塾を開設することとなりました。<br>
-                障害の有無に関わらず、お子様方が自分らしく生活の質を高めていけるようにサポートさせて頂きたいと考えています。<br>
-                ことば塾は、親御様の相談所の役割もあります。<br>
-                ひとりひとりに合う子育てを一緒に考えていきましょう。<br>
-            </p> --}}
+            <x-breadcrumb item="TOP" item2="訓練" url="https://bicky.herokuapp.com/overview" />
+            <h1 class="main-title">訓練</h1>
 
             <section class="mb-4">
                 <h2>訓練内容</h2>
@@ -36,15 +33,44 @@
             </section>
 
             <section class="mb-4">
-                <h2>訓練日時</h2>
-                <p>
-                    月曜から日曜日まで。来所での訓練は月に1or2回1時間。<br>
-                    （祝日はお休みです）時間は不定。<br>
-                    開所時間は10時~14時。（夕方の訓練は検討中です）<br>
-                    （兄妹での来所は1時間30分）完全予約制<br>
-                    週に1回（月3回~4回）、LINEアプリにて動画を添付して頂き、
-                    1週間のご様子を報告して頂き、LINEで返答します。
-                </p>
+                <h2>訓練詳細</h2>
+                <table class="sp-table" border="1">
+
+                    <tr><th>訓練曜日</th></tr>
+                    <tr><td>月~日</td></tr>
+                  
+                    <tr><th>訓練回数</th></tr>
+                    <tr><td>月1回または2回</td></tr>
+
+                    <tr><th>訓練時間</th></tr>
+                    <tr>
+                        <td>
+                            1時間<br>
+                            ※兄弟利用の場合は1時間半
+                        </td>
+                    </tr>
+
+                    <tr><th>開所時間</th></tr>
+                    <tr><td>10時~14時</td></tr>
+
+                    <tr><th>LINE相談</th></tr>
+                    <tr>
+                        <td>
+                            お子様の1週間のご様子を報告していただきます<br/>
+                            動画を添付してご送信ください<br/>
+                            指導員が返答致します
+                        </td>
+                    </tr>
+
+                    <tr><th>LINE相談回数</th></tr>
+                    <tr>
+                        <td>
+                            週に1回<br/>
+                            ※月の訓練回数によって変動あり
+                        </td>
+                    </tr>
+                  
+                </table>
             </section>
 
             <section>
