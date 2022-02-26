@@ -7,7 +7,7 @@
         <div><a href="{{ route("login")}}" class="menu-inner__link">ログイン</a></div>
     @endif
     <div><a href="{{ route("greeting")}}" class="menu-inner__link">ご挨拶</a></div>
-    <div><a href="{{ route("overview")}}" class="menu-inner__link">訓練</a></div>
+    <div><a href="{{ route("overview")}}" class="menu-inner__link">訓練内容</a></div>
     <div><a href="{{ route("fee") }}" class="menu-inner__link">料金・プラン</a></div>
     <div><a href="{{ route("reservationTop") }}" class="menu-inner__link">予約</a></div>
     <div><a href="{{ route("introduction") }}" class="menu-inner__link">指導員紹介</a></div>
@@ -33,7 +33,7 @@
                 <div><a href="{{ route("login")}}" class="pc-header__item">ログイン</a></div>
             @endif
             <div><a href="{{ route("greeting")}}" class="pc-header__item">ご挨拶</a></div>
-            <div><a href="{{ route("overview")}}" class="pc-header__item">訓練</a></div>
+            <div><a href="{{ route("overview")}}" class="pc-header__item">訓練内容</a></div>
             <div><a href="{{ route("fee") }}" class="pc-header__item">料金・プラン</a></div>
             <div><a href="{{ route("reservationTop") }}" class="pc-header__item">予約</a></div>
             <div><a href="{{ route("introduction") }}" class="pc-header__item">指導員紹介</a></div>

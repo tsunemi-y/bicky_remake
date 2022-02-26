@@ -16,21 +16,18 @@
 @section('content')
     <div class="row">
         <div class="col">
-            <x-breadcrumb item="TOP" item2="訓練" url="https://bicky.herokuapp.com/overview" />
-            <h1 class="main-title">訓練</h1>
+            <x-breadcrumb item="TOP" item2="訓練内容" url="https://bicky.herokuapp.com/overview" />
+            <h1 class="main-title">訓練内容</h1>
 
-            <section class="mb-4">
-                <h2>訓練内容</h2>
-                <p>
-                    LINEやメールで状況確認を致します。<br>
-                    直接訓練後の経過を週に1度観察し、次回の訓練時までに環境の調整を行っていきます。<br>
-                    来所での訓練時の様子から評価表を作成致します。<br>
-                    評価表の作成には1週間前後かかります。<br>
-                    作成した文書はメール（PDF）にて送信致します。<br>
-                    遠方からのご利用の方やコロナ渦ということを考慮致しまして、
-                    安全に訓練を受けて頂きたいと考えています。<br>
-                </p>
-            </section>
+            <p>
+                LINEやメールで状況確認を致します。<br>
+                直接訓練後の経過を週に1度観察し、次回の訓練時までに環境の調整を行っていきます。<br>
+                来所での訓練時の様子から評価表を作成致します。<br>
+                評価表の作成には1週間前後かかります。<br>
+                作成した文書はメール（PDF）にて送信致します。<br>
+                遠方からのご利用の方やコロナ渦ということを考慮致しまして、
+                安全に訓練を受けて頂きたいと考えています。<br>
+            </p>
 
             <section class="mb-4">
                 <h2>訓練詳細</h2>
