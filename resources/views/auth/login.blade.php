@@ -1,6 +1,8 @@
 @extends('layout.common')
 @include('layout.header')
-
+@section('pageJs')
+    <script src="{{ asset('js/login.js') }}"></script>
+@endsection
 @section('content')
 <div class="row">
     <div class="col">
@@ -32,7 +34,7 @@
               </div>
 
               <div class="text-center mt-5">
-                  <input type="submit" value="送信" class="btn btn-secondary w-100">
+                  <input type="submit" value="送信" class="btn btn-secondary w-100" id="jsLoginBtn">
               </div>
 
           </form>

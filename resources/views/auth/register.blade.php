@@ -237,7 +237,7 @@
               </div>
 
               <div class="text-center mt-5">
-                  <input type="submit" value="送信" class="btn btn-secondary w-100">
+                  <input type="submit" value="送信" class="btn btn-secondary w-100" id="jsRegistrationBtn">
               </div>
 
           </form>

@@ -23,6 +23,8 @@ function showOrHideTargetElementList(targetEventElementVal, targetElementList) {
       targetElementList[_i].addClass('d-none');
     }
   }
-}
+} // $('#jsRegistrationBtn').click(function() {
+//     $(this).prop("disabled", true);
+// });
 /******/ })()
 ;

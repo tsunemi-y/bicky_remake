@@ -27,3 +27,7 @@ function showOrHideTargetElementList(targetEventElementVal, targetElementList) {
         }
     }
 }
+
+// $('#jsRegistrationBtn').click(function() {
+//     $(this).prop("disabled", true);
+// });

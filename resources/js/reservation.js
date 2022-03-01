@@ -21,7 +21,7 @@ $('.day-ok').click(function() {
     $requestedAvaDate.val(date);
     const timesPerTargetDate = avaTimes[date];
     for (i = 0; i < timesPerTargetDate.length; i++) {
-        $avaTime.append(`<button class="btn mb-3 ava-time">${timesPerTargetDate[i]}</button>`);
+        $avaTime.append(`<button class="btn mb-3 ava-time" id="jsAvaTimeBtn">${timesPerTargetDate[i]}</button>`);
     }
     $('#avaTimeModal').modal();
 });
@@ -40,6 +40,7 @@ $(document).on("click",".ava-time", function() {
     const formatedDateTime = getFormatedDateTime(avaDate, avaTime);
     const isDoneReservation = confirm(formatedDateTime + 'に予約してよろしいですか？');
     if (isDoneReservation) {
+        $(this).prop("disabled", true);
         $requestedAvaTime = $('#jsRequestedAvaTime');
         const restoredTimeFormat = moment(avaTime, 'HH:mm:ss').format('HH:mm:ss'); // サーバ側でエラーにならないようフォーマットをもとに戻す
         $requestedAvaTime.val(restoredTimeFormat);
@@ -54,5 +55,3 @@ function getFormatedDateTime(avaDate, avaTime) {
     const miniute = avaTime.slice(3, 5) + '分';
     return month + day + hour + miniute;
 }
-
-
