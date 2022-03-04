@@ -19,7 +19,7 @@
             <x-breadcrumb item="TOP" item2="訓練内容" url="https://bicky.herokuapp.com/overview" />
             <h1 class="main-title">訓練内容</h1>
 
-            <p>
+            <p class="mb-4">
                 LINEやメールで状況確認を致します。<br>
                 直接訓練後の経過を週に1度観察し、次回の訓練時までに環境の調整を行っていきます。<br>
                 来所での訓練時の様子から評価表を作成致します。<br>
