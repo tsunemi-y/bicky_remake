@@ -8,26 +8,31 @@ showedOrHidedTargetElementList = [
 ];
 
 $(function() {
-    showOrHideTargetElementList($('#childName2').val(), showedOrHidedTargetElementList);
+    onHandleChangeChildName2($('#childName2').val(), showedOrHidedTargetElementList);
 });
 
 $('#childName2').change(function() {
-    showOrHideTargetElementList($(this).val(), showedOrHidedTargetElementList);
+    onHandleChangeChildName2($(this).val(), showedOrHidedTargetElementList);
 });
 
 // 発火要素値の有無により、対象要素リストの表示・非表示を制御
-function showOrHideTargetElementList(targetEventElementVal, targetElementList) {
+function onHandleChangeChildName2(targetEventElementVal, targetElementList) {
     if (targetEventElementVal) {
         for (let i = 0; i < targetElementList.length; i++) {
-            targetElementList[i].removeClass('d-none')
+            targetElementList[i].removeClass('d-none');
         }
     } else {
         for (let i = 0; i < targetElementList.length; i++) {
-            targetElementList[i].addClass('d-none')
+            targetElementList[i].addClass('d-none');
+        }
+        
+        // 兄弟児氏名の削除時、他兄弟児要素の値を空に設定
+        targetInputElementList = [
+            $('input[name="age2"]'),
+            $('input[name="diagnosis2"]'),
+        ];
+        for (let i = 0; i < targetInputElementList.length; i++) {
+            targetInputElementList[i].val('');
         }
     }
 }
-
-// $('#jsRegistrationBtn').click(function() {
-//     $(this).prop("disabled", true);
-// });

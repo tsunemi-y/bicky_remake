@@ -188,7 +188,7 @@ return [
 
         'age2' => [
             'required'  => '年齢2をご入力ください',
-            'integer'   => '文字でご入力ください',
+            'integer'   => '数字でご入力ください',
         ],
 
         'gender2' => [

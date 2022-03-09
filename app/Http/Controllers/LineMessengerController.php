@@ -67,6 +67,8 @@ class LineMessengerController extends Controller
 
         $message = '新規登録を受付ました。' . "\n" . "\n";
         $message .= "保護者氏名：　$user->parentName" . "\n";
+        $message .= "メールアドレス：　$user->email" . "\n";
+        $message .= "電話番号：　$user->tel" . "\n";
         $message .= "利用児氏名：　$user->childName" . "\n";
         $message .= "年齢：　$user->age" . "\n";
         $message .= "性別：　$user->gender" . "\n";

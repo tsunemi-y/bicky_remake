@@ -95,6 +95,10 @@ class RegisterController extends Controller
 
         $coursePlan = $this->getFeeByCourse((int) $data['numberOfUse'], (int) $data['coursePlan'], $data['childName2']);
 
+        // 利用時2未入力時は、age2をnullに設定
+        // ※age2はラジオボタンであり初期値が設定されるため
+        if (empty($data['childName2'])) $data['age2'] = null;
+
         $user = User::create([
             'parentName'   => $data['parentName'],
             'email'        => $data['email'],
