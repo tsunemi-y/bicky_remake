@@ -69,6 +69,7 @@ class RegisterController extends Controller
             'age2'         => ['nullable', 'integer'],
             'gender2'      => ['nullable', 'string', 'max:255'],
             'diagnosis2'   => ['nullable', 'string', 'max:255'],
+            'postCode'     => ['required', 'string', 'min:7', 'max:8'],
             'address'      => ['required', 'string', 'max:255'],
             'coursePlan'   => ['required', 'integer'],
             'introduction' => ['nullable', 'string', 'max:255'],

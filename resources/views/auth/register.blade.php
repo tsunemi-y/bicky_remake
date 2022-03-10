@@ -176,6 +176,20 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="postCode" class="form-label" style="margin-bottom: 0;">郵便番号<span
+                                class="text-danger">【必須】</span></label>
+                        <p class="small" style="margin-bottom: .5rem;">※ハイフンなしでご入力ください</p>
+                        <input type="text" class="form-control" id="postCode" name="postCode" placeholder="1234567"
+                            size="10" maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','address','address');"
+                            value="{{ old('postCode') }}">
+                        @if ($errors->has('postCode'))
+                            <div class="error text-danger">
+                                <p>{{ $errors->first('postCode') }}</p>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="mb-3">
                         <label for="address" class="form-label">住所<span class="text-danger">【必須】</span></label>
                         <input type="text" class="form-control" id="address" name="address" placeholder="〇〇区"
                             value="{{ old('address') }}">
