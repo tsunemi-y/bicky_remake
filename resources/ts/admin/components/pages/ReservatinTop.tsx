@@ -29,6 +29,7 @@ const ReservatinTop: React.FC<Props> = (props) => {
     const [avaTimes, setAvaTimes] = useState<any>(rData);
     const [date, setDate] = useState<Date>(new Date());
     const [datetime, setDatetime] = useState<any>('');
+    const [isBulk, setIsBulk] = useState<boolean>(true);
     const [deletedTargetAvaTimes, setDeletedTargetAvaTimes] = useState<any>([]);
     const [isShownModal, setIsShownModal] = useState<boolean>(false);
     const [loadingDispFlag, setLoadingDispFlag] = useState<Boolean>(false);
@@ -101,6 +102,11 @@ const ReservatinTop: React.FC<Props> = (props) => {
         setDatetime(value);
     }
 
+    const onChangeIsBulk = (event: React.ChangeEvent<HTMLInputElement>): void =>  {
+        const value: boolean = JSON.parse(event.target.value);
+        setIsBulk(value);
+    }
+
     // 予約可能テーブルに予約可能日時登録
     const createDatetime = async () => {
         try {
@@ -108,14 +114,14 @@ const ReservatinTop: React.FC<Props> = (props) => {
             const result: boolean = confirm(`${replacedDatetime}を予約可能日時に設定します。よろしいですか？`);
             if (result === false) return;
             const data = {
-                datetime: replacedDatetime
+                datetime: replacedDatetime,
+                isBulk
             }
             setLoadingDispFlag(true);
             await axios.post(`/api/admin/saveReservation`, data);
             fetchReservations();
             alert('登録に成功しました。');
         } catch (err) {
-            console.log(err);
             alert('登録に失敗しました。やり直してください。');
             setLoadingDispFlag(false);
         }
@@ -169,8 +175,17 @@ return (
         <>
             <h1　className="font-bold text-left text-2xl">{props.title}</h1>
             <div className="mt-3">
-                <label className="font-bold mr-3" htmlFor="avaDatetime">利用可能日時追加</label>
-                <input value={ datetime } onChange={onChangeDatetime} className="border-2 border-black border-solid p-0.5 rounded" type="datetime-local" id="avaDatetime"/>
+                <div className="mb-2">
+                    <label className="font-bold mr-3" htmlFor="avaDatetime">利用可能日時追加</label>
+                    <input value={ datetime } onChange={onChangeDatetime} className="border-2 border-black border-solid p-0.5 rounded" type="datetime-local" id="avaDatetime"/>
+                </div>
+
+                <div>
+                    <label className="font-bold mr-3">時間一括登録</label>
+                    <label htmlFor="notIsBulk"><input type="radio" name="isBulk" value="false" onChange={onChangeIsBulk} checked={isBulk === false} id="notIsBulk"/>なし</label>
+                    <label htmlFor="isBulk"><input type="radio" name="isBulk" value="true" onChange={onChangeIsBulk} checked={isBulk === true} id="isBulk" className="ml-2" />あり</label>
+                </div>
+
                 <div className="bg-blue-900 mt-3 p-1 rounded text-center text-white w-20">
                     <button className="w-full" onClick={ createDatetime }>追加</button>
                 </div>

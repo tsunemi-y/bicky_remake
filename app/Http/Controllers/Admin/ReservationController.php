@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use App\Consts\ConstReservation;
 use App\Http\Services\MailService;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\Reservationable;
 use App\Models\AvailableReservationDatetime;
@@ -67,10 +69,22 @@ class ReservationController extends Controller
 
         $avaRsvDatetimeModel = new AvailableReservationDatetime();
 
-        $avaRsvDatetimeModel->create([
-            'available_date' => $date,
-            'available_time' => $time,
-        ]);
+        // 一括ボタン押下時、一括登録
+        if ($request['isBulk']) {
+            $insetDatetimeList = [];
+            foreach (ConstReservation::AVAILABLE_TIME_LIST as $time) {
+                $insetDatetimeList[] = [
+                    'available_date' => $date,
+                    'available_time' => $time,
+                ];
+            }
+            DB::table('available_reservation_datetimes')->insert($insetDatetimeList);
+        } else {
+            $avaRsvDatetimeModel->create([
+                'available_date' => $date,
+                'available_time' => $time,
+            ]);
+        }
     }
 
     /**
