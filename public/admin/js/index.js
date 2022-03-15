@@ -19308,25 +19308,30 @@ var ReservatinTop = function ReservatinTop(props) {
       datetime = _useState6[0],
       setDatetime = _useState6[1];
 
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true),
       _useState8 = _slicedToArray(_useState7, 2),
-      deletedTargetAvaTimes = _useState8[0],
-      setDeletedTargetAvaTimes = _useState8[1];
+      isBulk = _useState8[0],
+      setIsBulk = _useState8[1];
 
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
       _useState10 = _slicedToArray(_useState9, 2),
-      isShownModal = _useState10[0],
-      setIsShownModal = _useState10[1];
+      deletedTargetAvaTimes = _useState10[0],
+      setDeletedTargetAvaTimes = _useState10[1];
 
   var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       _useState12 = _slicedToArray(_useState11, 2),
-      loadingDispFlag = _useState12[0],
-      setLoadingDispFlag = _useState12[1];
+      isShownModal = _useState12[0],
+      setIsShownModal = _useState12[1];
 
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(rData),
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       _useState14 = _slicedToArray(_useState13, 2),
-      reservations = _useState14[0],
-      setReservations = _useState14[1];
+      loadingDispFlag = _useState14[0],
+      setLoadingDispFlag = _useState14[1];
+
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(rData),
+      _useState16 = _slicedToArray(_useState15, 2),
+      reservations = _useState16[0],
+      setReservations = _useState16[1];
 
   var fetchReservations = function fetchReservations() {
     return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -19424,6 +19429,11 @@ var ReservatinTop = function ReservatinTop(props) {
   var onChangeDatetime = function onChangeDatetime(event) {
     var value = event.target.value;
     setDatetime(value);
+  };
+
+  var onChangeIsBulk = function onChangeIsBulk(event) {
+    var value = JSON.parse(event.target.value);
+    setIsBulk(value);
   }; // 予約可能テーブルに予約可能日時登録
 
 
@@ -19448,7 +19458,8 @@ var ReservatinTop = function ReservatinTop(props) {
 
             case 5:
               data = {
-                datetime: replacedDatetime
+                datetime: replacedDatetime,
+                isBulk: isBulk
               };
               setLoadingDispFlag(true);
               _context2.next = 9;
@@ -19457,17 +19468,16 @@ var ReservatinTop = function ReservatinTop(props) {
             case 9:
               fetchReservations();
               alert('登録に成功しました。');
-              _context2.next = 18;
+              _context2.next = 17;
               break;
 
             case 13:
               _context2.prev = 13;
               _context2.t0 = _context2["catch"](0);
-              console.log(_context2.t0);
               alert('登録に失敗しました。やり直してください。');
               setLoadingDispFlag(false);
 
-            case 18:
+            case 17:
             case "end":
               return _context2.stop();
           }
@@ -19560,17 +19570,50 @@ var ReservatinTop = function ReservatinTop(props) {
     }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", Object.assign({
       className: "mt-3"
     }, {
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", Object.assign({
-        className: "font-bold mr-3",
-        htmlFor: "avaDatetime"
+      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", Object.assign({
+        className: "mb-2"
       }, {
-        children: "\u5229\u7528\u53EF\u80FD\u65E5\u6642\u8FFD\u52A0"
-      }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
-        value: datetime,
-        onChange: onChangeDatetime,
-        className: "border-2 border-black border-solid p-0.5 rounded",
-        type: "datetime-local",
-        id: "avaDatetime"
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", Object.assign({
+          className: "font-bold mr-3",
+          htmlFor: "avaDatetime"
+        }, {
+          children: "\u5229\u7528\u53EF\u80FD\u65E5\u6642\u8FFD\u52A0"
+        }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+          value: datetime,
+          onChange: onChangeDatetime,
+          className: "border-2 border-black border-solid p-0.5 rounded",
+          type: "datetime-local",
+          id: "avaDatetime"
+        }, void 0)]
+      }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", Object.assign({
+          className: "font-bold mr-3"
+        }, {
+          children: "\u6642\u9593\u4E00\u62EC\u767B\u9332"
+        }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("label", Object.assign({
+          htmlFor: "notIsBulk"
+        }, {
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            type: "radio",
+            name: "isBulk",
+            value: "false",
+            onChange: onChangeIsBulk,
+            checked: isBulk === false,
+            id: "notIsBulk"
+          }, void 0), "\u306A\u3057"]
+        }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("label", Object.assign({
+          htmlFor: "isBulk"
+        }, {
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            type: "radio",
+            name: "isBulk",
+            value: "true",
+            onChange: onChangeIsBulk,
+            checked: isBulk === true,
+            id: "isBulk",
+            className: "ml-2"
+          }, void 0), "\u3042\u308A"]
+        }), void 0)]
       }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", Object.assign({
         className: "bg-blue-900 mt-3 p-1 rounded text-center text-white w-20"
       }, {
@@ -19721,6 +19764,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var _side_SideReservation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./side/SideReservation */ "./resources/ts/admin/components/parts/side/SideReservation.tsx");
 /* harmony import */ var _side_SideMail__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./side/SideMail */ "./resources/ts/admin/components/parts/side/SideMail.tsx");
+/* harmony import */ var _side_SideUser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./side/SideUser */ "./resources/ts/admin/components/parts/side/SideUser.tsx");
+
 
 
 
@@ -19734,7 +19779,7 @@ var SideMenu = function SideMenu() {
     }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", Object.assign({
       className: "mt-4 mx-auto w-4/6"
     }, {
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_side_SideReservation__WEBPACK_IMPORTED_MODULE_1__["default"], {}, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_side_SideMail__WEBPACK_IMPORTED_MODULE_2__["default"], {}, void 0)]
+      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_side_SideReservation__WEBPACK_IMPORTED_MODULE_1__["default"], {}, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_side_SideMail__WEBPACK_IMPORTED_MODULE_2__["default"], {}, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_side_SideUser__WEBPACK_IMPORTED_MODULE_3__["default"], {}, void 0)]
     }), void 0)]
   }, void 0);
 };
@@ -19743,9 +19788,9 @@ var SideMenu = function SideMenu() {
 
 /***/ }),
 
-/***/ "./resources/ts/admin/components/parts/side/SideMail.tsx":
+/***/ "./resources/ts/admin/components/parts/side/SideBase.tsx":
 /*!***************************************************************!*\
-  !*** ./resources/ts/admin/components/parts/side/SideMail.tsx ***!
+  !*** ./resources/ts/admin/components/parts/side/SideBase.tsx ***!
   \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -19756,7 +19801,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
 /* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 function _slicedToArray(arr, i) {
@@ -19825,8 +19869,11 @@ function _arrayWithHoles(arr) {
 
 
 
+var SideBase = function SideBase(props) {
+  var icon = props.icon,
+      name = props.name,
+      contents = props.contents;
 
-var SideMail = function SideMail() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
       _useState2 = _slicedToArray(_useState, 2),
       toggle = _useState2[0],
@@ -19839,34 +19886,71 @@ var SideMail = function SideMail() {
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", Object.assign({
         className: "inline-block w-24"
       }, {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-          className: "mr-1 text-white",
-          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faEnvelope
-        }, void 0), "\u30E1\u30FC\u30EB\u9001\u4FE1"]
+        children: [icon, name]
       }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
         className: "ml-3 text-white",
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faAngleDown,
         onClick: function onClick(e) {
           return setToggle(!toggle);
         }
-      }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", Object.assign({
-        className: toggle ? "transition duration-700 h-8" : "h-0 overflow-hidden"
+      }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", Object.assign({
+        className: toggle ? "transition duration-700" : "h-0 overflow-hidden"
       }, {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
-          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, Object.assign({
-            to: "/admin/receipt"
-          }, {
-            children: "\u9818\u53CE\u66F8"
-          }), void 0)
-        }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
-          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, Object.assign({
-            to: "/admin/evaluation"
-          }, {
-            children: "\u8A55\u4FA1\u8868"
-          }), void 0)
-        }, void 0)]
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
+          children: contents
+        }, void 0)
       }), void 0)]
     }), void 0)
+  }, void 0);
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SideBase);
+
+/***/ }),
+
+/***/ "./resources/ts/admin/components/parts/side/SideMail.tsx":
+/*!***************************************************************!*\
+  !*** ./resources/ts/admin/components/parts/side/SideMail.tsx ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _SideBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SideBase */ "./resources/ts/admin/components/parts/side/SideBase.tsx");
+
+
+
+
+
+
+var SideMail = function SideMail() {
+  var contents = [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, Object.assign({
+    to: "/admin/receipt",
+    className: "block"
+  }, {
+    children: "\u9818\u53CE\u66F8"
+  }), "1"), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, Object.assign({
+    to: "/admin/evaluation",
+    className: "block"
+  }, {
+    children: "\u8A55\u4FA1\u8868"
+  }), "2")];
+  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_SideBase__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+        className: "mr-1 text-white",
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faEnvelope
+      }, void 0),
+      name: "\u30E1\u30FC\u30EB\u9001\u4FE1",
+      contents: contents
+    }, void 0)
   }, void 0);
 };
 
@@ -19886,71 +19970,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
-}
-
-function _iterableToArrayLimit(arr, i) {
-  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-
-  if (_i == null) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-
-  var _s, _e;
-
-  try {
-    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _SideBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SideBase */ "./resources/ts/admin/components/parts/side/SideBase.tsx");
 
 
 
@@ -19958,42 +19981,70 @@ function _arrayWithHoles(arr) {
 
 
 var SideReservation = function SideReservation() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
-      _useState2 = _slicedToArray(_useState, 2),
-      toggle = _useState2[0],
-      setToggle = _useState2[1];
-
+  var contents = [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, Object.assign({
+    to: "/admin/reservation",
+    className: "block"
+  }, {
+    children: "\u4E88\u7D04\u4E00\u89A7"
+  }), "1")];
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", {
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", Object.assign({
-        className: "inline-block w-24"
-      }, {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-          className: "mr-1 text-white",
-          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faCalendarCheck
-        }, void 0), "\u4E88\u7D04"]
-      }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
-        className: "ml-3 text-white",
-        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faAngleDown,
-        onClick: function onClick(e) {
-          return setToggle(!toggle);
-        }
-      }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", Object.assign({
-        className: toggle ? "transition duration-700 h-8" : "h-0 overflow-hidden"
-      }, {
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
-          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, Object.assign({
-            to: "/admin/reservation"
-          }, {
-            children: "\u4E88\u7D04\u4E00\u89A7"
-          }), void 0)
-        }, void 0)
-      }), void 0)]
+    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_SideBase__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+        className: "mr-1 text-white",
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faCalendarCheck
+      }, void 0),
+      name: "\u4E88\u7D04",
+      contents: contents
     }, void 0)
   }, void 0);
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SideReservation);
+
+/***/ }),
+
+/***/ "./resources/ts/admin/components/parts/side/SideUser.tsx":
+/*!***************************************************************!*\
+  !*** ./resources/ts/admin/components/parts/side/SideUser.tsx ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _SideBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SideBase */ "./resources/ts/admin/components/parts/side/SideBase.tsx");
+
+
+
+
+
+
+var SideUser = function SideUser() {
+  var contents = [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, Object.assign({
+    to: "/admin/user",
+    className: "block"
+  }, {
+    children: "\u5229\u7528\u8005\u4E00\u89A7"
+  }), "1")];
+  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_SideBase__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+        className: "mr-1 text-white",
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faUserAlt
+      }, void 0),
+      name: "\u5229\u7528\u8005",
+      contents: contents
+    }, void 0)
+  }, void 0);
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SideUser);
 
 /***/ }),
 
