@@ -89,7 +89,7 @@ class ReservationController extends Controller
             if ($holidays->isHoliday(new \DateTime($displayedDate)) || $week == 0) $calender .= 'class="holiday" ';
             if ($week == $saturdayNum) $calender .= 'class="saturday" ';
             $calender .= '>' . $day;
-            if (strtotime($displayedDate) <= strtotime($nowDate) || strtotime($displayedDate) > strtotime("$nowDate +1 months")) {
+            if (strtotime($displayedDate) <= strtotime($nowDate)) {
                 $calender .= "<p class='hyphen'>-</p>";
             } else if ($isAvailableDate) {
                 $calender .= "<p class='circle day-ok' data-date='$displayedDate'>○</p>";
@@ -151,6 +151,7 @@ class ReservationController extends Controller
         $userInfo = User::find($userId);
         $mailData = [
             'childName' => $userInfo->childName,
+            'childName2' => $userInfo->childName2,
             'reservationDate' => $request->avaDate,
             'reservationTime' => $request->avaTime,
             'email' => $userInfo->email,
@@ -175,7 +176,7 @@ class ReservationController extends Controller
 
         // 管理者へLINEメッセージ送信
         $lineMessenger = new LineMessengerController();
-        $lineMessenger->sendReservationMessage($params['childName'], $params['reservationDate'], $params['reservationTime']);
+        $lineMessenger->sendReservationMessage($params['childName'], $params['childName2'], $params['reservationDate'], $params['reservationTime']);
 
         // 利用者へのメールに必要なデータ設定
         $mailService = new MailService();

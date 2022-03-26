@@ -30,6 +30,11 @@
     {{-- moment.js --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+    {{-- ログロケット --}}
+    <script src="https://cdn.lr-in.com/LogRocket.min.js" crossorigin="anonymous"></script>
+    <script>
+        window.LogRocket && window.LogRocket.init('tjnhom/bickey');
+    </script>
 
     @yield('title')
 

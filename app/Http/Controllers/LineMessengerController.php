@@ -47,12 +47,13 @@ class LineMessengerController extends Controller
     }
 
     // 予約があった場合にメッセージ送信
-    public function sendReservationMessage($name, $reservationDate, $reservationTime)
+    public function sendReservationMessage($name, $name2, $reservationDate, $reservationTime)
     {
         $userId = config('services.line.admin_id');
 
         $message = 'ご予約を受け付けました。' . "\n" . "\n";
         $message .= "利用児氏名：　{$name}" . "\n";
+        if (!empty($name2)) $message .= "利用児2氏名：　{$name2}" . "\n";
         $message .= "予約日時：　{$reservationDate}" . "\n";
         $message .= "予約時間：　{$reservationTime}";
 
