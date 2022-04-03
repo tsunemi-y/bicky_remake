@@ -61,7 +61,7 @@ class ReservationController extends Controller
         $nextMonth = date('Y-m', strtotime('+1 month', $timestamp));
 
         // 祝日取得
-        $holidays = Yasumi::create('Japan', '2021', 'ja_JP');
+        $holidays = Yasumi::create('Japan', date('Y'), 'ja_JP');
 
         // カレンダーの中身を格納する変数
         $calenders = [];
@@ -91,7 +91,7 @@ class ReservationController extends Controller
             $calender .= '>' . $day;
             if (strtotime($displayedDate) <= strtotime($nowDate)) {
                 $calender .= "<p class='hyphen'>-</p>";
-            } else if ($isAvailableDate) {
+            } else if ($isAvailableDate && !$holidays->isHoliday(new \DateTime($displayedDate))) {
                 $calender .= "<p class='circle day-ok' data-date='$displayedDate'>○</p>";
             } else {
                 $calender .= "<p class='cross'>×</p>";
@@ -186,6 +186,28 @@ class ReservationController extends Controller
     }
 
     /**
+     * 予約キャンセルメッセージ送信
+     * @param $param
+     * @return void
+     */
+    public function sendCancelReservationMessage($params)
+    {
+        // 日時のフォーマット変更
+        $params['reservationTime'] = formatTime($params['reservationTime']);
+        $params['reservationDate'] = formatDate($params['reservationDate']);
+
+        // 管理者へLINEメッセージ送信
+        $lineMessenger = new LineMessengerController();
+        $lineMessenger->sendCancelReservationMessage($params['childName'], $params['childName2'], $params['reservationDate'], $params['reservationTime']);
+
+        // 利用者へのメールに必要なデータ設定
+        $mailService = new MailService();
+        $viewFile = 'emails.reservations.cancel';
+        $subject = '予約をキャンセルしました';
+        $mailService->sendMailToUser($params, $viewFile, $subject);
+    }
+
+    /**
      * 予約キャンセル画面表示
      * @return void
      */
@@ -202,6 +224,17 @@ class ReservationController extends Controller
     public function cancelReservation(Reservation $reservation)
     {
         $reservation->delete();
-        return redirect(route('reservationTop'))->with('reservationCancel', '予約をキャンセルしました');
+
+        $messageData = [
+            'reservationDate' => $reservation->reservation_date,
+            'reservationTime' => $reservation->reservation_time,
+            'childName'       => $reservation->user->childName,
+            'childName2'      => $reservation->user->childName2,
+            'email'           => $reservation->user->email,
+        ];
+
+        $this->sendCancelReservationMessage($messageData);
+
+        return redirect(route('reservationTop'))->with('reservationCancel', '予約をキャンセルしました。');
     }
 }

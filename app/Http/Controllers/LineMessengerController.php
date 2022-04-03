@@ -60,6 +60,20 @@ class LineMessengerController extends Controller
         $this->sendMessage($userId, $message);
     }
 
+    // 予約キャンセルがあった場合にメッセージ送信
+    public function sendCancelReservationMessage($name, $name2, $reservationDate, $reservationTime)
+    {
+        $userId = config('services.line.admin_id');
+
+        $message = 'ご予約がキャンセルされました。' . "\n" . "\n";
+        $message .= "利用児氏名：　{$name}" . "\n";
+        if (!empty($name2)) $message .= "利用児2氏名：　{$name2}" . "\n";
+        $message .= "予約日時：　{$reservationDate}" . "\n";
+        $message .= "予約時間：　{$reservationTime}";
+
+        $this->sendMessage($userId, $message);
+    }
+
     // 新規登録者のメッセージ作成
     public function sendRegistrationMessage($user)
     {
