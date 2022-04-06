@@ -54,6 +54,7 @@ trait Reservationable
         $avaDatetimes = [];
 
         foreach ($tmpAvaDatetimes as  $avaDate => $avaTimes) {
+            if (!isset($reserveDateTimes[$avaDate])) continue; // 予約配列に利用可能配列の日付がない場合、スキップ
             foreach ($reserveDateTimes[$avaDate] as $rsvTime) {
                 foreach ($avaTimes as $avaTime) {
                     if ($rsvTime['start_time'] <= $avaTime && $avaTime < $rsvTime['end_time']) {
