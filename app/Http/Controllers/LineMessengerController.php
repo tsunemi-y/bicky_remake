@@ -35,7 +35,7 @@ class LineMessengerController extends Controller
             $todayReservationListCount = count($todayReservationList);
             $message = '本日の予約者は下記の通りです。' . "\n" . "\n";
             foreach ($todayReservationList as $key => $rsv) {
-                $message .= $rsv->name . ': ' . $rsv->reservation_time;
+                $message .= $rsv->parentName . ': ' . $rsv->reservation_time;
 
                 if ($todayReservationListCount != $key + 1) {
                     $message .= "\n" . "\n";

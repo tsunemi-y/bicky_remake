@@ -42,10 +42,6 @@ trait Reservationable
 
     /**
      * 利用可能時間と予約時間から画面に表示される利用可能時間を取得
-     * 1. 予約可能日時をループで回す
-     * 2. 予約されている日時をループで回す
-     * 3. 予約可能日時 - 予約されている日時で予約可能な日時を設定
-     *
      * @return Array
      */
     public function getAvailableReservationDatetimes($tmpAvaDatetimes, $reserveDateTimes)
