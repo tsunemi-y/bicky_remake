@@ -37,6 +37,7 @@ class User extends Authenticatable
         'introduction',
         'fee',
         'userAgent',
+        'use_time',
     ];
 
     /**

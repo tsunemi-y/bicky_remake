@@ -15,6 +15,7 @@ class Reservation extends Model
         'user_id',
         'reservation_date',
         'reservation_time',
+        'end_time',
     ];
 
     /**
