@@ -92,9 +92,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // $this->validator($data);
-
-        $coursePlan = $this->getFeeByCourse((int) $data['numberOfUse'], (int) $data['coursePlan'], $data['childName2']);
+        $fee = $this->getFeeByCourse((int) $data['numberOfUse'], (int) $data['coursePlan'], $data['childName2']);
+        $useTime = $this->getUseTimeByFee($fee);
 
         // 利用時2未入力時は、gender2をnullに設定
         // ※gender2はラジオボタンであり初期値が設定されるため
@@ -117,8 +116,9 @@ class RegisterController extends Controller
             'introduction' => $data['introduction'],
             'coursePlan'   => $data['coursePlan'],
             'consaltation' => $data['consaltation'],
-            'fee'          => $coursePlan,
+            'fee'          => $fee,
             'userAgent'    => $_SERVER['HTTP_USER_AGENT'],
+            'use_time'     => $useTime,
         ]);
 
         $lineModel = new LineMessengerController();
@@ -167,6 +167,20 @@ class RegisterController extends Controller
             if (!empty($siblingUse)) return ConstUser::FEE_TWO_SIBLING;
             if ($coursePlan === ConstUser::COURSE_WEEKDAY) return ConstUser::FEE_TWO_WEEKDAY;
             if ($coursePlan === ConstUser::COURSE_HOLIDAY) return ConstUser::FEE_TWO_HOLIDAY;
+        }
+    }
+
+    /**
+     * 利用料金によって利用時間取得
+     * @param Integer　 利用人数
+     * @return Integer 料金
+     */
+    private function getUseTimeByFee($fee)
+    {
+        if ($fee === ConstUser::FEE_ONE_SIBLING || $fee === ConstUser::FEE_TWO_SIBLING) {
+            return ConstUser::LONG_USE_TIME;
+        } else {
+            return ConstUser::NORMAL_USE_TIME;
         }
     }
 }

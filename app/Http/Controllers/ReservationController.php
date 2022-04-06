@@ -142,10 +142,14 @@ class ReservationController extends Controller
         if ($isReserved) return redirect(route('reservationTop'))->with('failedReservation', '選択された日時はすでにご予約がございます。</br>違う日時でご予約ください。');
 
         $userId = \Auth::id();
+        $useTime = User::find($userId)->use_time;
+        $endTime = date('H:i:s', strtotime("{$request->avaTime} +{$useTime} minute -1 second"));
+
         $reservedInfo = $reservationModel->create([
             'user_id' => $userId,
             'reservation_date' => $request->avaDate,
             'reservation_time' => $request->avaTime,
+            'end_time' => $endTime,
         ]);
 
         $userInfo = User::find($userId);

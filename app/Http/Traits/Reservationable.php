@@ -31,13 +31,17 @@ trait Reservationable
     {
         $reservations = Reservation::all();
         $reserveDateTimes = [];
+        $i = 0;
         foreach ($reservations as $reservation) {
-            $reserveDateTimes[$reservation->reservation_date][] = $reservation->reservation_time;
+            $reserveDateTimes[$reservation->reservation_date][$i]['start_time'] = $reservation->reservation_time;
+            $reserveDateTimes[$reservation->reservation_date][$i]['end_time'] = $reservation->end_time;
+            $i++;
         }
         return $reserveDateTimes;
     }
 
     /**
+     * 利用可能時間と予約時間から画面に表示される利用可能時間を取得
      * 1. 予約可能日時をループで回す
      * 2. 予約されている日時をループで回す
      * 3. 予約可能日時 - 予約されている日時で予約可能な日時を設定
@@ -46,43 +50,32 @@ trait Reservationable
      */
     public function getAvailableReservationDatetimes($tmpAvaDatetimes, $reserveDateTimes)
     {
-        // 利用可能日時と予約されている時間日時を比較し、被っているものがあれば配列から削除
+        $avaDates = array_keys($tmpAvaDatetimes);
         $avaDatetimes = [];
 
-        // 予約可能日を配列に格納
-        // 下記配列から予約が埋まっている日を削除し画面に表示する
-        $avaDates = array_keys($tmpAvaDatetimes);
-
-        foreach ($tmpAvaDatetimes as $avaDate => $avaTimes) {
-
-            // 日付に対応する時間を格納
-            $avaDatetimes[$avaDate] = $avaTimes;
-
-            // ビューに表示する日付を設定
-            foreach ($reserveDateTimes as $reserveDate => $reserveTimes) {
-                if ($avaDate !== $reserveDate) continue;
-
-                // その日の利用可能時間が全て予約で埋まっている場合、対応する日を☓に設定
-                if (count($avaTimes) === count($reserveTimes)) {
-                    $keysDeleteTargetDate = array_search($avaDate, $avaDates);
-                    unset($avaDates[$keysDeleteTargetDate]);
-                }
-
-                // ビューに表示する日付に紐づく時間を設定
-                foreach ($reserveTimes as $reserveTime) {
-                    $keyDeleteTargetTime = array_search($reserveTime, $avaDatetimes[$avaDate]);
-                    if ($keyDeleteTargetTime == '') continue;
-                    unset($avaDatetimes[$avaDate][$keyDeleteTargetTime]);
+        foreach ($tmpAvaDatetimes as  $avaDate => $avaTimes) {
+            foreach ($reserveDateTimes[$avaDate] as $rsvTime) {
+                foreach ($avaTimes as $avaTime) {
+                    if ($rsvTime['start_time'] <= $avaTime && $avaTime < $rsvTime['end_time']) {
+                        $deleteTimeKey = array_search($avaTime, $tmpAvaDatetimes[$avaDate]);
+                        unset($tmpAvaDatetimes[$avaDate][$deleteTimeKey]);
+                    }
                 }
             }
-            // 日付に対応する時間配列を再作成（unsetで添字がずれたため）
-            // 添字がずれている場合、ビューに渡した配列がオブジェクト形式になってしまう
-            $avaDatetimes[$avaDate] = array_values($avaDatetimes[$avaDate]);
+
+            $avaDatetimes[$avaDate] = $tmpAvaDatetimes[$avaDate];
+            $avaDatetimes[$avaDate] = array_values($avaDatetimes[$avaDate]); // 配列順序並び替え
 
             // 時間形式をhh時ss秒に変更
             foreach ($avaDatetimes[$avaDate] as $key => $time) {
                 $formattedTime = formatTime($time);
                 $avaDatetimes[$avaDate][$key] = $formattedTime; // フォーマット前時間をフォーマット後時間で上書き
+            }
+
+            // 時間を持っていない日付を削除
+            if (empty($tmpAvaDatetimes[$avaDate])) {
+                $deleteDateKey = array_search($avaDate, $avaDates);
+                unset($avaDates[$deleteDateKey]);
             }
         }
 
