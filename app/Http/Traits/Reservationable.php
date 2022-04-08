@@ -14,7 +14,7 @@ trait Reservationable
      */
     public function getTmpAvailableReservationDatetimes()
     {
-        $avaReserveDatetimes = AvailableReservationDatetime::get(['id', 'available_date', 'available_time']);
+        $avaReserveDatetimes = AvailableReservationDatetime::orderBy('available_date', 'asc')->orderBy('available_time', 'asc')->get(['id', 'available_date', 'available_time']);
         $avaTimes = [];
         foreach ($avaReserveDatetimes as $avaReserveDateTime) {
             $avaTimes[$avaReserveDateTime->available_date][] = $avaReserveDateTime->available_time;
@@ -48,14 +48,17 @@ trait Reservationable
     {
         $avaDates = array_keys($tmpAvaDatetimes);
         $avaDatetimes = [];
+        \Log::info($tmpAvaDatetimes);
 
         foreach ($tmpAvaDatetimes as  $avaDate => $avaTimes) {
-            if (!isset($reserveDateTimes[$avaDate])) continue; // 予約配列に利用可能配列の日付がない場合、スキップ
-            foreach ($reserveDateTimes[$avaDate] as $rsvTime) {
-                foreach ($avaTimes as $avaTime) {
-                    if ($rsvTime['start_time'] <= $avaTime && $avaTime < $rsvTime['end_time']) {
-                        $deleteTimeKey = array_search($avaTime, $tmpAvaDatetimes[$avaDate]);
-                        unset($tmpAvaDatetimes[$avaDate][$deleteTimeKey]);
+            foreach ($reserveDateTimes as $rsvDate => $rsvTimes) {
+                if ($avaDate !== $rsvDate) continue;
+                foreach ($rsvTimes as $rsvTime) {
+                    foreach ($avaTimes as $avaTime) {
+                        if ($rsvTime['start_time'] <= $avaTime && $avaTime < $rsvTime['end_time']) {
+                            $deleteTimeKey = array_search($avaTime, $tmpAvaDatetimes[$avaDate]);
+                            unset($tmpAvaDatetimes[$avaDate][$deleteTimeKey]);
+                        }
                     }
                 }
             }

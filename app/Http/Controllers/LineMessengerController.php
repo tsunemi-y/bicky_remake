@@ -27,7 +27,7 @@ class LineMessengerController extends Controller
         $userId = config('services.line.admin_id');
         $today = date("Y-m-d H:i:s");
         $reservationModel = new Reservation;
-        $todayReservationList = $reservationModel->where('reservation_date', '=', $today)->get();
+        $todayReservationList = $reservationModel->with('user')->where('reservation_date', '=', $today)->oldest('reservation_time')->get();
         if (count($todayReservationList) == 0) {
             $message = '本日の予約者はいません。';
         } else {
@@ -35,10 +35,10 @@ class LineMessengerController extends Controller
             $todayReservationListCount = count($todayReservationList);
             $message = '本日の予約者は下記の通りです。' . "\n" . "\n";
             foreach ($todayReservationList as $key => $rsv) {
-                $message .= $rsv->parentName . ': ' . $rsv->reservation_time;
+                $message .= $rsv->user->parentName . ': ' . $rsv->reservation_time;
 
                 if ($todayReservationListCount != $key + 1) {
-                    $message .= "\n" . "\n";
+                    $message .= "\n";
                 }
             }
         }

@@ -10,6 +10,7 @@ use App\Http\Traits\Reservationable;
 
 use App\Http\Requests\ReservationCalenderFormRequest;
 use App\Http\Requests\ReservationFormRequest;
+use App\Http\Controllers\LineMessengerController;
 
 class ReservationController extends Controller
 {
@@ -38,6 +39,7 @@ class ReservationController extends Controller
         $reserveDateTimes = $this->getReservationDatetimes();
 
         $avaDatetimes = $this->getAvailableReservationDatetimes($tmpAvaDatetimes, $reserveDateTimes);
+
         $avaDates = $avaDatetimes['avaDates'];
         $avaTimes = $avaDatetimes['avaDatetimes'];
 
