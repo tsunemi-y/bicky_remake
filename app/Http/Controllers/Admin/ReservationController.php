@@ -19,24 +19,14 @@ class ReservationController extends Controller
     /**
      * 予約画面表示
      * @param Illuminate\Http\Request
-     *
      * @return \Illuminate\Http\Response
      */
     public function getReservations()
     {
         $reservationModel = new Reservation;
 
-        //======予約可能日時取得　ここから======
-
         // 予約可能日時取得
-        $tmpAvaDatetimes = $this->getTmpAvailableReservationDatetimes();
-        // 予約されている日時取得
-        $reserveDateTimes = $this->getReservationDatetimes();
-        $avaDatetimes = $this->getAvailableReservationDatetimes($tmpAvaDatetimes, $reserveDateTimes);
-
-        $avaTimes = $avaDatetimes['avaDatetimes'];
-
-        //======予約可能日時取得　ここまで======
+        $avaTimes = $this->getTmpAvailableReservationDatetimes();
 
         //======予約情報取得　ここから======
         $tmpReservations = $reservationModel
@@ -58,7 +48,6 @@ class ReservationController extends Controller
      * 利用可能日時登録
      *
      * @param \Illuminate\Http\Request
-     * 
      * @return void
      */
     public function saveDatetime(CreateAvailableFormRequest $request)
@@ -90,7 +79,6 @@ class ReservationController extends Controller
     /**
      * 利用可能日時削除　todo: バリデ
      * @param \Illuminate\Http\Request
-     * 
      * @return void
      */
     public function deleteDatetime(Request $request)
