@@ -2,8 +2,9 @@
 
 namespace App\Http\Traits;
 
-use App\Models\AvailableReservationDatetime;
+use App\Models\User;
 use App\Models\Reservation;
+use App\Models\AvailableReservationDatetime;
 
 trait Reservationable
 {
@@ -48,14 +49,17 @@ trait Reservationable
     {
         $avaDates = array_keys($tmpAvaDatetimes);
         $avaDatetimes = [];
-        \Log::info($tmpAvaDatetimes);
+
+        $userId = \Auth::id();
+        $useTime = User::find($userId)->use_time;
 
         foreach ($tmpAvaDatetimes as  $avaDate => $avaTimes) {
             foreach ($reserveDateTimes as $rsvDate => $rsvTimes) {
                 if ($avaDate !== $rsvDate) continue;
                 foreach ($rsvTimes as $rsvTime) {
                     foreach ($avaTimes as $avaTime) {
-                        if ($rsvTime['start_time'] <= $avaTime && $avaTime < $rsvTime['end_time']) {
+                        // 予約start~toの間の予約可能日時削除
+                        if (!((date('H:i:s', strtotime("{$avaTime} +{$useTime} minute -1 second")) < $rsvTime['start_time']) || $rsvTime['end_time'] < $avaTime)) {
                             $deleteTimeKey = array_search($avaTime, $tmpAvaDatetimes[$avaDate]);
                             unset($tmpAvaDatetimes[$avaDate][$deleteTimeKey]);
                         }
