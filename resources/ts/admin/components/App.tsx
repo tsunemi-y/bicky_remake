@@ -1,10 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Router from './router';
 
 const App: React.VFC = () => {
-
     return (
-        <div className="flex">
+        <div className="">
             <Router />
         </div>
     )

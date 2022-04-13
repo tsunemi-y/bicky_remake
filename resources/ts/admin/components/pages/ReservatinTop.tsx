@@ -190,7 +190,7 @@ return (
                     <button className="w-full" onClick={ createDatetime }>追加</button>
                 </div>
                 <Calendar
-                    className={ ['w-4/5', 'mt-6'] }
+                    className={ ['mt-6'] }
                     locale='ja-JP'
                     value={date}
                     formatDay={(locale: any, date: Date) => dayjs(date).format('DD')}

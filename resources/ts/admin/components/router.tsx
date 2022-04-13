@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import { 
     BrowserRouter, 
     Switch,
@@ -5,6 +6,7 @@ import {
 } from 'react-router-dom';
 
 import SideMenu from './parts/SideMenu';
+import Header from './parts/Header';
 import ReservatinTop from './pages/ReservatinTop';
 import Receipt from './pages/Receipt';
 import ReceiptSend from './pages/ReceiptSend';
@@ -12,13 +14,20 @@ import Evaluation from './pages/Evaluation';
 import EvaluationSend from './pages/EvaluationSend';
 
 const Router = () => {
+    const [toggle, setToggle] = useState<Boolean>(true);
+
+    // サイドメニュー表示・非表示
+    const toggleSideMunu = (): void => setToggle(!toggle);
+
     return (
         <BrowserRouter>
-            <div　className="bg-blue-900 pt-5 text-white w-52">　
-                <SideMenu/>
-            </div>
+            <Header toggleSideMunu={ toggleSideMunu }/>
 
-            <div　className="bg-gray-200 h-screen pt-5 w-11/12">
+            {/* <div className={toggle ? "hidden" : "bg-blue-900 pt-5 text-white w-52"}> */}
+                <SideMenu/>
+            {/* </div> */}
+
+            <div className="bg-gray-200 h-screen pt-5">
                 <div className="ml-5">
                     <Switch>
                         <Route path='/admin/receipt/send/:id' render={ () => <ReceiptSend title={'領収書送信'}/> }/>
