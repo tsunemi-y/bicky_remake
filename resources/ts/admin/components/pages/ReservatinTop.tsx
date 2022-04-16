@@ -24,7 +24,7 @@ const rData = {
     reservation_time: ''
 }
 
-const ReservatinTop: React.FC<Props> = (props) => {
+const ReservatinTop: React.FC = (props: Props) => {
 
     const [avaTimes, setAvaTimes] = useState<any>(rData);
     const [date, setDate] = useState<Date>(new Date());
@@ -56,40 +56,45 @@ const ReservatinTop: React.FC<Props> = (props) => {
         if (view !== 'month') return null;
         const formatDate: string | never = dayjs(date).format('YYYY-MM-DD');
 
-        const targetReservation = reservations[formatDate];
+        const targetReservations = reservations[formatDate];
         const targetAvaTimes = avaTimes[formatDate];
-
+        
         let avaTimeList: any = [];
-        for(var i in targetAvaTimes){
+        for(let i in targetAvaTimes){
             avaTimeList.push(<p key={ i }>{ targetAvaTimes && targetAvaTimes[i] }</p>);
         }
 
-        if (targetReservation && avaTimeList.length) {
+        let reservationList: any = [];
+        for(let i in targetReservations){
+            reservationList.push(<p key={ i }>{ targetReservations && `${targetReservations[i].reservationName}: ${targetReservations[i].reservationTime}` }</p>);
+        }
+
+        if (reservationList.length && avaTimeList.length) {
             return (
-                <div>
-                    <div>
+                <>
+                    <div className="text-xs text-left">
                         <p className='font-bold'>■予約者</p>
-                        <p>{targetReservation.reservationName}: {targetReservation.reservationTime}</p>
+                        { reservationList }
                     </div>
 
-                    <div>
+                    <div className="text-xs text-left">
                         <p className='font-bold mt-2'>■予約可能日時</p>
                         { avaTimeList }
                     </div>
-                </div>
+                </>
             )
 
-        } else if (targetReservation) {
+        } else if (reservationList.length) {
             return (
-                <div>
+                <div className="text-xs text-left">
                     <p className='font-bold'>■予約者</p>
-                    <p>{targetReservation.reservationName}: {targetReservation.reservationTime}</p>
+                    { reservationList }
                 </div>
             )
 
-        } else if (targetAvaTimes) {
+        } else if (avaTimeList.length) {
             return (
-                <div>
+                <div className="text-xs text-left">
                     <p className='font-bold'>■予約可能日時</p>
                     { avaTimeList }
                 </div>
@@ -190,7 +195,7 @@ return (
                     <button className="w-full" onClick={ createDatetime }>追加</button>
                 </div>
                 <Calendar
-                    className={ ['mt-6'] }
+                    className={ ['mt-6', 'w-full'] }
                     locale='ja-JP'
                     value={date}
                     formatDay={(locale: any, date: Date) => dayjs(date).format('DD')}

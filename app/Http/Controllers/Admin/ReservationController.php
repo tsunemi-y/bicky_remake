@@ -31,10 +31,13 @@ class ReservationController extends Controller
         //======予約情報取得　ここから======
         $tmpReservations = $reservationModel
             ->join('users', 'reservations.user_id', 'users.id')
+            ->orderBy('reservation_date', 'asc')
+            ->orderBy('reservation_time', 'asc')
             ->get(['parentName', 'reservation_date', 'reservation_time']);
+
         $reservations = [];
         foreach ($tmpReservations as $tr) {
-            $reservations[$tr->reservation_date] = [
+            $reservations[$tr->reservation_date][] = [
                 'reservationName' => $tr->parentName,
                 'reservationTime' => $tr->reservation_time
             ];

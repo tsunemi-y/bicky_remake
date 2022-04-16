@@ -3,7 +3,7 @@ import Router from './router';
 
 const App: React.VFC = () => {
     return (
-        <div className="">
+        <div>
             <Router />
         </div>
     )

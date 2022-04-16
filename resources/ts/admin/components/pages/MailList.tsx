@@ -39,7 +39,6 @@ const MailList: React.FC<Props> = (props) => {
     const history = useHistory(); 
 
     const fetchUsers = async () => {
-        console.log(data);
         setLoadingDispFlag(true);
         const response = await axios.get(`/api/admin/users?name=${data.name}`);
         setUsers(response.data);
@@ -82,7 +81,7 @@ const MailList: React.FC<Props> = (props) => {
                 <div className="bg-blue-900 mt-3 p-1 rounded text-center text-white w-20">
                     <button className="w-full" onClick={onClickSearchBtn}>検索</button>
                 </div>
-                <table className="text-left mt-5" width="70%">
+                <table className="text-left mt-5 w-full">
                     <thead>
                         <tr className="border-b-2 border-gray-500 border-solid text-blue-400">
                             <th>氏名</th>

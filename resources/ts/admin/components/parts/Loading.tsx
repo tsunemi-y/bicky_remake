@@ -6,8 +6,8 @@ const Loading: React.FC = () => {
     
     return (
         <>
-            <div className="absolute bg-black bg-opacity-80 h-screen left-0 top-0 w-screen">
-                <FontAwesomeIcon className="absolute animate-spin left-1/2 text-white top-1/2" icon={faSpinner} size="5x" />
+            <div className="absolute bg-black bg-opacity-80 flex h-screen items-center justify-center left-0 top-0 w-screen">
+                <FontAwesomeIcon className="animate-spin text-white" icon={faSpinner} size="5x" />
             </div>
         </>
     );
