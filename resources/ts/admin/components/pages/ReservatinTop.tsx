@@ -74,12 +74,10 @@ const ReservatinTop: React.FC = (props: Props) => {
             return (
                 <>
                     <div className="text-xs text-left">
-                        <p className='font-bold'>■予約者</p>
                         { reservationList }
                     </div>
 
                     <div className="text-xs text-left">
-                        <p className='font-bold mt-2'>■予約可能日時</p>
                         { avaTimeList }
                     </div>
                 </>
@@ -88,7 +86,6 @@ const ReservatinTop: React.FC = (props: Props) => {
         } else if (reservationList.length) {
             return (
                 <div className="text-xs text-left">
-                    <p className='font-bold'>■予約者</p>
                     { reservationList }
                 </div>
             )
@@ -96,7 +93,6 @@ const ReservatinTop: React.FC = (props: Props) => {
         } else if (avaTimeList.length) {
             return (
                 <div className="text-xs text-left">
-                    <p className='font-bold'>■予約可能日時</p>
                     { avaTimeList }
                 </div>
             )

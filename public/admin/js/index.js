@@ -19398,43 +19398,27 @@ var ReservatinTop = function ReservatinTop(props) {
 
     if (reservationList.length && avaTimeList.length) {
       return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", Object.assign({
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", Object.assign({
           className: "text-xs text-left"
         }, {
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", Object.assign({
-            className: 'font-bold'
-          }, {
-            children: "\u25A0\u4E88\u7D04\u8005"
-          }), void 0), reservationList]
-        }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", Object.assign({
+          children: reservationList
+        }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", Object.assign({
           className: "text-xs text-left"
         }, {
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", Object.assign({
-            className: 'font-bold mt-2'
-          }, {
-            children: "\u25A0\u4E88\u7D04\u53EF\u80FD\u65E5\u6642"
-          }), void 0), avaTimeList]
+          children: avaTimeList
         }), void 0)]
       }, void 0);
     } else if (reservationList.length) {
-      return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", Object.assign({
+      return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", Object.assign({
         className: "text-xs text-left"
       }, {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", Object.assign({
-          className: 'font-bold'
-        }, {
-          children: "\u25A0\u4E88\u7D04\u8005"
-        }), void 0), reservationList]
+        children: reservationList
       }), void 0);
     } else if (avaTimeList.length) {
-      return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", Object.assign({
+      return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", Object.assign({
         className: "text-xs text-left"
       }, {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", Object.assign({
-          className: 'font-bold'
-        }, {
-          children: "\u25A0\u4E88\u7D04\u53EF\u80FD\u65E5\u6642"
-        }), void 0), avaTimeList]
+        children: avaTimeList
       }), void 0);
     }
   };
