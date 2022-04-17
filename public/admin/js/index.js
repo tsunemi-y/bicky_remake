@@ -19294,45 +19294,50 @@ var ReservatinTop = function ReservatinTop(props) {
       avaTimes = _useState2[0],
       setAvaTimes = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(new Date()),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
       _useState4 = _slicedToArray(_useState3, 2),
-      date = _useState4[0],
-      setDate = _useState4[1];
+      holidays = _useState4[0],
+      setHolidays = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(''),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(new Date()),
       _useState6 = _slicedToArray(_useState5, 2),
-      datetime = _useState6[0],
-      setDatetime = _useState6[1];
+      date = _useState6[0],
+      setDate = _useState6[1];
 
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(''),
       _useState8 = _slicedToArray(_useState7, 2),
-      isBulkDay = _useState8[0],
-      setisBulkDay = _useState8[1];
+      datetime = _useState8[0],
+      setDatetime = _useState8[1];
 
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true),
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       _useState10 = _slicedToArray(_useState9, 2),
-      isBulkMonth = _useState10[0],
-      setisBulkMonth = _useState10[1];
+      isBulkDay = _useState10[0],
+      setisBulkDay = _useState10[1];
 
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true),
       _useState12 = _slicedToArray(_useState11, 2),
-      deletedTargetAvaTimes = _useState12[0],
-      setDeletedTargetAvaTimes = _useState12[1];
+      isBulkMonth = _useState12[0],
+      setisBulkMonth = _useState12[1];
 
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
       _useState14 = _slicedToArray(_useState13, 2),
-      isShownModal = _useState14[0],
-      setIsShownModal = _useState14[1];
+      deletedTargetAvaTimes = _useState14[0],
+      setDeletedTargetAvaTimes = _useState14[1];
 
   var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       _useState16 = _slicedToArray(_useState15, 2),
-      loadingDispFlag = _useState16[0],
-      setLoadingDispFlag = _useState16[1];
+      isShownModal = _useState16[0],
+      setIsShownModal = _useState16[1];
 
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(rData),
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       _useState18 = _slicedToArray(_useState17, 2),
-      reservations = _useState18[0],
-      setReservations = _useState18[1];
+      loadingDispFlag = _useState18[0],
+      setLoadingDispFlag = _useState18[1];
+
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(rData),
+      _useState20 = _slicedToArray(_useState19, 2),
+      reservations = _useState20[0],
+      setReservations = _useState20[1];
 
   var fetchReservations = function fetchReservations() {
     return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -19350,22 +19355,23 @@ var ReservatinTop = function ReservatinTop(props) {
               response = _context.sent;
               setReservations(response.data.reservations);
               setAvaTimes(response.data.avaTimes);
+              setHolidays(response.data.holidays);
               setLoadingDispFlag(false);
-              _context.next = 14;
+              _context.next = 15;
               break;
 
-            case 10:
-              _context.prev = 10;
+            case 11:
+              _context.prev = 11;
               _context.t0 = _context["catch"](0);
               alert('エラーです。やり直してください。');
               setLoadingDispFlag(false);
 
-            case 14:
+            case 15:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 10]]);
+      }, _callee, null, [[0, 11]]);
     }));
   };
 
@@ -19421,6 +19427,15 @@ var ReservatinTop = function ReservatinTop(props) {
         children: avaTimeList
       }), void 0);
     }
+  };
+
+  var getTileClassName = function getTileClassName(_ref2) {
+    var date = _ref2.date,
+        view = _ref2.view;
+    if (!holidays) return null;
+    if (view !== 'month') return null;
+    var formatDate = dayjs__WEBPACK_IMPORTED_MODULE_5___default()(date).format('YYYY-MM-DD');
+    if (holidays.includes(formatDate)) return 'react-calendar__month-view__days__day--weekend';
   };
 
   var onChangeDatetime = function onChangeDatetime(event) {
@@ -19663,6 +19678,7 @@ var ReservatinTop = function ReservatinTop(props) {
           return dayjs__WEBPACK_IMPORTED_MODULE_5___default()(date).format('DD');
         },
         tileContent: getTileContent,
+        tileClassName: getTileClassName,
         onClickDay: handleOnClickDay
       }, void 0)]
     }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_parts_Modal__WEBPACK_IMPORTED_MODULE_7__["default"], {

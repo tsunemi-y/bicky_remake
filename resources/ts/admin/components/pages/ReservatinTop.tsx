@@ -27,6 +27,7 @@ const rData = {
 const ReservatinTop: React.FC = (props: Props) => {
 
     const [avaTimes, setAvaTimes] = useState<any>(rData);
+    const [holidays, setHolidays] = useState<any>([]);
     const [date, setDate] = useState<Date>(new Date());
     const [datetime, setDatetime] = useState<any>('');
     const [isBulkDay, setisBulkDay] = useState<boolean>(false);
@@ -42,6 +43,7 @@ const ReservatinTop: React.FC = (props: Props) => {
             const response = await axios.get(`/api/admin/reservation`);
             setReservations(response.data.reservations);
             setAvaTimes(response.data.avaTimes);
+            setHolidays(response.data.holidays);
             setLoadingDispFlag(false);
         } catch (err) {
             alert('エラーです。やり直してください。');
@@ -97,6 +99,14 @@ const ReservatinTop: React.FC = (props: Props) => {
                 </div>
             )
         }
+    }
+
+    const getTileClassName= ({ date, view }: TileContent): any  => {
+        if (!holidays) return null;
+        if (view !== 'month') return null;
+
+        const formatDate: string | never = dayjs(date).format('YYYY-MM-DD');
+        if (holidays.includes(formatDate)) return 'react-calendar__month-view__days__day--weekend';
     }
 
     const onChangeDatetime = (event: React.ChangeEvent<HTMLInputElement>): void =>  {
@@ -209,6 +219,7 @@ return (
                     value={date}
                     formatDay={(locale: any, date: Date) => dayjs(date).format('DD')}
                     tileContent={getTileContent}
+                    tileClassName={getTileClassName}
                     onClickDay={handleOnClickDay}
                 />
             </div>

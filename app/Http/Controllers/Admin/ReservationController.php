@@ -45,7 +45,11 @@ class ReservationController extends Controller
         }
         //======予約情報取得　ここまで======
 
-        return compact('avaTimes', 'reservations');
+        // 祝日取得
+        $holidays = Yasumi::create('Japan', date('Y'), 'ja_JP');
+        $holidays = array_values($holidays->getHolidayDates());
+
+        return compact('avaTimes', 'reservations', 'holidays');
     }
 
     /**
