@@ -18197,11 +18197,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", Object.assign({
-    className: ""
-  }, {
+  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
     children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_router__WEBPACK_IMPORTED_MODULE_1__["default"], {}, void 0)
-  }), void 0);
+  }, void 0);
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
@@ -18698,17 +18696,16 @@ var MailList = function MailList(props) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              console.log(data);
               setLoadingDispFlag(true);
-              _context.next = 4;
+              _context.next = 3;
               return axios__WEBPACK_IMPORTED_MODULE_3___default().get("/api/admin/users?name=".concat(data.name));
 
-            case 4:
+            case 3:
               response = _context.sent;
               setUsers(response.data);
               setLoadingDispFlag(false);
 
-            case 7:
+            case 6:
             case "end":
               return _context.stop();
           }
@@ -18786,8 +18783,7 @@ var MailList = function MailList(props) {
           children: "\u691C\u7D22"
         }), void 0)
       }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("table", Object.assign({
-        className: "text-left mt-5",
-        width: "70%"
+        className: "text-left mt-5 w-full"
       }, {
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("thead", {
           children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("tr", Object.assign({
@@ -19308,30 +19304,35 @@ var ReservatinTop = function ReservatinTop(props) {
       datetime = _useState6[0],
       setDatetime = _useState6[1];
 
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       _useState8 = _slicedToArray(_useState7, 2),
-      isBulk = _useState8[0],
-      setIsBulk = _useState8[1];
+      isBulkDay = _useState8[0],
+      setisBulkDay = _useState8[1];
 
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true),
       _useState10 = _slicedToArray(_useState9, 2),
-      deletedTargetAvaTimes = _useState10[0],
-      setDeletedTargetAvaTimes = _useState10[1];
+      isBulkMonth = _useState10[0],
+      setisBulkMonth = _useState10[1];
 
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
       _useState12 = _slicedToArray(_useState11, 2),
-      isShownModal = _useState12[0],
-      setIsShownModal = _useState12[1];
+      deletedTargetAvaTimes = _useState12[0],
+      setDeletedTargetAvaTimes = _useState12[1];
 
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       _useState14 = _slicedToArray(_useState13, 2),
-      loadingDispFlag = _useState14[0],
-      setLoadingDispFlag = _useState14[1];
+      isShownModal = _useState14[0],
+      setIsShownModal = _useState14[1];
 
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(rData),
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       _useState16 = _slicedToArray(_useState15, 2),
-      reservations = _useState16[0],
-      setReservations = _useState16[1];
+      loadingDispFlag = _useState16[0],
+      setLoadingDispFlag = _useState16[1];
+
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(rData),
+      _useState18 = _slicedToArray(_useState17, 2),
+      reservations = _useState18[0],
+      setReservations = _useState18[1];
 
   var fetchReservations = function fetchReservations() {
     return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -19377,7 +19378,7 @@ var ReservatinTop = function ReservatinTop(props) {
         view = _ref.view;
     if (view !== 'month') return null;
     var formatDate = dayjs__WEBPACK_IMPORTED_MODULE_5___default()(date).format('YYYY-MM-DD');
-    var targetReservation = reservations[formatDate];
+    var targetReservations = reservations[formatDate];
     var targetAvaTimes = avaTimes[formatDate];
     var avaTimeList = [];
 
@@ -19387,42 +19388,54 @@ var ReservatinTop = function ReservatinTop(props) {
       }, i));
     }
 
-    if (targetReservation && avaTimeList.length) {
-      return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    var reservationList = [];
+
+    for (var _i2 in targetReservations) {
+      reservationList.push((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
+        children: targetReservations && "".concat(targetReservations[_i2].reservationName, ": ").concat(targetReservations[_i2].reservationTime)
+      }, _i2));
+    }
+
+    if (reservationList.length && avaTimeList.length) {
+      return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", Object.assign({
+          className: "text-xs text-left"
+        }, {
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", Object.assign({
             className: 'font-bold'
           }, {
             children: "\u25A0\u4E88\u7D04\u8005"
-          }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
-            children: [targetReservation.reservationName, ": ", targetReservation.reservationTime]
-          }, void 0)]
-        }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          }), void 0), reservationList]
+        }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", Object.assign({
+          className: "text-xs text-left"
+        }, {
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", Object.assign({
             className: 'font-bold mt-2'
           }, {
             children: "\u25A0\u4E88\u7D04\u53EF\u80FD\u65E5\u6642"
           }), void 0), avaTimeList]
-        }, void 0)]
+        }), void 0)]
       }, void 0);
-    } else if (targetReservation) {
-      return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    } else if (reservationList.length) {
+      return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", Object.assign({
+        className: "text-xs text-left"
+      }, {
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", Object.assign({
           className: 'font-bold'
         }, {
           children: "\u25A0\u4E88\u7D04\u8005"
-        }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
-          children: [targetReservation.reservationName, ": ", targetReservation.reservationTime]
-        }, void 0)]
-      }, void 0);
-    } else if (targetAvaTimes) {
-      return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        }), void 0), reservationList]
+      }), void 0);
+    } else if (avaTimeList.length) {
+      return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", Object.assign({
+        className: "text-xs text-left"
+      }, {
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", Object.assign({
           className: 'font-bold'
         }, {
           children: "\u25A0\u4E88\u7D04\u53EF\u80FD\u65E5\u6642"
         }), void 0), avaTimeList]
-      }, void 0);
+      }), void 0);
     }
   };
 
@@ -19431,9 +19444,14 @@ var ReservatinTop = function ReservatinTop(props) {
     setDatetime(value);
   };
 
-  var onChangeIsBulk = function onChangeIsBulk(event) {
+  var onChangeisBulkDay = function onChangeisBulkDay(event) {
     var value = JSON.parse(event.target.value);
-    setIsBulk(value);
+    setisBulkDay(value);
+  };
+
+  var onChangeisBulkMonth = function onChangeisBulkMonth(event) {
+    var value = JSON.parse(event.target.value);
+    setisBulkMonth(value);
   }; // 予約可能テーブルに予約可能日時登録
 
 
@@ -19459,7 +19477,8 @@ var ReservatinTop = function ReservatinTop(props) {
             case 5:
               data = {
                 datetime: replacedDatetime,
-                isBulk: isBulk
+                isBulkDay: isBulkDay,
+                isBulkMonth: isBulkMonth
               };
               setLoadingDispFlag(true);
               _context2.next = 9;
@@ -19589,28 +19608,57 @@ var ReservatinTop = function ReservatinTop(props) {
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", Object.assign({
           className: "font-bold mr-3"
         }, {
-          children: "\u6642\u9593\u4E00\u62EC\u767B\u9332"
+          children: "\u4E00\u30F6\u6708\u4E00\u62EC\u767B\u9332"
         }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("label", Object.assign({
-          htmlFor: "notIsBulk"
+          htmlFor: "notisBulkMonth"
         }, {
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
             type: "radio",
-            name: "isBulk",
+            name: "isBulkMonth",
             value: "false",
-            onChange: onChangeIsBulk,
-            checked: isBulk === false,
-            id: "notIsBulk"
+            onChange: onChangeisBulkMonth,
+            checked: isBulkMonth === false,
+            id: "notisBulkMonth"
           }, void 0), "\u306A\u3057"]
         }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("label", Object.assign({
-          htmlFor: "isBulk"
+          htmlFor: "isBulkMonth"
         }, {
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
             type: "radio",
-            name: "isBulk",
+            name: "isBulkMonth",
             value: "true",
-            onChange: onChangeIsBulk,
-            checked: isBulk === true,
-            id: "isBulk",
+            onChange: onChangeisBulkMonth,
+            checked: isBulkMonth === true,
+            id: "isBulkMonth",
+            className: "ml-2"
+          }, void 0), "\u3042\u308A"]
+        }), void 0)]
+      }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", Object.assign({
+          className: "font-bold mr-3"
+        }, {
+          children: "\u65E5\u306B\u3061\u4E00\u62EC\u767B\u9332"
+        }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("label", Object.assign({
+          htmlFor: "notisBulkDay"
+        }, {
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            type: "radio",
+            name: "isBulkDay",
+            value: "false",
+            onChange: onChangeisBulkDay,
+            checked: isBulkDay === false,
+            id: "notisBulkDay"
+          }, void 0), "\u306A\u3057"]
+        }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("label", Object.assign({
+          htmlFor: "isBulkDay"
+        }, {
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            type: "radio",
+            name: "isBulkDay",
+            value: "true",
+            onChange: onChangeisBulkDay,
+            checked: isBulkDay === true,
+            id: "isBulkDay",
             className: "ml-2"
           }, void 0), "\u3042\u308A"]
         }), void 0)]
@@ -19624,7 +19672,7 @@ var ReservatinTop = function ReservatinTop(props) {
           children: "\u8FFD\u52A0"
         }), void 0)
       }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_calendar__WEBPACK_IMPORTED_MODULE_8__["default"], {
-        className: ['mt-6'],
+        className: ['mt-6', 'w-full'],
         locale: 'ja-JP',
         value: date,
         formatDay: function formatDay(locale, date) {
@@ -19704,10 +19752,10 @@ __webpack_require__.r(__webpack_exports__);
 var Loading = function Loading() {
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", Object.assign({
-      className: "absolute bg-black bg-opacity-80 h-screen left-0 top-0 w-screen"
+      className: "absolute bg-black bg-opacity-80 flex h-screen items-center justify-center left-0 top-0 w-screen"
     }, {
       children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-        className: "absolute animate-spin left-1/2 text-white top-1/2",
+        className: "animate-spin text-white",
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faSpinner,
         size: "5x"
       }, void 0)
@@ -19805,7 +19853,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var SideMenu = function SideMenu() {
+var SideMenu = function SideMenu(props) {
+  var toggleSideMunu = props.toggleSideMunu;
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", Object.assign({
       className: "font-bold font- text-left mx-auto w-4/6"
@@ -19814,7 +19863,11 @@ var SideMenu = function SideMenu() {
     }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", Object.assign({
       className: "mt-4 mx-auto w-4/6"
     }, {
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_side_SideReservation__WEBPACK_IMPORTED_MODULE_1__["default"], {}, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_side_SideMail__WEBPACK_IMPORTED_MODULE_2__["default"], {}, void 0)]
+      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_side_SideReservation__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        toggleSideMunu: toggleSideMunu
+      }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_side_SideMail__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        toggleSideMunu: toggleSideMunu
+      }, void 0)]
     }), void 0)]
   }, void 0);
 };
@@ -19906,7 +19959,9 @@ function _arrayWithHoles(arr) {
 
 
 
-var SideMail = function SideMail() {
+var SideMail = function SideMail(props) {
+  var toggleSideMunu = props.toggleSideMunu;
+
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
       _useState2 = _slicedToArray(_useState, 2),
       toggle = _useState2[0],
@@ -19934,12 +19989,14 @@ var SideMail = function SideMail() {
       }, {
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
           children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, Object.assign({
+            onClick: toggleSideMunu,
             to: "/admin/receipt"
           }, {
             children: "\u9818\u53CE\u66F8"
           }), void 0)
         }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
           children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, Object.assign({
+            onClick: toggleSideMunu,
             to: "/admin/evaluation"
           }, {
             children: "\u8A55\u4FA1\u8868"
@@ -20037,7 +20094,9 @@ function _arrayWithHoles(arr) {
 
 
 
-var SideReservation = function SideReservation() {
+var SideReservation = function SideReservation(props) {
+  var toggleSideMunu = props.toggleSideMunu;
+
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
       _useState2 = _slicedToArray(_useState, 2),
       toggle = _useState2[0],
@@ -20063,6 +20122,7 @@ var SideReservation = function SideReservation() {
       }, {
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
           children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, Object.assign({
+            onClick: toggleSideMunu,
             to: "/admin/reservation"
           }, {
             children: "\u4E88\u7D04\u4E00\u89A7"
@@ -20179,57 +20239,67 @@ var Router = function Router() {
 
 
   var toggleSideMunu = function toggleSideMunu() {
-    return setToggle(!toggle);
+    setToggle(!toggle);
   };
 
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.BrowserRouter, {
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_parts_Header__WEBPACK_IMPORTED_MODULE_3__["default"], {
       toggleSideMunu: toggleSideMunu
-    }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_parts_SideMenu__WEBPACK_IMPORTED_MODULE_2__["default"], {}, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", Object.assign({
-      className: "bg-gray-200 h-screen pt-5"
+    }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", Object.assign({
+      className: ""
     }, {
-      children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", Object.assign({
-        className: "ml-5"
+      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", Object.assign({
+        className: toggle ? "hidden" : "absolute bg-blue-900 min-h-full pt-5 text-white w-52"
       }, {
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Switch, {
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-            path: '/admin/receipt/send/:id',
-            render: function render() {
-              return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_ReceiptSend__WEBPACK_IMPORTED_MODULE_6__["default"], {
-                title: '領収書送信'
-              }, void 0);
-            }
-          }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-            path: '/admin/evaluation/send/:id',
-            render: function render() {
-              return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_EvaluationSend__WEBPACK_IMPORTED_MODULE_8__["default"], {
-                title: '評価表送信'
-              }, void 0);
-            }
-          }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-            path: '/admin/reservation',
-            render: function render() {
-              return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_ReservatinTop__WEBPACK_IMPORTED_MODULE_4__["default"], {
-                title: '予約一覧'
-              }, void 0);
-            }
-          }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-            path: '/admin/receipt',
-            render: function render() {
-              return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Receipt__WEBPACK_IMPORTED_MODULE_5__["default"], {
-                title: '領収書'
-              }, void 0);
-            }
-          }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-            path: '/admin/evaluation',
-            render: function render() {
-              return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Evaluation__WEBPACK_IMPORTED_MODULE_7__["default"], {
-                title: '評価表'
-              }, void 0);
-            }
-          }, void 0)]
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_parts_SideMenu__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          toggleSideMunu: toggleSideMunu
         }, void 0)
-      }), void 0)
+      }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", Object.assign({
+        className: "100vw bg-gray-200 h-screen pt-5"
+      }, {
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", Object.assign({
+          className: "ml-2 mr-2"
+        }, {
+          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Switch, {
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+              path: '/admin/receipt/send/:id',
+              render: function render() {
+                return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_ReceiptSend__WEBPACK_IMPORTED_MODULE_6__["default"], {
+                  title: '領収書送信'
+                }, void 0);
+              }
+            }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+              path: '/admin/evaluation/send/:id',
+              render: function render() {
+                return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_EvaluationSend__WEBPACK_IMPORTED_MODULE_8__["default"], {
+                  title: '評価表送信'
+                }, void 0);
+              }
+            }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+              path: '/admin/reservation',
+              render: function render() {
+                return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_ReservatinTop__WEBPACK_IMPORTED_MODULE_4__["default"], {
+                  title: '予約一覧'
+                }, void 0);
+              }
+            }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+              path: '/admin/receipt',
+              render: function render() {
+                return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Receipt__WEBPACK_IMPORTED_MODULE_5__["default"], {
+                  title: '領収書'
+                }, void 0);
+              }
+            }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+              path: '/admin/evaluation',
+              render: function render() {
+                return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Evaluation__WEBPACK_IMPORTED_MODULE_7__["default"], {
+                  title: '評価表'
+                }, void 0);
+              }
+            }, void 0)]
+          }, void 0)
+        }), void 0)
+      }), void 0)]
     }), void 0)]
   }, void 0);
 };
