@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use \Yasumi\Yasumi;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Consts\ConstReservation;
@@ -62,15 +63,32 @@ class ReservationController extends Controller
         $avaRsvDatetimeModel = new AvailableReservationDatetime();
 
         // 一括ボタン押下時、一括登録
-        if ($request['isBulk']) {
-            $insetDatetimeList = [];
+        if ($request['isBulkMonth']) {
+            // 祝日取得
+            $holidays = Yasumi::create('Japan', date('Y'), 'ja_JP');
+            $monthCount = date('t', strtotime($date));
+            $dateNotDay = substr($date, 0, 8); // 例）2022/05/
+            $insertDatetimeList = [];
+
+            for ($i = 1; $i <= $monthCount; $i++) {
+                if ($holidays->isHoliday(new \DateTime($dateNotDay . $i))) continue;
+                foreach (ConstReservation::AVAILABLE_TIME_LIST as $time) {
+                    $insertDatetimeList[] = [
+                        'available_date' => $dateNotDay . $i,
+                        'available_time' => $time,
+                    ];
+                }
+            }
+            DB::table('available_reservation_datetimes')->insert($insertDatetimeList);
+        } elseif ($request['isBulkDay']) {
+            $insertDatetimeList = [];
             foreach (ConstReservation::AVAILABLE_TIME_LIST as $time) {
-                $insetDatetimeList[] = [
+                $insertDatetimeList[] = [
                     'available_date' => $date,
                     'available_time' => $time,
                 ];
             }
-            DB::table('available_reservation_datetimes')->insert($insetDatetimeList);
+            DB::table('available_reservation_datetimes')->insert($insertDatetimeList);
         } else {
             $avaRsvDatetimeModel->create([
                 'available_date' => $date,

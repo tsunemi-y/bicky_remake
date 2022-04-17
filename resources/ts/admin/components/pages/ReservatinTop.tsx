@@ -29,7 +29,8 @@ const ReservatinTop: React.FC = (props: Props) => {
     const [avaTimes, setAvaTimes] = useState<any>(rData);
     const [date, setDate] = useState<Date>(new Date());
     const [datetime, setDatetime] = useState<any>('');
-    const [isBulk, setIsBulk] = useState<boolean>(true);
+    const [isBulkDay, setisBulkDay] = useState<boolean>(false);
+    const [isBulkMonth, setisBulkMonth] = useState<boolean>(true);
     const [deletedTargetAvaTimes, setDeletedTargetAvaTimes] = useState<any>([]);
     const [isShownModal, setIsShownModal] = useState<boolean>(false);
     const [loadingDispFlag, setLoadingDispFlag] = useState<Boolean>(false);
@@ -107,9 +108,14 @@ const ReservatinTop: React.FC = (props: Props) => {
         setDatetime(value);
     }
 
-    const onChangeIsBulk = (event: React.ChangeEvent<HTMLInputElement>): void =>  {
+    const onChangeisBulkDay = (event: React.ChangeEvent<HTMLInputElement>): void =>  {
         const value: boolean = JSON.parse(event.target.value);
-        setIsBulk(value);
+        setisBulkDay(value);
+    }
+
+    const onChangeisBulkMonth = (event: React.ChangeEvent<HTMLInputElement>): void =>  {
+        const value: boolean = JSON.parse(event.target.value);
+        setisBulkMonth(value);
     }
 
     // 予約可能テーブルに予約可能日時登録
@@ -120,7 +126,8 @@ const ReservatinTop: React.FC = (props: Props) => {
             if (result === false) return;
             const data = {
                 datetime: replacedDatetime,
-                isBulk
+                isBulkDay,
+                isBulkMonth
             }
             setLoadingDispFlag(true);
             await axios.post(`/api/admin/saveReservation`, data);
@@ -186,9 +193,15 @@ return (
                 </div>
 
                 <div>
-                    <label className="font-bold mr-3">時間一括登録</label>
-                    <label htmlFor="notIsBulk"><input type="radio" name="isBulk" value="false" onChange={onChangeIsBulk} checked={isBulk === false} id="notIsBulk"/>なし</label>
-                    <label htmlFor="isBulk"><input type="radio" name="isBulk" value="true" onChange={onChangeIsBulk} checked={isBulk === true} id="isBulk" className="ml-2" />あり</label>
+                    <label className="font-bold mr-3">一ヶ月一括登録</label>
+                    <label htmlFor="notisBulkMonth"><input type="radio" name="isBulkMonth" value="false" onChange={onChangeisBulkMonth} checked={isBulkMonth === false} id="notisBulkMonth"/>なし</label>
+                    <label htmlFor="isBulkMonth"><input type="radio" name="isBulkMonth" value="true" onChange={onChangeisBulkMonth} checked={isBulkMonth === true} id="isBulkMonth" className="ml-2" />あり</label>
+                </div>
+
+                <div>
+                    <label className="font-bold mr-3">日にち一括登録</label>
+                    <label htmlFor="notisBulkDay"><input type="radio" name="isBulkDay" value="false" onChange={onChangeisBulkDay} checked={isBulkDay === false} id="notisBulkDay"/>なし</label>
+                    <label htmlFor="isBulkDay"><input type="radio" name="isBulkDay" value="true" onChange={onChangeisBulkDay} checked={isBulkDay === true} id="isBulkDay" className="ml-2" />あり</label>
                 </div>
 
                 <div className="bg-blue-900 mt-3 p-1 rounded text-center text-white w-20">
