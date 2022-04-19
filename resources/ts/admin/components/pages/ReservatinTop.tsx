@@ -24,8 +24,8 @@ const rData = {
     reservation_time: ''
 }
 
-const ReservatinTop: React.FC = (props: Props) => {
-
+const ReservatinTop: React.FC<Props> = (props) => {
+    const { title } = props;
     const [avaTimes, setAvaTimes] = useState<any>(rData);
     const [holidays, setHolidays] = useState<any>([]);
     const [date, setDate] = useState<Date>(new Date());
@@ -146,8 +146,8 @@ const ReservatinTop: React.FC = (props: Props) => {
       }
 
       // 日付押下時、モーダル内に押下した日付に紐づく時間一覧を表示させる。
-    const handleOnClickDay = (e) => {
-        const selectedDay: String = dayjs(e).format('YYYY-MM-DD')
+    const handleOnClickDay = (e: any) => {
+        const selectedDay: any = dayjs(e).format('YYYY-MM-DD')
         const targetAvaTimes: any = avaTimes[selectedDay];
         
         let avaTimeList: any = [];
@@ -157,7 +157,7 @@ const ReservatinTop: React.FC = (props: Props) => {
                     className="bg-red-500 block mt-3 p-1 rounded text-center text-white w-20" 
                     key={i} 
                     data-date={selectedDay} 
-                    onClick={(e) => deleteDatetime(selectedDay, e.target.innerText ) }>{targetAvaTimes[i]}
+                    onClick={(e: any) => deleteDatetime(selectedDay, e.target.innerText ) }>{targetAvaTimes[i]}
                 </button>
             );
         }
@@ -191,7 +191,7 @@ const ReservatinTop: React.FC = (props: Props) => {
     
 return (
         <>
-            <h1　className="font-bold text-left text-2xl">{props.title}</h1>
+            <h1　className="font-bold text-left text-2xl">{title}</h1>
             <div className="mt-3">
                 <div className="mb-2">
                     <label className="font-bold mr-3" htmlFor="avaDatetime">利用可能日時追加</label>

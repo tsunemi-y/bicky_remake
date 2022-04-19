@@ -36,4 +36,8 @@ return [
         'admin_id' => env('LINE_ADMIN_ID'),
     ],
 
+    'google_calendar' => [
+        'id' => env('GOOGLE_CALENDAR_ID'),
+    ],
+
 ];

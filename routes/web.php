@@ -6,6 +6,7 @@ use App\Http\Controllers\FeeController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\LineMessengerController;
+use App\Http\Controllers\GoogleCalendarController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 
 /*
@@ -58,6 +59,9 @@ Route::post('/cancelReservation/{reservation}', [ReservationController::class, '
 
 Route::post('/createReservation', [ReservationController::class, 'createReservation'])->name('createReservation')->middleware('auth');
 Route::post('/reservation/sendmail', [ReservationController::class, 'sendMail'])->name('sendMail');
+
+// グーグルカレンダー
+Route::post('/googleCalendar/store', [GoogleCalendarController::class, 'store'])->name('googleCalendarStore');
 
 // auth
 Auth::routes();

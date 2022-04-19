@@ -30,7 +30,7 @@ const rData = {
 
 const MailList: React.FC<Props> = (props) => {
 
-    const [users, setUsers] = useState<RData>(rData);
+    const [users, setUsers] = useState<any>(rData);
     const [data, setData] = useState<InputData>(initialInputData);
     const [loadingDispFlag, setLoadingDispFlag] = useState<Boolean>(false);
 
@@ -88,7 +88,7 @@ const MailList: React.FC<Props> = (props) => {
                             <th>メールアドレス</th>
                         </tr>
                     </thead>
-                    {users[0] && users[0].id !='' && users.map((user, index) =>
+                    {users[0] && users[0].id !='' && users.map((user: any, index: any) =>
                         <tbody key={index} onClick={() => handleOnClick(user.id)}>
                             <tr className="border-b-2 border-gray-500 border-solid bg-white h-16">
                                 <td key={index}>

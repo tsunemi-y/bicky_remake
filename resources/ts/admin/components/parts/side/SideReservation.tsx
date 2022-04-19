@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 
-const SideReservation: React.FC = (props: Props) => {
+const SideReservation: React.FC<any> = (props) => {
     const { toggleSideMunu } = props;
     const [toggle, setToggle] = useState<Boolean>(true);
 

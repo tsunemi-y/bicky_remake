@@ -8,9 +8,10 @@ use App\Models\Reservation;
 use App\Http\Services\MailService;
 use App\Http\Traits\Reservationable;
 
-use App\Http\Requests\ReservationCalenderFormRequest;
 use App\Http\Requests\ReservationFormRequest;
 use App\Http\Controllers\LineMessengerController;
+use App\Http\Controllers\GoogleCalendarController;
+use App\Http\Requests\ReservationCalenderFormRequest;
 
 class ReservationController extends Controller
 {
@@ -165,6 +166,10 @@ class ReservationController extends Controller
         ];
 
         $this->sendReservationMessage($mailData);
+
+        $googleCalendar = new GoogleCalendarController();
+        $googleCalendar->store($userInfo->parentName, $request->avaDate . $request->avaTime, $request->avaDate . $endTime);
+
         return redirect(route('reservationTop'))
             ->with('successReservation', '予約を受け付けました。</br>予約内容確認のメールをお送りしました。');
     }

@@ -29,12 +29,12 @@ const EvaluationSend: React.FC<Props> = (props) => {
     const { title } = props;
 
     const [user, setUser] = useState(rData);
-    const [fileObj, setFileObj] = useState({});
+    const [fileObj, setFileObj] = useState<any>({});
     const [loadingDispFlag, setLoadingDispFlag] = useState<Boolean>(false);
 
     const { id }: urlParam = useParams();
 
-    const onChangeEvaluationPDF = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onChangeEvaluationPDF = async (e: any) => {
         setFileObj(e.target.files);
     }
 

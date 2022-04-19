@@ -2,7 +2,7 @@ import React from 'react';
 import SideReservation from './side/SideReservation';
 import SideMail from './side/SideMail';
 
-const SideMenu: React.FC = (props: Props) => {
+const SideMenu: React.FC<any> = (props) => {
     const { toggleSideMunu } = props;
     return (
         <>

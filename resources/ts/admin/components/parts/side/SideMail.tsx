@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 
-const SideMail: React.FC = (props: Props) => {
+const SideMail: React.FC<any> = (props) => {
     const { toggleSideMunu } = props;
     const [toggle, setToggle] = useState<Boolean>(true);
 

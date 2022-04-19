@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { FcMenu } from "react-icons/fc";
 
-const Header: React.FC = (props: Props) => {
+const Header: React.FC<any> = (props) => {
     const { toggleSideMunu } = props;
     
     return (

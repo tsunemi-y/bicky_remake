@@ -19289,6 +19289,8 @@ var rData = {
 };
 
 var ReservatinTop = function ReservatinTop(props) {
+  var title = props.title;
+
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(rData),
       _useState2 = _slicedToArray(_useState, 2),
       avaTimes = _useState2[0],
@@ -19584,7 +19586,7 @@ var ReservatinTop = function ReservatinTop(props) {
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", Object.assign({
       className: "font-bold text-left text-2xl"
     }, {
-      children: props.title
+      children: title
     }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", Object.assign({
       className: "mt-3"
     }, {
