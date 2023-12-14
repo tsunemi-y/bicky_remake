@@ -6,17 +6,24 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\AvailableReservationDatetime;
 use App\Http\Requests\CreateAvailableFormRequest;
+
 use App\Services\ReservationService;
+use App\Services\UserService;
 
 class ReservationController extends Controller
 {
-    public function __construct(private ReservationService $reservationService)
-    {
+    public function __construct(
+        private ReservationService $reservationService,
+        private UserService $userService,
+
+    ) {
     }
 
     public function index()
     {
-        $avaDatetimes = $this->reservationService->getMappingAvailableDatesAndTimes();
+        $user = $this->userService->getLoginUser();
+
+        $avaDatetimes = $this->reservationService->getMappingAvailableDatesAndTimes($user->use_time);
         $avaTimes = $avaDatetimes['avaTimes'];
 
         $reservations = $this->reservationService->getReservations();

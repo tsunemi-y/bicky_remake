@@ -2,16 +2,15 @@
 
 namespace App\Services;
 
-use \Yasumi\Yasumi;
 use App\Models\User;
 use App\Consts\ConstUser;
-use App\Models\Reservation;
+
 use App\Services\MailService;
-use App\Consts\ConstReservation;
 use App\Services\LineMessengerServices;
+
 use App\Repositories\ReservationRepository;
-use App\Models\AvailableReservationDatetime;
 use App\Repositories\AvailableReservationDatetimeRepository;
+use App\Repositories\UserRepository;
 
 class UserService
 {
@@ -21,7 +20,8 @@ class UserService
         private LineMessengerServices $lineMessengerServices,
         private AvailableReservationDatetimeService $availableReservationDatetimeService,
         private ReservationRepository $reservationRepository,
-        private AvailableReservationDatetimeRepository $availableReservationDatetimeRepository
+        private AvailableReservationDatetimeRepository $availableReservationDatetimeRepository,
+        private UserRepository $userRepository
     ) {
     }
 
@@ -41,5 +41,10 @@ class UserService
         } else {
             return ConstUser::NORMAL_USE_TIME;
         }
+    }
+
+    public function getLoginUser(): User
+    { 
+        return $this->userRepository->getLoginUser(\Auth::id());
     }
 }

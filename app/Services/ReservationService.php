@@ -5,18 +5,19 @@ namespace App\Services;
 use \Yasumi\Yasumi;
 use App\Models\User;
 use App\Models\Reservation;
-use App\Services\MailService;
+use App\Services\UserService;
 use App\Consts\ConstReservation;
-use App\Services\LineMessengerServices;
 use App\Repositories\ReservationRepository;
 use App\Models\AvailableReservationDatetime;
 use App\Repositories\AvailableReservationDatetimeRepository;
+
 
 class ReservationService
 {
     public function __construct(
         private GoogleCalendarService $googleCalendarService, 
         private AvailableReservationDatetimeService $availableReservationDatetimeService,
+        private UserService $userService,
         private ReservationRepository $reservationRepository,
         private AvailableReservationDatetimeRepository $availableReservationDatetimeRepository
     ) {
@@ -25,7 +26,9 @@ class ReservationService
     // todo:html部分をビューに移行。ビューの日付押下時のエラー修正
     public function createCalender($request)
     {
-        $avaDatetimes = $this->getMappingAvailableDatesAndTimes();
+        $user = $this->userService->getLoginUser();
+
+        $avaDatetimes = $this->getMappingAvailableDatesAndTimes($user->use_time);
         $avaDates = $avaDatetimes['avaDates'];
         $avaTimes = $avaDatetimes['avaTimes'];
 
@@ -127,9 +130,9 @@ class ReservationService
         return date('H:i:s', strtotime("{$request->avaTime} +{$useTime} minute -1 second"));
     }
 
-    public function getMappingAvailableDatesAndTimes()
+    public function getMappingAvailableDatesAndTimes($usetime)
     {
-        $avaDatetimes = $this->reservationRepository->getAvailableDatetimes();
+        $avaDatetimes = $this->reservationRepository->getAvailableDatetimes($usetime);
 
         $avaDates = [];
         $avaTimes = [];

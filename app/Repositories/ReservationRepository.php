@@ -9,18 +9,25 @@ use App\Models\AvailableReservationDatetime;
 
 class ReservationRepository
 {
-    public function getAvailableDatetimes(): Collection
+    public function getAvailableDatetimes($useTime)
     {
+        $ajdustedUseTime = $useTime - 1;
+
         return AvailableReservationDatetime::query()
             ->select(DB::raw('
             available_date
             ,array_agg(available_time order by available_time) available_times
         '))
-            ->whereNotExists(function($query) {
+            ->whereNotExists(function($query) use($ajdustedUseTime) {
             $query->select(DB::raw(1))
                 ->from('reservations')
                 ->whereRaw('CAST(available_date AS DATE) = CAST(reservation_date AS DATE)')
-                ->whereRaw('CAST(available_time AS TIME) BETWEEN CAST(reservation_time AS TIME) AND CAST(end_time AS TIME)');
+                ->whereRaw("
+                    (
+                        CAST(available_time AS TIME) BETWEEN CAST(reservation_time AS TIME) AND CAST(end_time AS TIME) OR
+                        CAST(available_time AS TIME) + CAST('$ajdustedUseTime minutes' as INTERVAL) BETWEEN CAST(reservation_time AS TIME) AND CAST(end_time AS TIME)
+                    )
+                ");
             })
             ->groupBy('available_date')
             ->get();
