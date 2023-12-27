@@ -23,7 +23,7 @@ class ReservationController extends Controller
     {
         $user = $this->userService->getLoginUser();
 
-        $avaDatetimes = $this->reservationService->getMappingAvailableDatesAndTimes($user->use_time);
+        $avaDatetimes = $this->reservationService->getMappingAvailableDatesAndTimes($user->use_time ?? null);
         $avaTimes = $avaDatetimes['avaTimes'];
 
         $reservations = $this->reservationService->getReservations();

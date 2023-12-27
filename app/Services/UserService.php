@@ -43,7 +43,7 @@ class UserService
         }
     }
 
-    public function getLoginUser(): User
+    public function getLoginUser(): User | null
     { 
         return $this->userRepository->getLoginUser(\Auth::id());
     }

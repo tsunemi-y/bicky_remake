@@ -11,7 +11,10 @@ class ReservationRepository
 {
     public function getAvailableDatetimes($useTime)
     {
+        $ajdustedUseTime = 0;
+        if (!is_null($ajdustedUseTime)) {
         $ajdustedUseTime = $useTime - 1;
+        }
 
         return AvailableReservationDatetime::query()
             ->select(DB::raw('
