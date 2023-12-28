@@ -13,7 +13,7 @@ class ReservationRepository
     {
         $ajdustedUseTime = 0;
         if (!is_null($ajdustedUseTime)) {
-        $ajdustedUseTime = $useTime - 1;
+            $ajdustedUseTime = $useTime - 1;
         }
 
         return AvailableReservationDatetime::query()
@@ -43,5 +43,15 @@ class ReservationRepository
             ->orderBy('reservation_date', 'asc')
             ->orderBy('reservation_time', 'asc')
             ->get(['parentName', 'reservation_date', 'reservation_time']);
+    }
+
+    public function getMonthlyFee(): int
+    {
+        // 今月分
+        // feeをcount　→　user.feeから取ってくる
+        return Reservation::query()
+            ->join('users', 'reservations.user_id', '=', 'users.id')
+            ->whereRaw("date_part('month', reservation_date) = date_part('month', now())")
+            ->count();
     }
 }

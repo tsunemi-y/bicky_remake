@@ -2,16 +2,17 @@
 
 namespace App\Services;
 
-use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot;
-use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use App\Models\Reservation;
+use App\Repositories\ReservationRepository;
+use LINE\LINEBot\HTTPClient\CurlHTTPClient;
+use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 
 class LineMessengerServices
 {
     private $userId;
 
-    public function __construct()
+    public function __construct(private ReservationRepository $reservationRepository,)
     {
         $this->userId = config('services.line.admin_id');
     }
@@ -99,6 +100,17 @@ class LineMessengerServices
         $message .= "ご利用プラン：　{$coursePlan}" . "\n";
         $message .= "料金：　$user->fee";
         
+        $this->sendMessage($message);
+    }
+
+    // 月の利用料集計
+    public function sendMonthlyFeeMessage()
+    {
+        $monthlityFeeCount = $this->reservationRepository->getMonthlyFee();
+        $fee = number_format($monthlityFeeCount);
+
+        $message = "今月の売り上げは、{$fee}円です。";
+
         $this->sendMessage($message);
     }
 }
