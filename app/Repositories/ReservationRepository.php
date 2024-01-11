@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
-use DB;
 use App\Models\Reservation;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use App\Models\AvailableReservationDatetime;
 
 class ReservationRepository
@@ -52,6 +52,6 @@ class ReservationRepository
         return Reservation::query()
             ->join('users', 'reservations.user_id', '=', 'users.id')
             ->whereRaw("date_part('month', reservation_date) = date_part('month', now())")
-            ->count();
+            ->sum(DB::raw('CAST(users.fee AS INTEGER)'));
     }
 }
