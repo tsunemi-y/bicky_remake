@@ -11,9 +11,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
+use App\Services\LineMessengerServices;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Http\Controllers\LineMessengerController;
 
 class RegisterController extends Controller
 {
@@ -42,7 +42,7 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(private LineMessengerServices $lineMessengerServices)
     {
         $this->middleware('guest');
     }
@@ -124,8 +124,7 @@ class RegisterController extends Controller
             'line_consultation_flag'     => $data['lineConsultation'],
         ]);
 
-        $lineModel = new LineMessengerController();
-        $lineModel->sendRegistrationMessage($user);
+        $this->lineMessengerServices->sendRegistrationMessage($user);
 
         return $user;
     }
