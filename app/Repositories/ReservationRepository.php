@@ -11,8 +11,10 @@ class ReservationRepository
 {
     public function getAvailableDatetimes($useTime)
     {
+        // 管理画面からコールされる場合、管理者はuseTimeを持っていないため、0をセット
+        // ※予約終了時間の影響を受けないように設定
         $ajdustedUseTime = 0;
-        if (!is_null($ajdustedUseTime)) {
+        if (!is_null($useTime)) {
             $ajdustedUseTime = $useTime - 1;
         }
 
