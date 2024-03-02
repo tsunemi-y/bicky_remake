@@ -42,7 +42,10 @@ class LineMessengerServices
             $todayReservationListCount = count($todayReservationList);
             $message = '本日の予約者は下記の通りです。' . "\n" . "\n";
             foreach ($todayReservationList as $key => $rsv) {
-                $message .= $rsv->user->parentName . ': ' . $rsv->reservation_time;
+                $message .= $rsv->user->childName . ': ' . $rsv->reservation_time;
+                if (!is_null($rsv->user->childName2)) {
+                    $message .= "\n" . $rsv->user->childName2 . ': ' . $rsv->reservation_time;
+                }
 
                 if ($todayReservationListCount != $key + 1) {
                     $message .= "\n";
@@ -84,13 +87,16 @@ class LineMessengerServices
 
         $message = '新規登録を受付ました。' . "\n" . "\n";
         $message .= "保護者氏名：　$user->parentName" . "\n";
+        $message .= "保護者氏名（フリガナ）：　$user->parentNameKana" . "\n";
         $message .= "メールアドレス：　$user->email" . "\n";
         $message .= "電話番号：　$user->tel" . "\n";
         $message .= "利用児氏名：　$user->childName" . "\n";
+        $message .= "利用児氏名（フリガナ）：　$user->childNameKana" . "\n";
         $message .= "年齢：　$user->age" . "\n";
         $message .= "性別：　$user->gender" . "\n";
         if (!empty($user->diagnosis)) $message .= "診断名：　$user->diagnosis" . "\n";
         if (!empty($user->childName2)) $message .= "利用児氏名2：　$user->childName2" . "\n";
+        if (!empty($user->childName2Kana)) $message .= "利用児氏名2（フリガナ）：　$user->childName2Kana" . "\n";
         if (!empty($user->age2)) $message .= "年齢2：　$user->age2" . "\n";
         if (!empty($user->gender2)) $message .= "性別2：　$user->gender2" . "\n";
         if (!empty($user->diagnosis2)) $message .= "診断名2：　$user->diagnosis2" . "\n";
