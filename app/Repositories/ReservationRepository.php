@@ -53,7 +53,10 @@ class ReservationRepository
         // feeをcount　→　user.feeから取ってくる
         return Reservation::query()
             ->join('users', 'reservations.user_id', '=', 'users.id')
-            ->whereRaw("date_part('month', reservation_date) = date_part('month', now())")
+            ->whereRaw("
+                date_part('year', reservation_date) = date_part('year', now()) AND
+                date_part('month', reservation_date) = date_part('month', now())
+            ")
             ->sum(DB::raw('CAST(users.fee AS INTEGER)'));
     }
 }
