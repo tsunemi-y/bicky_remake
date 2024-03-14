@@ -32,7 +32,6 @@
                         <thead>
                             <tr class="table-header">
                                 <th class="bg-white"></th>
-                                <th class="font-weight-bold">平日利用</th>
                                 <th class="font-weight-bold">休日利用</th>
                                 <th class="font-weight-bold">兄弟同時利用</th>
                             </tr>
@@ -40,7 +39,6 @@
                         <tbody>    
                             <tr class="table-height">
                                 <th style="background-color: #fdffe5;">料金</th>
-                                <th>7,700円</th>
                                 <th>8,800円</th>
                                 <th>13,200円（6,600円/人）</th>
                             </tr>
