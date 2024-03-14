@@ -83,8 +83,6 @@ class LineMessengerServices
     // 新規登録者のメッセージ作成
     public function sendRegistrationMessage($user)
     {
-        $coursePlan = convertCourseFeeToName($user->fee);
-
         $message = '新規登録を受付ました。' . "\n" . "\n";
         $message .= "保護者氏名：　$user->parentName" . "\n";
         $message .= "保護者氏名（フリガナ）：　$user->parentNameKana" . "\n";
@@ -100,11 +98,9 @@ class LineMessengerServices
         if (!empty($user->age2)) $message .= "年齢2：　$user->age2" . "\n";
         if (!empty($user->gender2)) $message .= "性別2：　$user->gender2" . "\n";
         if (!empty($user->diagnosis2)) $message .= "診断名2：　$user->diagnosis2" . "\n";
-        $message .= "住所：　$user->address" . "\n";
         if (!empty($user->introduction)) $message .= "紹介先：　$user->introduction" . "\n";
         if (!empty($user->consaltation)) $message .= "相談内容：　$user->consaltation" . "\n";
-        $message .= "ご利用プラン：　{$coursePlan}" . "\n";
-        $message .= "料金：　$user->fee";
+        $message .= "住所：　$user->address";
         
         $this->sendMessage($message);
     }

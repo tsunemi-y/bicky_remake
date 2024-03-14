@@ -215,46 +215,8 @@
                                 </label>
                             </div>
                         </div>
-
-                        {{-- 利用回数 --}}
-                        <div class="mb-1" id="numberOfUse">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="numberOfUse" id="one" value="1" checked>
-                                <label class="form-check-label" for="one">
-                                    月一回利用
-                                </label>
-                            </div>
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="numberOfUse" id="two" value="2">
-                                <label class="form-check-label" for="two">
-                                    月二回利用
-                                </label>
-                            </div>
-                        </div>
-
-                        {{-- コースタイプ選択 --}}
-                        <div id="coursePlan">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="coursePlan" id="weekday" value="1" checked>
-                                <label class="form-check-label" for="weekday">
-                                    平日利用
-                                </label>
-                            </div>
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="coursePlan" id="holiday" value="2">
-                                <label class="form-check-label" for="holiday">
-                                    休日利用
-                                </label>
-                            </div>
-                        </div>
-
-                        @if ($errors->has('coursePlan'))
-                            <div class="error text-danger">
-                                <p>{{ $errors->first('coursePlan') }}</p>
-                            </div>
-                        @endif
+                        <input type="hidden" name="numberOfUse" value='1 '>
+                        <input type="hidden" name="coursePlan" value='2'>
                     </div>
 
                     <div class="mb-3">
