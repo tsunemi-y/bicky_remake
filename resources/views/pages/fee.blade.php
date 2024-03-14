@@ -28,12 +28,6 @@
             <section class="mb-4">
                 <h2>料金・プラン</h2>
                 <section class="mb-4">
-                    <p class="mb-2">
-                        訓練回数は月1回または2回のどちらかをご選択いただけます。<br>
-                        月2回の場合は、月1回の倍の料金になります。<br>
-                        月2回の場合は、来所での訓練が月2回（隔週）、評価表が2回分になります。<br>
-                        LINEでの相談は、2回以上で4回までご利用可能です。
-                    <p>
                     <table border="1" class="text-center mb-2" width="100%">
                         <thead>
                             <tr class="table-header">
@@ -45,16 +39,10 @@
                         </thead>
                         <tbody>    
                             <tr class="table-height">
-                                <th style="background-color: #fdffe5;">月1回</th>
+                                <th style="background-color: #fdffe5;">料金</th>
                                 <th>7,700円</th>
                                 <th>8,800円</th>
                                 <th>13,200円（6,600円/人）</th>
-                            </tr>
-                            <tr class="table-height">
-                                <th style="background-color: #fdffe5;">月2回</th>
-                                <th>15,400円</th>
-                                <th>17,600円</th>
-                                <th>26,400円（13,200円/人）</th>
                             </tr>
                         </tbody>
                     </table>
