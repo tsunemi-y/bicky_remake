@@ -32,7 +32,7 @@
                         <thead>
                             <tr class="table-header">
                                 <th class="bg-white"></th>
-                                <th class="font-weight-bold">休日利用</th>
+                                <th class="font-weight-bold">通常利用</th>
                                 <th class="font-weight-bold">兄弟同時利用</th>
                             </tr>
                         </thead>
