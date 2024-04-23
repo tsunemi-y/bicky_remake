@@ -24,7 +24,7 @@ class UserController extends Controller
         return $user
             ->fuzzyName($request->name)
             ->equalId($request->id)
-            ->orderBy('parentName')
+            ->orderBy('parent_name_kana')
             ->get(['id', 'parentName', 'email', 'fee']);
     }
 
