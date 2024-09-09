@@ -85,16 +85,16 @@ class LineMessengerServices
     {
         $message = '新規登録を受付ました。' . "\n" . "\n";
         $message .= "保護者氏名：　$user->parentName" . "\n";
-        $message .= "保護者氏名（フリガナ）：　$user->parentNameKana" . "\n";
+        $message .= "保護者氏名（フリガナ）：　$user->parent_name_kana" . "\n";
         $message .= "メールアドレス：　$user->email" . "\n";
         $message .= "電話番号：　$user->tel" . "\n";
         $message .= "利用児氏名：　$user->childName" . "\n";
-        $message .= "利用児氏名（フリガナ）：　$user->childNameKana" . "\n";
+        $message .= "利用児氏名（フリガナ）：　$user->child_name_kana" . "\n";
         $message .= "年齢：　$user->age" . "\n";
         $message .= "性別：　$user->gender" . "\n";
         if (!empty($user->diagnosis)) $message .= "診断名：　$user->diagnosis" . "\n";
         if (!empty($user->childName2)) $message .= "利用児氏名2：　$user->childName2" . "\n";
-        if (!empty($user->childName2Kana)) $message .= "利用児氏名2（フリガナ）：　$user->childName2Kana" . "\n";
+        if (!empty($user->child_name2_kana)) $message .= "利用児氏名2（フリガナ）：　$user->child_name2_kana" . "\n";
         if (!empty($user->age2)) $message .= "年齢2：　$user->age2" . "\n";
         if (!empty($user->gender2)) $message .= "性別2：　$user->gender2" . "\n";
         if (!empty($user->diagnosis2)) $message .= "診断名2：　$user->diagnosis2" . "\n";

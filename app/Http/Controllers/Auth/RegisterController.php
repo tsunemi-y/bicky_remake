@@ -55,17 +55,19 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-
         $validationConditionList = [
             'parentName'   => ['required', 'string', 'max:255'],
+            'parentNameKana'   => ['required', 'string', 'max:255'],
             'email'        => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'tel'          => ['required', 'numeric', 'digits_between:10,11'],
             'password'     => ['required', new AlphaNumHalf, 'min:8', 'confirmed'],
             'childName'    => ['required', 'string', 'max:255'],
+            'childNameKana'    => ['required', 'string', 'max:255'],
             'age'          => ['required', 'integer'],
             'gender'       => ['required', 'string', 'max:255'],
             'diagnosis'    => ['nullable', 'string', 'max:255'],
             'childName2'   => ['nullable', 'string', 'max:255'],
+            'childName2Kana'   => ['nullable', 'string', 'max:255'],
             'age2'         => ['nullable', 'integer'],
             'gender2'      => ['nullable', 'string', 'max:255'],
             'diagnosis2'   => ['nullable', 'string', 'max:255'],
@@ -103,14 +105,17 @@ class RegisterController extends Controller
 
         $user = User::create([
             'parentName'                 => $data['parentName'],
+            'parent_name_kana'             => $data['parentNameKana'],
             'email'                      => $data['email'],
             'tel'                        => $data['tel'],
             'password'                   => Hash::make($data['password']),
             'childName'                  => $data['childName'],
+            'child_name_kana'                  => $data['childNameKana'],
             'age'                        => $data['age'],
             'gender'                     => $data['gender'],
             'diagnosis'                  => $data['diagnosis'],
             'childName2'                 => $data['childName2'],
+            'child_name2_kana'                 => $data['childName2Kana'],
             'age2'                       => $data['age2'],
             'gender2'                    => $data['gender2'],
             'diagnosis2'                 => $data['diagnosis2'],

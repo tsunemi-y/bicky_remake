@@ -25,6 +25,17 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="parentNameKana" class="form-label">保護者氏名（カナ）<span class="text-danger">【必須】</span></label>
+                        <input type="text" class="form-control" id="parentNameKana" name="parentNameKana" placeholder="タナカタロウ"
+                            value="{{ old('parentNameKana') }}">
+                        @if ($errors->has('parentNameKana'))
+                            <div class="error text-danger">
+                                <p>{{ $errors->first('parentNameKana') }}</p>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="mb-3">
                         <label for="email" class="form-label">メールアドレス<span class="text-danger">【必須】</span></label>
                         <input type="email" class="form-control" id="email" name="email"
                             placeholder="name@example.com" value="{{ old('email') }}">
@@ -73,6 +84,17 @@
                         @if ($errors->has('childName'))
                             <div class="error text-danger">
                                 <p>{{ $errors->first('childName') }}</p>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="childNameKana" class="form-label">利用児氏名（カナ）<span class="text-danger">【必須】</span></label>
+                        <input type="text" class="form-control" id="childNameKana" name="childNameKana" placeholder="タナカタロウ"
+                            value="{{ old('childNameKana') }}">
+                        @if ($errors->has('childNameKana'))
+                            <div class="error text-danger">
+                                <p>{{ $errors->first('childNameKana') }}</p>
                             </div>
                         @endif
                     </div>
@@ -129,6 +151,17 @@
                         @if ($errors->has('childName2'))
                             <div class="error text-danger">
                                 <p>{{ $errors->first('childName2') }}</p>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="childName2Kana" class="form-label">利用児氏名2（カナ）<span class="text-danger">【必須】</span></label>
+                        <input type="text" class="form-control" id="childName2Kana" name="childName2Kana" placeholder="タナカタロウ"
+                            value="{{ old('childName2Kana') }}">
+                        @if ($errors->has('childName2Kana'))
+                            <div class="error text-danger">
+                                <p>{{ $errors->first('childName2Kana') }}</p>
                             </div>
                         @endif
                     </div>
