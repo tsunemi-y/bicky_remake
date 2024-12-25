@@ -59,4 +59,13 @@ class ReservationRepository
             ")
             ->sum(DB::raw('CAST(users.fee AS INTEGER)'));
     }
+
+    public function getTodayReservations()
+    {
+        $today = date('Y-m-d');
+        $reservations = Reservation::whereDate('reservation_date', $today)
+            ->join('users', 'reservations.user_id', '=', 'users.id')
+            ->get();
+        return $reservations;
+    }
 }
