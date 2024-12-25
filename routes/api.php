@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ReservationController;
+use App\Http\Controllers\Api\ReservationController as ApiReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/sendEvaluation', [UserController::class, 'sendEvaluation'])->name('sendEvaluation');
     Route::post('/sendReceipt', [UserController::class, 'sendReceipt'])->name('sendReceipt');
 });
+
+Route::get('/reservation', [ApiReservationController::class, 'getTodayReservations'])->name('getTodayReservations');
