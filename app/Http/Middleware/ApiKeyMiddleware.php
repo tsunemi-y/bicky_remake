@@ -16,6 +16,7 @@ class ApiKeyMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        \Log::info($request);
         $apiKey = $request->header('API_KEY');
 
         if ($apiKey !== env('API_KEY')) {
