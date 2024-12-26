@@ -16,8 +16,8 @@ class ApiKeyMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        \Log::info($request->all());
-        $apiKey = $request->header('API_KEY');
+        \Log::info($request->input());
+        $apiKey = $request->input('API_KEY'); 
 
         if ($apiKey !== env('API_KEY')) {
             return response()->json(['error' => 'Unauthorized'], 401);
