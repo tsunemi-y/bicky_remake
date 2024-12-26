@@ -28,5 +28,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 Route::middleware('api.key')->group(function () {
-    Route::get('/reservation', [ApiReservationController::class, 'getTodayReservations'])->name('getTodayReservations');
+    Route::post('/reservation', [ApiReservationController::class, 'getTodayReservations'])->name('getTodayReservations');
 });
