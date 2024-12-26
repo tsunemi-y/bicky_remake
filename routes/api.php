@@ -27,4 +27,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/sendReceipt', [UserController::class, 'sendReceipt'])->name('sendReceipt');
 });
 
-Route::get('/reservation', [ApiReservationController::class, 'getTodayReservations'])->name('getTodayReservations');
+Route::middleware('api.key')->group(function () {
+    Route::get('/reservation', [ApiReservationController::class, 'getTodayReservations'])->name('getTodayReservations');
+});
