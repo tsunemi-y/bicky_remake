@@ -92,6 +92,7 @@ class LineMessengerServices
         $message .= "利用児氏名（フリガナ）：　$user->child_name_kana" . "\n";
         $message .= "年齢：　$user->age" . "\n";
         $message .= "性別：　$user->gender" . "\n";
+        $message .= "LINE相談：　" . ($user->line_consultation_flag ? 'あり' : 'なし') . "\n";
         if (!empty($user->diagnosis)) $message .= "診断名：　$user->diagnosis" . "\n";
         if (!empty($user->childName2)) $message .= "利用児氏名2：　$user->childName2" . "\n";
         if (!empty($user->child_name2_kana)) $message .= "利用児氏名2（フリガナ）：　$user->child_name2_kana" . "\n";
