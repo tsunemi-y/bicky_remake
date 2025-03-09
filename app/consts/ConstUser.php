@@ -1,5 +1,5 @@
 <?php
-
+// こっちは使われていない
 namespace App\Consts;
 
 class ConstUser

@@ -18,6 +18,7 @@ class ConstUser
     public const FEE_ONE_HOLIDAY = 8800;  // 月1回休日
     public const FEE_ONE_SIBLING = 13200; // 月1回兄弟
     public const FEE_TWO_WEEKDAY = 15400; // 月2回平日
+    public const FEE_THREE_SIBLING = 19800; // 月1回3兄弟
     public const FEE_TWO_HOLIDAY = 17600; // 月2回休日
     public const FEE_TWO_SIBLING = 26400; // 月2回兄弟
 

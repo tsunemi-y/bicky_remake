@@ -27,7 +27,7 @@ class UserService
 
     public function getUseTimeByFee($fee)
     { 
-        if ($fee === ConstUser::FEE_ONE_SIBLING || ConstUser::FEE_THREE_SIBLING) {
+        if ($fee === ConstUser::FEE_ONE_SIBLING || $fee === ConstUser::FEE_THREE_SIBLING) {
             return ConstUser::LONG_USE_TIME;
         } else {
             return ConstUser::NORMAL_USE_TIME;
