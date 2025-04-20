@@ -58,6 +58,8 @@ class ReservationController extends Controller
         // 管理者へ予約通知のLINEメッセージ送信
         $this->lineMessengerServices->sendReservationMessage($messageData['childName'], $messageData['childName2'], $messageData['reservationDate'], $messageData['reservationTime']);
 
+        $this->lineMessengerServices->sendMonthlyFeeMessage();
+
         $viewFile = 'emails.reservations.user';
         $subject = '予約を受け付けました';
         $this->mailService->sendMailToUser($messageData, $viewFile, $subject);
@@ -87,6 +89,8 @@ class ReservationController extends Controller
 
         // 管理者へ予約キャンセルのLINEメッセージ送信
         $this->lineMessengerServices->sendCancelReservationMessage($messageData['childName'], $messageData['childName2'], $messageData['reservationDate'], $messageData['reservationTime']);
+
+        $this->lineMessengerServices->sendMonthlyFeeMessage();
 
         $viewFile = 'emails.reservations.cancel';
         $subject = '予約をキャンセルしました';
