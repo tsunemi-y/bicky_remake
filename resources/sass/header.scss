@@ -1,0 +1,117 @@
+@import "variables";
+@import "functions";
+
+.header {
+    background-color: $mainColor;
+    &__item {
+        height: 3rem;
+        margin: 0 auto;
+        position: relative;
+    }
+}
+
+.header-title {
+    font-size: 1.2rem;
+    font-family: "メイリオ", Meiryo;
+    // width: 45%;
+    a {
+        color: $menuColor;
+    }
+}
+
+.header-phone {
+    width: 40%;
+}
+
+.pc-header {
+    display: none;
+    margin: 0 auto;
+    width: 100%;
+    @include min_pc {
+        display: flex;
+        justify-content: flex-end;
+    }
+    &__item {
+        color: $black;
+        margin-left: 20px;
+    }
+}
+
+.menu {
+    @include position($position: fixed, $right: 0);
+    align-items: center;
+    background-color: $menuColor;
+    display: flex;
+    height: 3rem;
+    justify-content: center;
+    width: 3rem;
+    z-index: 3;
+    &__top,
+    &__middle,
+    &__bottom {
+        background-color: $white;
+        border-radius: 3px;
+        content: "";
+        display: block;
+        height: 3px;
+        position: absolute;
+        width: 25px;
+    }
+    &__top {
+        bottom: 30%;
+    }
+    &__top.is-active {
+        top: 50%;
+        transform: rotate(45deg);
+    }
+    &__middle.is-active {
+        transform: scaleX(0);
+    }
+    &__bottom {
+        top: 30%;
+    }
+    &__bottom.is-active {
+        top: 50%;
+        transform: rotate(-45deg);
+    }
+}
+
+.menu-inner {
+    background-color: $menuColor;
+    height: 100%;
+    right: -50%;
+    transition: all 300ms 0s ease;
+    width: 50%;
+    z-index: 2;
+    &__link {
+        color: $white;
+    }
+}
+
+.menu-inner.is-active {
+    right: 0;
+}
+
+.sp-header {
+    @include min_pc {
+        display: none;
+    }
+}
+
+.sp-header div {
+    border-bottom: 1px dotted $white;
+    padding-bottom: 3px;
+    margin-left: 0.5rem;
+}
+
+.sp-header div:first-child {
+    margin-top: 5rem;
+}
+
+.sp-header div:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.sp-header div a {
+    display: block;
+}

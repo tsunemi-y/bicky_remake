@@ -1,0 +1,11 @@
+@import "variables";
+
+.sp-table {
+    width: 100%;
+    tr:nth-child(odd) {
+        background-color: $mainColor;
+    }
+    th {
+        text-align: center;
+    }
+}

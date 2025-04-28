@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://bicky.herokuapp.com/sitemap.xml

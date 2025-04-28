@@ -1,0 +1,16 @@
+{
+    "/js/top.js": "/js/top.js",
+    "/js/reservation.js": "/js/reservation.js",
+    "/js/register.js": "/js/register.js",
+    "/js/login.js": "/js/login.js",
+    "/admin/js/index.js": "/admin/js/index.js",
+    "/css/header.css": "/css/header.css",
+    "/css/common.css": "/css/common.css",
+    "/admin/css/app.css": "/admin/css/app.css",
+    "/css/overview.css": "/css/overview.css",
+    "/css/fee.css": "/css/fee.css",
+    "/css/access.css": "/css/access.css",
+    "/css/reservation.css": "/css/reservation.css",
+    "/css/top.css": "/css/top.css",
+    "/css/footer.css": "/css/footer.css"
+}

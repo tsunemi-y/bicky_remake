@@ -1,0 +1,11 @@
+.sp-table {
+  width: 100%;
+}
+
+.sp-table tr:nth-child(odd) {
+  background-color: #fdffe5;
+}
+
+.sp-table th {
+  text-align: center;
+}

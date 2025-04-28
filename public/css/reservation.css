@@ -1,0 +1,36 @@
+.reserv-table {
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+}
+
+.holiday {
+  color: #e64c30;
+}
+
+.saturday {
+  color: #3d90dd;
+}
+
+.circle {
+  cursor: pointer;
+  color: #00b900;
+}
+
+.cross {
+  color: #ff0000;
+}
+
+.hyphen {
+  color: #b4b4b4;
+}
+
+.table-time {
+  display: block;
+}
+
+.ava-time {
+  background-color: #72cc82;
+  color: #fff;
+  display: block;
+}

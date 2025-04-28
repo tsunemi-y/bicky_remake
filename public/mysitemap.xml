@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+	<url>
+	<loc>http://localhost</loc>
+		<priority>1</priority>
+		<lastmod>2021-10-21T21:58:30+09:00</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+	<loc>http://localhost/greeting</loc>
+		<priority>1</priority>
+		<lastmod>2021-10-21T21:58:30+09:00</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+	<loc>http://localhost/access</loc>
+		<priority>1</priority>
+		<lastmod>2021-10-21T21:58:30+09:00</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+	<loc>http://localhost/fee</loc>
+		<priority>1</priority>
+		<lastmod>2021-10-21T21:58:30+09:00</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+	<loc>http://localhost/introduction</loc>
+		<priority>1</priority>
+		<lastmod>2021-10-21T21:58:30+09:00</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+	<loc>http://localhost/reservation</loc>
+		<priority>1</priority>
+		<lastmod>2021-10-21T21:58:30+09:00</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+</urlset>
+

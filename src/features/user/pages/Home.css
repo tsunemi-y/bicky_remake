@@ -1,0 +1,256 @@
+/* Home.css - メインホームページスタイル */
+
+/* 全体のコンテナ */
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ヒーローセクション */
+.hero-section {
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 120px 20px;
+  margin-bottom: 60px;
+  border-radius: 8px;
+}
+
+.hero-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+/* セクションタイトル */
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: #4a90e2;
+}
+
+/* 特集セクション */
+.featured-section {
+  padding: 60px 20px;
+  margin-bottom: 60px;
+}
+
+.featured-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.featured-item {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.featured-item:hover {
+  transform: translateY(-10px);
+}
+
+.item-image {
+  height: 200px;
+  overflow: hidden;
+}
+
+.item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.featured-item:hover .item-image img {
+  transform: scale(1.1);
+}
+
+.featured-item h3 {
+  padding: 15px 20px 5px;
+  font-size: 1.3rem;
+}
+
+.featured-item p {
+  padding: 0 20px;
+  color: #666;
+  font-size: 0.9rem;
+  height: 60px;
+  overflow: hidden;
+}
+
+.featured-item .price {
+  display: block;
+  padding: 10px 20px;
+  font-weight: bold;
+  color: #4a90e2;
+  font-size: 1.2rem;
+}
+
+.item-button {
+  display: block;
+  margin: 15px 20px 20px;
+  padding: 10px;
+  text-align: center;
+  background-color: #4a90e2;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.item-button:hover {
+  background-color: #357abf;
+}
+
+/* CTAセクション */
+.cta-section {
+  background-color: #f8f9fa;
+  padding: 80px 20px;
+  text-align: center;
+  margin-bottom: 60px;
+  border-radius: 8px;
+}
+
+.cta-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cta-content h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+}
+
+.cta-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: #4a90e2;
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+}
+
+.cta-button:hover {
+  background-color: #357abf;
+  transform: translateY(-3px);
+  box-shadow: 0 7px 14px rgba(74, 144, 226, 0.3);
+}
+
+/* お知らせセクション */
+.news-section {
+  padding: 60px 20px;
+  margin-bottom: 80px;
+}
+
+.news-items {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.news-item {
+  background-color: white;
+  padding: 25px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s;
+}
+
+.news-item:hover {
+  transform: translateY(-5px);
+}
+
+.news-date {
+  display: inline-block;
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.news-item h3 {
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+}
+
+.news-item p {
+  color: #666;
+}
+
+/* レスポンシブ調整 */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+  
+  .hero-content p {
+    font-size: 1.2rem;
+  }
+  
+  .featured-items {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  .cta-content h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 80px 15px;
+  }
+  
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+  
+  .section-title {
+    font-size: 1.6rem;
+  }
+  
+  .cta-content h2 {
+    font-size: 1.5rem;
+  }
+  
+  .featured-item {
+    margin-bottom: 15px;
+  }
+} 

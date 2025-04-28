@@ -1,0 +1,34 @@
+@import "variables";
+@import "functions";
+
+.hero-img {
+    align-items: center;
+    background-image: url(../img/hero-img.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+.hero-img__text {
+    color: $menuColor;
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    position: absolute;
+    text-shadow: 2px 2px 1px $white, -2px 2px 1px $white, 2px -2px 1px $white,
+        -2px -2px 1px $white, 2px 0px 1px $white, 0px 2px 1px $white,
+        -2px 0px 1px $white, 0px -2px 1px $white;
+    top: 30%;
+    transform: translateY(-50%);
+}
+
+.hero-img {
+    display: block !important;
+}
+
+body {
+    display: block !important;
+}
