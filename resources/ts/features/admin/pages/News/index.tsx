@@ -10,7 +10,7 @@ const Receipt: React.FC<Props> = (props) => {
 
     return (
         <>
-            <MailList title={title} detailUrl={'/admin/receipt/send/'}/>
+            <MailList title={title} detailUrl={'/admin/evaluation/send/'}/>
         </>
     );
 }
