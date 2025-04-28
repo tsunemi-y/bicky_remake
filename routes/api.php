@@ -16,6 +16,26 @@ use App\Http\Controllers\Api\ReservationController as ApiReservationController;
 |
 */
 
+// 認証不要のルート
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [RegisterController::class, 'register']);
+
+// 認証が必要なルート
+Route::middleware('auth:sanctum')->group(function () {
+    // ユーザー情報
+    Route::get('/user', [AuthController::class, 'user']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    
+    // 予約関連
+    Route::get('/reservations', [ReservationController::class, 'index']);
+    Route::get('/reservations/{id}', [ReservationController::class, 'show']);
+    Route::post('/reservations', [ReservationController::class, 'store']);
+    Route::put('/reservations/{id}/cancel', [ReservationController::class, 'cancel']);
+    
+    // 空き状況確認
+    Route::post('/availability', [ReservationController::class, 'checkAvailability']);
+});
+
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/reservation', [ReservationController::class, 'index'])->name('getReservation');
     Route::post('/saveReservation', [ReservationController::class, 'store'])->name('saveReservation');

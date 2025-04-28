@@ -1,5 +1,5 @@
 import { apiRequest, ApiResponse } from './api';
-import { AuthUser } from './loginService';
+import { AuthUser } from './authService';
 
 // 新規登録用の型定義
 export interface RegisterData {
