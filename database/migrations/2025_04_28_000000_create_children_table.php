@@ -21,6 +21,7 @@ class CreateChildrenTable extends Migration
             $table->date('birth_date')->comment('生年月日');
             $table->string('gender')->comment('性別');
             $table->text('symptoms')->nullable()->comment('症状');
+            $table->boolean('has_questionnaire')->default(false)->comment('問診票記入済みフラグ');
             $table->timestamps();
         });
     }

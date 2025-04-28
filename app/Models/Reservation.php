@@ -27,6 +27,11 @@ class Reservation extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function children()
+    {
+        return $this->belongsToMany(Child::class, 'child_reservation');
+    }
+
     /**
      * 予約時間フォーマット変換
      * ※秒数部分を削除

@@ -29,6 +29,7 @@ class Child extends Model
         'birth_date',
         'gender',
         'symptoms',
+        'has_questionnaire',
     ];
 
     /**
@@ -48,5 +49,10 @@ class Child extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function reservations()
+    {
+        return $this->belongsToMany(Reservation::class, 'child_reservation');
     }
 } 
