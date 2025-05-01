@@ -68,4 +68,9 @@ class ReservationRepository
             ->get();
         return $reservations;
     }
+
+    public function attachChildrenToReservation($reservation, $childIds)
+    {
+        $reservation->children()->attach($childIds);
+    }
 }

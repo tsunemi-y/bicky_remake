@@ -11,6 +11,7 @@ use App\Services\LineMessengerServices;
 use App\Repositories\ReservationRepository;
 use App\Repositories\AvailableReservationDatetimeRepository;
 use App\Repositories\UserRepository;
+use App\Repositories\ChildRepository;
 
 class UserService
 {
@@ -21,7 +22,8 @@ class UserService
         private AvailableReservationDatetimeService $availableReservationDatetimeService,
         private ReservationRepository $reservationRepository,
         private AvailableReservationDatetimeRepository $availableReservationDatetimeRepository,
-        private UserRepository $userRepository
+        private UserRepository $userRepository,
+        private ChildRepository $childRepository
     ) {
     }
 
@@ -51,5 +53,20 @@ class UserService
         $now = new \DateTime();
         $diff = $dob->diff($now);
         return sprintf('%d歳%dヶ月', $diff->y, $diff->m);
+    }
+
+    public function getChildren($userId)
+    {
+        return $this->ChildRepository->getChildren($userId);
+    }
+
+    public function createChild($userId)
+    {
+        return $this->ChildRepository->createChild($userId);
+    }
+
+    public function getChildrenByChildIds(array $childIds): Collection
+    {
+        return $this->ChildRepository->getChildrenByChildIds($childIds);
     }
 }

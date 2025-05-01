@@ -23,7 +23,12 @@ class ReservationService
     ) {
     }
 
-    // todo:html部分をビューに移行。ビューの日付押下時のエラー修正
+    /**
+     * 必要データ
+     * 利用可能日 - 予約日した日付と時間
+     * 
+     * ■注意事項
+     */
     public function createCalender($request)
     {
         $user = $this->userService->getLoginUser();
@@ -211,5 +216,29 @@ class ReservationService
         }
         
         $this->availableReservationDatetimeRepository->bulkInsert($insertDatetimes);
+    }
+
+    public function attachChildrenToReservation($reservation, $childIds)
+    {
+        $this->reservationRepository->attachChildrenToReservation($reservation, $childIds);
+    }
+
+    public function calculateUsageFee($childIds)
+    {
+        $childCount = count($childIds);
+
+        if ($childCount === 1) {
+            return ConstReservation::RESERVATION_FEE_ONE_CHILD;
+        } 
+
+        if ($childCount === 2) {
+            return ConstReservation::RESERVATION_FEE_TWO_CHILD;
+        }
+
+        if ($childCount === 3) {
+            return ConstReservation::RESERVATION_FEE_THREE_CHILD;
+        }
+
+        return ConstReservation::RESERVATION_NO_FEE;
     }
 }
