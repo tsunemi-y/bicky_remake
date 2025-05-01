@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserFormRequest;
 use Illuminate\Support\Facades\Validator;
-use App\Models\User;
 
 class UserController extends Controller
 {
@@ -47,25 +48,30 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request)
+    public function register(UserFormRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'parentName' => 'required|string|max:255',
-            'parentNameKana' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'tel' => 'required|string|max:20',
-            'password' => 'required|string|min:8|confirmed',
-            'childName' => 'required|string|max:255',
-            'childNameKana' => 'required|string|max:255',
-            'age' => 'required|numeric',
-            'gender' => 'required|string|in:男の子,女の子',
-            'postCode' => 'required|string|max:8',
-            'address' => 'required|string|max:255',
-        ]);
+        $userParams = [
+            'name' => $request->parentName,
+            'name_kana' => $request->parentNameKana,
+            'email' => $request->email,
+            'tel' => $request->tel,
+            'password' => Hash::make($request->password),
+            'post_code' => $request->postCode,
+            'address' => $request->address,
+        ];
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+        if ($request->has('introduction')) {
+            $userParams['introduction'] = $request->introduction;
         }
+
+        if ($request->has('consultation')) {
+            $userParams['consultation'] = $request->consultation;
+        }
+
+        if ($request->has('lineConsultation') && $request->lineConsultation) {
+            $userParams['line_consultation'] = true;
+        }
+
 
         // ユーザー作成
         $user = User::create([
@@ -78,6 +84,14 @@ class UserController extends Controller
             'address' => $request->address,
         ]);
 
+        $childParams = [
+            'name' => $request->childName,
+            'name_kana' => $request->childNameKana,
+            'age' => $request->age,
+            'gender' => $request->gender,
+            'diagnosis' => $request->diagnosis,
+        ];
+
         // 子どもの情報も保存（ここでは子どもモデルが別にあると仮定）
         $user->children()->create([
             'name' => $request->childName,
@@ -86,19 +100,6 @@ class UserController extends Controller
             'gender' => $request->gender,
             'diagnosis' => $request->diagnosis,
         ]);
-
-        // オプションの追加情報があれば保存
-        if ($request->has('introduction')) {
-            $user->update(['introduction' => $request->introduction]);
-        }
-
-        if ($request->has('consultation')) {
-            $user->update(['consultation' => $request->consultation]);
-        }
-
-        if ($request->has('lineConsultation') && $request->lineConsultation) {
-            $user->update(['line_consultation' => true]);
-        }
 
         // 登録後すぐにJWTトークンを生成してログイン状態にする
         $token = auth('api')->login($user);
