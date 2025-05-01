@@ -111,13 +111,14 @@ class ReservationController extends Controller
         $messageData = [
             'reservationDate' => formatDate($reservation->reservation_date),
             'reservationTime' => formatTime($reservation->reservation_time),
-            'childName'       => $reservation->user->childName,
-            'childName2'      => $reservation->user->childName2,
             'email'           => $reservation->user->email,
         ];
 
+        // 予約IDから利用児データ取得
+        $selectedChildren = $this->reservationService->getChildrenByReservationId($reservation->id);
+
         // 管理者へ予約キャンセルのLINEメッセージ送信
-        $this->lineMessengerServices->sendCancelReservationMessage($messageData['childName'], $messageData['childName2'], $messageData['reservationDate'], $messageData['reservationTime']);
+        $this->lineMessengerServices->sendCancelReservationMessage($messageData['childName'], $messageData['childName2'], $messageData['reservationDate'], $messageData['reservationTime'], $selectedChildren);
 
         $this->lineMessengerServices->sendMonthlyFeeMessage();
 

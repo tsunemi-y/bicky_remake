@@ -82,11 +82,19 @@ class LineMessengerServices
     }
 
     // 予約キャンセルがあった場合にメッセージ送信
-    public function sendCancelReservationMessage($name, $name2, $reservationDate, $reservationTime)
+    public function sendCancelReservationMessage($reservationDate, $reservationTime, $selectedChildren)
     {
         $message = 'ご予約がキャンセルされました。' . "\n" . "\n";
-        $message .= "利用児氏名：　{$name}" . "\n";
-        if (!empty($name2)) $message .= "利用児2氏名：　{$name2}" . "\n";
+        
+        $serialNumber = 1;
+        foreach ($selectedChildren as $child) {
+            $serialNumber++;
+
+            $ageAndMonths = $this->userService->calculateAgeAndMonths($child->birth_date);
+
+            $message .= "利用児氏名{$serialNumber}：　{$child->name}({$ageAndMonths})" . "\n";
+        }
+        
         $message .= "予約日時：　{$reservationDate}" . "\n";
         $message .= "予約時間：　{$reservationTime}";
 

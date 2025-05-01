@@ -29,7 +29,12 @@ class Reservation extends Model
 
     public function children()
     {
-        return $this->belongsToMany(Child::class, 'child_reservation');
+        return $this->belongsToMany(
+            Child::class,
+            'child_reservation',   // ピボットテーブル名
+            'reservation_id',
+            'child_id'
+        );
     }
 
     /**

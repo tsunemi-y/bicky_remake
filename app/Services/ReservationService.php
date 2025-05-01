@@ -223,7 +223,7 @@ class ReservationService
         $this->reservationRepository->attachChildrenToReservation($reservation, $childIds);
     }
 
-    public function calculateUsageFee($childIds)
+    public function calculateUsageFee(array $childIds):int
     {
         $childCount = count($childIds);
 
@@ -240,5 +240,10 @@ class ReservationService
         }
 
         return ConstReservation::RESERVATION_NO_FEE;
+    }
+
+    public function getChildrenByReservationId(int $reservationId):Collection
+    {
+        return $this->reservationRepository->getChildrenByReservationId($reservationId);
     }
 }

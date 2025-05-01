@@ -73,4 +73,11 @@ class ReservationRepository
     {
         $reservation->children()->attach($childIds);
     }
+
+    public function getChildrenByReservationId(int $reservationId): Collection
+    {
+        return Reservation::with('children')
+            ->findOrFail($reservationId)
+            ->children;
+    }
 }
