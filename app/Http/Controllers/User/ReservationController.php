@@ -49,20 +49,20 @@ class ReservationController extends Controller
 
         $userId = \Auth::id();
 
-        $childIds = $request->chaildIds;
+        $childIds = $request->childIds;
 
         $endTime = $this->reservationService->calculateReservationEndTime($request, $userId);
 
         $reservedInfo = $this->reservationService->createReservation($reservation, $request, $userId, $endTime);
 
         // 予約と子供の関連付け
-        $this->reservationService->attachChildrenToReservation($reservedInfo, $chaildIds);
+        $this->reservationService->attachChildrenToReservation($reservedInfo, $childIds);
 
         // リクエスト中の利用児idから利用児データ取得
-        $selectedChildren = $this->userService->getChildrenByChildIds($chaildIds);
+        $selectedChildren = $this->userService->getChildrenByChildIds($childIds);
 
         // 利用料計算
-        $usageFee = $this->reservationService->calculateUsageFee($chaildIds);
+        $usageFee = $this->reservationService->calculateUsageFee($childIds);
 
         if ($usageFee === ConstReservation::RESERVATION_NO_FEE) {
             return response()->json([
@@ -100,7 +100,8 @@ class ReservationController extends Controller
 
     public function show(Reservation $reservation)
     {
-        return view('pages.reservations.reservationCancel', compact('reservation'));
+        // TODO: エラーハンドリング最適解調査
+        return response()->json($reservation);
     }
 
     public function destroy(Reservation $reservation)
@@ -126,6 +127,9 @@ class ReservationController extends Controller
 
         $this->googleCalendarService->delete($reservation->id);
 
-        return redirect(route('reservationTop'))->with('reservationCancel', '予約をキャンセルしました。');
+        return response()->json([
+            'success' => true,
+            'message' => '予約をキャンセルしました。'
+        ]);
     }
 }
