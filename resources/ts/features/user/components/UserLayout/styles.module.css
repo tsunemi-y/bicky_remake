@@ -1,0 +1,12 @@
+/* src/features/user/components/UserLayout/style.module.css */
+.layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .mainContent {
+    flex: 1;
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+  }

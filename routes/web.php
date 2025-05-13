@@ -18,53 +18,56 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 
 // ===============ユーザー画面　ここから============
 
-// トップ画面
-Route::get('/', function () {
-    return view('pages.top');
-})->name('top');
+// // トップ画面
+// Route::get('/', function () {
+//     return view('pages.top');
+// })->name('top');
 
-// ご挨拶画面
-Route::get('greeting', function () {
-    return view('pages.greeting');
-})->name('greeting');
+// // ご挨拶画面
+// Route::get('greeting', function () {
+//     return view('pages.greeting');
+// })->name('greeting');
 
-// アクセス画面
-Route::get('access', function () {
-    return view('pages.access');
-})->name('access');
+// // アクセス画面
+// Route::get('access', function () {
+//     return view('pages.access');
+// })->name('access');
 
-// 訓練内容画面
-Route::get('overview', function () {
-    return view('pages.overview');
-})->name('overview');
+// // 訓練内容画面
+// Route::get('overview', function () {
+//     return view('pages.overview');
+// })->name('overview');
 
-// 遠方の方へ画面
-Route::get('remote', function () {
-    return view('pages.remote');
-})->name('remote');
+// // 遠方の方へ画面
+// Route::get('remote', function () {
+//     return view('pages.remote');
+// })->name('remote');
 
-// 料金画面
-Route::get('fee', [FeeController::class, 'index'])->name('fee');
+// // 料金画面
+// Route::get('fee', [FeeController::class, 'index'])->name('fee');
 
-Route::get('introduction', function () {
-    return view('pages.introduction');
-})->name('introduction');
+// Route::get('introduction', function () {
+//     return view('pages.introduction');
+// })->name('introduction');
 
-Route::get('/reservation', [ReservationController::class, 'index'])->name('reservationTop')->middleware('auth');
-Route::get('/reservationForm', [ReservationController::class, 'dispReservationForm'])->name('reservationForm');
-Route::get('/reservationFormUsed', [ReservationController::class, 'dispReservationFormUsed'])->name('reservationFormUsed');
+// Route::get('/reservation', [ReservationController::class, 'index'])->name('reservationTop')->middleware('auth');
+// Route::get('/reservationForm', [ReservationController::class, 'dispReservationForm'])->name('reservationForm');
+// Route::get('/reservationFormUsed', [ReservationController::class, 'dispReservationFormUsed'])->name('reservationFormUsed');
 
-// キャンセル画面
-Route::get('/show/{reservation}', [ReservationController::class, 'show'])->name('show');
-Route::post('/destroy/{reservation}', [ReservationController::class, 'destroy'])->name('destroy');
+// // キャンセル画面
+// Route::get('/show/{reservation}', [ReservationController::class, 'show'])->name('show');
+// Route::post('/destroy/{reservation}', [ReservationController::class, 'destroy'])->name('destroy');
 
-Route::post('/store', [ReservationController::class, 'store'])->name('store')->middleware('auth');
-Route::post('/reservation/sendmail', [ReservationController::class, 'sendMail'])->name('sendMail');
+// Route::post('/store', [ReservationController::class, 'store'])->name('store')->middleware('auth');
+// Route::post('/reservation/sendmail', [ReservationController::class, 'sendMail'])->name('sendMail');
 
-// auth
-Auth::routes();
+// // auth
+// Auth::routes();
 
-// ===============ユーザー画面　ここまで============
+Route::get('/{any?}', function () {
+    return view('user.top');
+})->where('any', '.*')->name('top');
+// =============ユーザー画面　ここまで============
 
 // ===============管理画面画面　ここから============
 

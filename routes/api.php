@@ -16,17 +16,31 @@ use App\Http\Controllers\Api\ReservationController as ApiReservationController;
 |
 */
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/reservation', [ReservationController::class, 'index'])->name('getReservation');
-    Route::post('/saveReservation', [ReservationController::class, 'store'])->name('saveReservation');
-    Route::post('/deleteReservation', [ReservationController::class, 'destroy'])->name('deleteDatetime');
-
-    Route::get('/users', [UserController::class, 'index'])->name('users');
-    Route::put('/updateFee/{user}', [UserController::class, 'updateFee'])->name('updateFee');
-    Route::post('/sendEvaluation', [UserController::class, 'sendEvaluation'])->name('sendEvaluation');
-    Route::post('/sendReceipt', [UserController::class, 'sendReceipt'])->name('sendReceipt');
+// 認証が必要なルート
+Route::middleware('auth:sanctum')->group(function () {
+  
+    
+    // 予約関連
+    Route::get('/reservations', [ReservationController::class, 'index']);
+    Route::get('/reservations/{id}', [ReservationController::class, 'show']);
+    Route::post('/reservations', [ReservationController::class, 'store']);
+    Route::put('/reservations/{id}/cancel', [ReservationController::class, 'cancel']);
+    
+    // 空き状況確認
+    Route::post('/availability', [ReservationController::class, 'checkAvailability']);
 });
 
-Route::middleware('api.key')->group(function () {
-    Route::post('/reservation', [ApiReservationController::class, 'getTodayReservations'])->name('getTodayReservations');
-});
+// Route::prefix('admin')->name('admin.')->group(function () {
+//     Route::get('/reservation', [ReservationController::class, 'index'])->name('getReservation');
+//     Route::post('/saveReservation', [ReservationController::class, 'store'])->name('saveReservation');
+//     Route::post('/deleteReservation', [ReservationController::class, 'destroy'])->name('deleteDatetime');
+
+//     Route::get('/users', [UserController::class, 'index'])->name('users');
+//     Route::put('/updateFee/{user}', [UserController::class, 'updateFee'])->name('updateFee');
+//     Route::post('/sendEvaluation', [UserController::class, 'sendEvaluation'])->name('sendEvaluation');
+//     Route::post('/sendReceipt', [UserController::class, 'sendReceipt'])->name('sendReceipt');
+// });
+
+// Route::middleware('api.key')->group(function () {
+//     Route::post('/reservation', [ApiReservationController::class, 'getTodayReservations'])->name('getTodayReservations');
+// });
