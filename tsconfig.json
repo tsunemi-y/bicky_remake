@@ -18,6 +18,10 @@
         ]
     },
     "include": [
-        "resources/admin/ts/**/*" // TypeScriptのソース配置場所
-, "resources/ts/admin/components", "resources/js/admin/app.js"    ]
+        "resources/ts/App.tsx",
+        // "resources/ts/**/*",
+        // "resources/admin/ts/**/*", // TypeScriptのソース配置場所
+        // "resources/ts/admin/components",
+        // "resources/js/admin/app.js"
+    ]
 }
