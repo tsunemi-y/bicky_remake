@@ -20,8 +20,8 @@ jobs:
     
     - name: Install dependencies
       run: |
-        composer update --no-dev --optimize-autoloader
-        composer install --no-dev --optimize-autoloader
+        composer update --optimize-autoloader
+        composer install --optimize-autoloader
     
     - name: Code Quality Check
       run: |
@@ -33,7 +33,7 @@ jobs:
         fi
     
     - name: Run tests
-      run: echo "Tests skipped - CI pipeline check passed"
+      run: php artisan test
 
   # deploy:
   #   needs: test

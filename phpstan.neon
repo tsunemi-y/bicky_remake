@@ -1,0 +1,16 @@
+parameters:
+    level: 0
+    paths:
+        - app
+    excludePaths:
+        - app/Console/Commands/deleteDataYesterday.php
+    ignoreErrors:
+        # Laravel specific
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder#'
+        - '#Property [a-zA-Z0-9\\_\\$]+ \(mixed\) does not accept [a-zA-Z0-9\\_\\|\\<\\>\\s]+#'
+    bootstrapFiles:
+        - vendor/autoload.php
+    scanDirectories:
+        - vendor
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
