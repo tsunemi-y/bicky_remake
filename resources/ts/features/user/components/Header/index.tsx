@@ -39,7 +39,7 @@ const Header = () => {
         to="/"
         sx={{ my: 2, textAlign: 'center', textDecoration: 'none', color: 'inherit' }}
       >
-        ことばの相談室 ことり
+        ビッキーことば塾
       </Typography>
       <List>
         {navLinks.map(({ label, to }) => (
@@ -68,7 +68,7 @@ const Header = () => {
             to="/"
             sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}
           >
-            ことばの相談室 ことり
+            ビッキーことば塾
           </Typography>
           {/* SP: ハンバーガーメニュー */}
           <Box sx={{ display: { xs: 'block', md: 'none' } }}>

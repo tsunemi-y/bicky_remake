@@ -61,7 +61,7 @@ const Footer = () => {
 
         <Box mt={5}>
           <Typography variant="h6" gutterBottom>
-            ことばの相談室ことり
+            ビッキーことば塾
           </Typography>
           <Typography variant="body2" color="textSecondary">
             〒111-0051<br />

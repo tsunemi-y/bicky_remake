@@ -5,6 +5,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import UserLayout from './features/user/components/UserLayout';
 import UserHome from './features/user/pages/Home';
 import UserReservation from './features/user/pages/Reservation';
+import UserRegister from './features/user/pages/Register';
 // import UserFee from './features/user/pages/Fee';
 
 // // 管理者
@@ -20,7 +21,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <UserHome /> },
       { path: 'reservation', element: <UserReservation /> },
-      // { path: 'fee', element: <UserFee /> },
+      { path: 'register', element: <UserRegister /> },
       // 他のユーザーページ
     ]
   },
