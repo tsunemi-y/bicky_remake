@@ -1,25 +1,40 @@
 import React, { useState } from 'react';
-import './styles.module.css';
 
-const UserRegister = () => {
-  const [currentStep, setCurrentStep] = useState(1);
-  const steps = ['Step 1', 'Step 2'];
+import { Model } from "survey-core";
+import { Survey } from "survey-react-ui";
+import "survey-core/survey-core.min.css";
 
-  return (
-    <div className="flex justify-between h-auto items-center my-3">
-      {steps.map((step, index) => (
-        <div
-          key={index}
-          className={` stepper ${currentStep === index + 1 && "active"} ${
-            index + 1 < currentStep && "complete"
-          }`}
-        >
-          <div className="step">{index + 1}</div>
-          <p className="text-gray-500 text-sm">{step}</p>
-        </div>
-      ))}
-    </div>
-  );
+import { json } from "./form_json";
+import './style.module.css';
+
+const Register = () => {
+  const survey = new Model(json);
+    survey.onComplete.add((sender, options) => {
+        console.log(JSON.stringify(sender.data, null, 3));
+    });
+    var storageName = "survey_patient_history";
+    function saveSurveyData(survey: Model) {
+        var data = survey.data;
+        data.pageNo = survey.currentPageNo;
+        window.localStorage.setItem(storageName, JSON.stringify(data));
+    }
+    survey.onPartialSend.add(function(sender){
+        saveSurveyData(sender);
+    });
+    survey.onComplete.add(function(sender, options){
+        saveSurveyData(sender);
+    });
+    
+    survey.partialSendEnabled = true;
+    var prevData = window.localStorage.getItem(storageName) || null;
+    if(prevData) {
+        var data = JSON.parse(prevData);
+        survey.data = data;
+        if(data.pageNo) {
+            survey.currentPageNo = data.pageNo;
+        }
+    }
+    return (<Survey model={survey} />);
 };
 
-export default UserRegister;
+export default Register;
