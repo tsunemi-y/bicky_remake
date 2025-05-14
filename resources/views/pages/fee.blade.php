@@ -29,6 +29,7 @@
             <section class="mb-4">
                 <h2>通常プラン（現在は土日コースのみ）</h2>
                 <section class="mb-4">
+<<<<<<< HEAD
                     <p>
                         中学生未満の場合は、通常利用と兄弟同時利用の2種類があります。<br>
                         通常利用は、60分利用と同じ料金です。<br>
@@ -52,31 +53,65 @@
                             </tr>
                         </tbody>
                     </table>
+=======
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table border="1" class="text-center mb-2" width="100%">
+                                <thead>
+                                    <tr class="table-header">
+                                        <th class="font-weight-bold" width="50%">コース</th>
+                                        <th class="font-weight-bold" width="50%">料金</th>
+                                    </tr>
+                                </thead>
+                                <tbody>    
+                                    <tr class="table-height">
+                                        <th>お一人（60分）</th>
+                                        <td>8,800円</td>
+                                    </tr>
+                                    <tr class="table-height">
+                                        <th>兄弟児同時利用（90分）</th>
+                                        <td>13,200円<br>（お一人6,600円）</td>
+                                    </tr>
+                                    <tr class="table-height">
+                                        <th>兄弟児分離利用</th>
+                                        <td>8,800円×人数<br>（二名だと120分）</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+>>>>>>> 119b97d (fee画面整形)
                     <p>
                         ☆兄弟児様で同時ご利用頂ける場合に限り、1回90分で2,200円の割引きが適用されます。<br>
-                        なお、お一人60分で兄弟児様別々（完全個別）でご利用される場合は、通常の8,800円×人数の料金になります。
+                        なお、お一人60分で兄弟児様分離（完全個別）でご利用される場合は、通常の8,800円×人数の料金になります。
                     </p>
                 </section>
 
                 <section class="mb-4">
                 <h2>中学生限定特別プラン</h2>
                 <section class="mb-4">
-                    <table border="1" class="text-center mb-2 mt-2" width="100%">
-                        <thead>
-                            <tr class="table-header">
-                                <th class="bg-white" width="20%"></th>
-                                <th class="font-weight-bold">通常コース（60分）</th>
-                                <th class="font-weight-bold">特進コース（90分）</th>
-                            </tr>
-                        </thead>
-                        <tbody>    
-                            <tr class="table-height">
-                                <th style="background-color: #fdffe5;">料金</th>
-                                <th>8,800円</th>
-                                <th>13,200円</th>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table border="1" class="text-center mb-2 mt-2" width="100%">
+                                <thead>
+                                    <tr class="table-header">
+                                        <th class="font-weight-bold" width="50%">コース</th>
+                                        <th class="font-weight-bold" width="50%">料金</th>
+                                    </tr>
+                                </thead>
+                                <tbody>    
+                                    <tr class="table-height">
+                                        <th>通常コース（60分）</th>
+                                        <td>8,800円</td>
+                                    </tr>
+                                    <tr class="table-height">
+                                        <th>特進コース（90分）</th>
+                                        <td>13,200円</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
                     <p>
                         通常コースは、60分（30分課題学習+10分コミュニケーショントレーニング+20分保護者からのヒアリング）<br>
