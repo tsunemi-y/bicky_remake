@@ -47,13 +47,25 @@ class ReservationController extends Controller
             ], 422);
         } 
 
-        $userId = \Auth::id();
+        $userId = auth('api')->id();
 
         $childIds = $request->childIds;
+        $courseId = $request->course;
+        $avaDate = $request->avaDate;
+        $avaTime = $request->avaTime;
+
 
         $endTime = $this->reservationService->calculateReservationEndTime($request, $userId);
 
-        $reservedInfo = $this->reservationService->createReservation($reservation, $request, $userId, $endTime);
+        $reservationParams = [
+            'user_id' => $userId,
+            'reservation_date' => $avaDate,
+            'reservation_time' => $avaTime,
+            'end_time' => $endTime,
+            'course_id' => $courseId,
+        ];
+
+        $reservedInfo = $this->reservationService->createReservation($reservationParams);
 
         // 予約と子供の関連付け
         $this->reservationService->attachChildrenToReservation($reservedInfo, $childIds);
@@ -62,7 +74,7 @@ class ReservationController extends Controller
         $selectedChildren = $this->userService->getChildrenByChildIds($childIds);
 
         // 利用料計算
-        $usageFee = $this->reservationService->calculateUsageFee($childIds);
+        $usageFee = $this->reservationService->calculateUsageFee($childIds, $courseId);
 
         if ($usageFee === ConstReservation::RESERVATION_NO_FEE) {
             return response()->json([
@@ -74,8 +86,8 @@ class ReservationController extends Controller
         $userInfo = User::find($userId);
         
         $messageData = [
-            'reservationDate' => formatDate($request->avaDate),
-            'reservationTime' => formatTime($request->avaTime),
+            'reservationDate' => formatDate($avaDate),
+            'reservationTime' => formatTime($avaTime),
             'email' => $userInfo->email,
             'reservationId' => $reservedInfo->id,
             // 'usageFee' => $usageFee,
@@ -90,7 +102,7 @@ class ReservationController extends Controller
         $subject = '予約を受け付けました';
         $this->mailService->sendMailToUser($messageData, $viewFile, $subject);
 
-        $this->googleCalendarService->store($userInfo->parentName, $request->avaDate. $request->avaTime, $request->avaDate. $endTime, $reservedInfo->id);
+        $this->googleCalendarService->store($userInfo->parentName, $avaDate. $avaTime, $avaDate. $endTime, $reservedInfo->id);
 
         return response()->json([
             'success' => true,

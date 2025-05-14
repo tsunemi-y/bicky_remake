@@ -28,7 +28,7 @@ class Child extends Model
         'name_kana',
         'birth_date',
         'gender',
-        'symptoms',
+        'diagnosis',
         'has_questionnaire',
     ];
 

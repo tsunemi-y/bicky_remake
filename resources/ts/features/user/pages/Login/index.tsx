@@ -1,59 +1,38 @@
 import React, { useState } from 'react';
-import './style.css';
+import { Model } from "survey-core";
+import { Survey } from "survey-react-ui";
+import "survey-core/survey-core.min.css";
+import { json } from "./form_json";
+import './style.module.css';
 
-const Register = () => {
-  // フォームの状態
-  const [formValues, setFormValues] = useState({
-    parentName: '',
-    parentNameKana: '',
-    email: '',
-    tel: '',
-    password: '',
-    passwordConfirmation: '',
-    childName: '',
-    childNameKana: '',
-    age: '',
-    gender: '男の子',
-    diagnosis: '',
-    postCode: '',
-    address: '',
-    lineConsultation: false,
-    introduction: '',
-    consultation: ''
-  });
-
-  // エラー状態
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
-
-  // フォームの入力変更ハンドラ
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target as HTMLInputElement;
-    setFormValues({
-      ...formValues,
-      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+const Login = () => {
+  const survey = new Model(json);
+    survey.onComplete.add((sender, options) => {
+        console.log(JSON.stringify(sender.data, null, 3));
     });
-  };
-
-  // フォーム送信ハンドラ
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // バリデーション
-    const newErrors: Record<string, string> = {};
+    var storageName = "survey_patient_history";
+    function saveSurveyData(survey) {
+        var data = survey.data;
+        data.pageNo = survey.currentPageNo;
+        window.localStorage.setItem(storageName, JSON.stringify(data));
+    }
+    survey.onPartialSend.add(function(sender){
+        saveSurveyData(sender);
+    });
+    survey.onComplete.add(function(sender, options){
+        saveSurveyData(sender);
+    });
     
-    // 必須項目チェック
-    if (!formValues.parentName) newErrors.parentName = '保護者氏名は必須';
-
-    // エラー状態の更新
-    setErrors(newErrors);
-  };
-
-  return (
-    <div>
-      {/* フォームのHTML部分 */}
-    </div>
-  );
+    survey.partialSendEnabled = true;
+    var prevData = window.localStorage.getItem(storageName) || null;
+    if(prevData) {
+        var data = JSON.parse(prevData);
+        survey.data = data;
+        if(data.pageNo) {
+            survey.currentPageNo = data.pageNo;
+        }
+    }
+    return (<Survey model={survey} />);
 };
 
-export default Register;
+export default Login;

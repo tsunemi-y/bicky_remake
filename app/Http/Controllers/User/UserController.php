@@ -2,34 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\UserFormRequest;
 use Illuminate\Support\Facades\Validator;
+use function response;
+use function auth;
+
+use App\Models\User;
+
+use App\Services\UserService;
+
+use App\Http\Requests\UserFormRequest;
+use App\Http\Requests\LoginFormRequest;
 
 class UserController extends Controller
 {
+    public function __construct(
+        private UserService $userService
+    ) {
+    }
+
     /**
      * ユーザーログイン処理
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\LoginFormRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login(LoginFormRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|string|min:6',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
         // JWT認証を試みる
-        if (!$token = auth('api')->attempt($validator->validated())) {
+        if (!$token = auth('api')->attempt($request->only(['email', 'password']))) {
             return response()->json(['error' => 'メールアドレスまたはパスワードが正しくありません'], 401);
         }
 
@@ -58,48 +60,27 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'post_code' => $request->postCode,
             'address' => $request->address,
+            'introduction' => $request->introduction,
         ];
 
-        if ($request->has('introduction')) {
-            $userParams['introduction'] = $request->introduction;
+        $user = $this->userService->createUser($userParams);
+
+        // ====ループして登録====
+        if (is_array($request->children)) {
+            foreach ($request->children as $child) {
+                $childParams = [
+                    'user_id'           => $user->id,
+                    'name'              => $child['childName'] ?? null,
+                    'name_kana'         => $child['childNameKana'] ?? null,
+                    'birth_date'        => $child['childBirthDate'] ?? null,
+                    'gender'            => $child['gender'] ?? null,
+                    'diagnosis'         => $child['diagnosis'] ?? null,
+                    'has_questionnaire' => 0,
+                ];
+                $this->userService->createChild($childParams);
+            }
         }
-
-        if ($request->has('consultation')) {
-            $userParams['consultation'] = $request->consultation;
-        }
-
-        if ($request->has('lineConsultation') && $request->lineConsultation) {
-            $userParams['line_consultation'] = true;
-        }
-
-
-        // ユーザー作成
-        $user = User::create([
-            'name' => $request->parentName,
-            'name_kana' => $request->parentNameKana,
-            'email' => $request->email,
-            'tel' => $request->tel,
-            'password' => Hash::make($request->password),
-            'post_code' => $request->postCode,
-            'address' => $request->address,
-        ]);
-
-        $childParams = [
-            'name' => $request->childName,
-            'name_kana' => $request->childNameKana,
-            'age' => $request->age,
-            'gender' => $request->gender,
-            'diagnosis' => $request->diagnosis,
-        ];
-
-        // 子どもの情報も保存（ここでは子どもモデルが別にあると仮定）
-        $user->children()->create([
-            'name' => $request->childName,
-            'name_kana' => $request->childNameKana,
-            'age' => $request->age,
-            'gender' => $request->gender,
-            'diagnosis' => $request->diagnosis,
-        ]);
+        // ====ループして登録====
 
         // 登録後すぐにJWTトークンを生成してログイン状態にする
         $token = auth('api')->login($user);

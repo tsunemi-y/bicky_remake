@@ -3,14 +3,18 @@
 namespace App\Services;
 
 use \Yasumi\Yasumi;
+
+use App\Consts\ConstReservation;
+
 use App\Models\User;
 use App\Models\Reservation;
-use App\Services\UserService;
-use App\Consts\ConstReservation;
-use App\Repositories\ReservationRepository;
 use App\Models\AvailableReservationDatetime;
-use App\Repositories\AvailableReservationDatetimeRepository;
 
+use App\Services\UserService;
+
+use App\Repositories\Repository;
+use App\Repositories\ReservationRepository;
+use App\Repositories\AvailableReservationDatetimeRepository;
 
 class ReservationService
 {
@@ -18,6 +22,7 @@ class ReservationService
         private GoogleCalendarService $googleCalendarService, 
         private AvailableReservationDatetimeService $availableReservationDatetimeService,
         private UserService $userService,
+
         private ReservationRepository $reservationRepository,
         private AvailableReservationDatetimeRepository $availableReservationDatetimeRepository
     ) {
@@ -108,14 +113,9 @@ class ReservationService
         return compact('calenders', 'calenderTitle', 'prevMonth', 'nextMonth', 'avaTimes');
     }
 
-    public function createReservation(Reservation $reservation, $request, $userId, $endTime)
+    public function createReservation($params)
     {
-        return $reservation->create([
-            'user_id' => $userId,
-            'reservation_date' => $request->avaDate,
-            'reservation_time' => $request->avaTime,
-            'end_time' => $endTime,
-        ]);
+        return Reservation::create($reservationParams);
     }
 
     public function existsDuplicateReservation($request)
@@ -223,8 +223,10 @@ class ReservationService
         $this->reservationRepository->attachChildrenToReservation($reservation, $childIds);
     }
 
-    public function calculateUsageFee(array $childIds):int
+    public function calculateUsageFee(array $childIds, int $courseId):int
     {
+        // TODO: コースIDに応じた料金を取得する
+        
         $childCount = count($childIds);
 
         if ($childCount === 1) {
@@ -245,5 +247,11 @@ class ReservationService
     public function getChildrenByReservationId(int $reservationId):Collection
     {
         return $this->reservationRepository->getChildrenByReservationId($reservationId);
+    }
+
+    public function createReservation(array $params):Reservation
+    {
+        $repository = new Repository(Reservation::class);
+        return $repository->create($params);
     }
 }

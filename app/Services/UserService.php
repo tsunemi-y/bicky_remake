@@ -3,11 +3,13 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\Child;
 use App\Consts\ConstUser;
 
 use App\Services\MailService;
 use App\Services\LineMessengerServices;
 
+use App\Repositories\Repository;
 use App\Repositories\ReservationRepository;
 use App\Repositories\AvailableReservationDatetimeRepository;
 use App\Repositories\UserRepository;
@@ -20,6 +22,7 @@ class UserService
         private MailService $mailService, 
         private LineMessengerServices $lineMessengerServices,
         private AvailableReservationDatetimeService $availableReservationDatetimeService,
+
         private ReservationRepository $reservationRepository,
         private AvailableReservationDatetimeRepository $availableReservationDatetimeRepository,
         private UserRepository $userRepository,
@@ -36,9 +39,15 @@ class UserService
         }
     }
 
+    public function createUser($userParams)
+    {
+        $repository = new Repository(User::class);
+        return $repository->create($userParams);
+    }
+
     public function getLoginUser(): User | null
     { 
-        return $this->userRepository->getLoginUser(\Auth::id());
+        return auth('api')->user();
     }
 
     /**
@@ -60,9 +69,10 @@ class UserService
         return $this->ChildRepository->getChildren($userId);
     }
 
-    public function createChild($userId)
+    public function createChild($childParams)
     {
-        return $this->ChildRepository->createChild($userId);
+        $repository = new Repository(Child::class);
+        return $repository->create($childParams);
     }
 
     public function getChildrenByChildIds(array $childIds): Collection

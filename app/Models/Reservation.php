@@ -15,6 +15,7 @@ class Reservation extends Model
         'reservation_date',
         'reservation_time',
         'end_time',
+        'course_id',
     ];
 
     /**
