@@ -1,11 +1,12 @@
 // API基本設定
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost/api';
 
 // 共通ヘッダー
 const getHeaders = () => {
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
+    'X-CSRF-TOKEN': window.csrfToken || '',
   };
 
   // ローカルストレージからトークンを取得
@@ -27,6 +28,7 @@ export const apiRequest = async <T>(
     const url = `${API_BASE_URL}${endpoint}`;
     const options: RequestInit = {
       method,
+      credentials: 'include',
       headers: getHeaders(),
       body: data ? JSON.stringify(data) : undefined,
     };

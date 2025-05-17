@@ -2,12 +2,13 @@
 
 namespace App\Repositories;
 
+use App\Repositories\Repository;
 use App\Models\User;
 
-class UserRepository
+class UserRepository extends Repository
 {
-    public function getLoginUser(int | null $id): User | null
+    public function __construct(User $model)
     {
-        return User::find($id);
+        parent::__construct($model);
     }
-}
+}          

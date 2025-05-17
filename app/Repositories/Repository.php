@@ -7,30 +7,62 @@ use Illuminate\Support\Collection;
 
 abstract class Repository
 {
-    private $model;
+    /**
+     * The Eloquent model instance.
+     *
+     * @var \Illuminate\Database\Eloquent\Model
+     */
+    protected $model;
 
-    public function __construct($model)
+    /**
+     * Repository constructor.
+     *
+     * @param string $modelClass  The model class or binding to resolve.
+     */
+    // $modelClass には User::class や Child::class など、Eloquentモデルのクラス名（例: 'App\Models\User'）が渡ってくる想定です
+    public function __construct(string $modelClass)
     {
-        $this->model = app($model);
+        $this->model = app($modelClass);
     }
 
+    /**
+     * Get a single record by its primary key.
+     *
+     * @param  mixed  $id
+     * @return Model|null
+     */
     public function getOneById($id): ?Model
     {
         return $this->model->find($id);
     }
 
-    /** @return Collection|array<Model> */
+    /**
+     * Get multiple records by their primary keys.
+     *
+     * @param  array  $ids
+     * @return Collection|Model[]
+     */
     public function getByIds(array $ids): Collection
     {
         return $this->model->find($ids);
     }
 
-    /** @return Collection|array<Model> */
+    /**
+     * Get all records for the model.
+     *
+     * @return Collection|Model[]
+     */
     public function getAll(): Collection
     {
         return $this->model->all();
     }
 
+    /**
+     * Get the first record matching the given where condition.
+     *
+     * @param  mixed ...$params
+     * @return Model|null
+     */
     public function getFirstWhere(...$params): ?Model
     {
         return $this->model->firstWhere(...$params);

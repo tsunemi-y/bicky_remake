@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\ReservationController;
 use App\Http\Controllers\Api\ReservationController as ApiReservationController;
 
@@ -18,11 +18,12 @@ use App\Http\Controllers\Api\ReservationController as ApiReservationController;
 
 // 認証が必要なルート
 // Route::middleware('auth:sanctum')->group(function () {
-  
-    
-//     // 予約関連
-    Route::get('/reservations', [ReservationController::class, 'index']);
-//     Route::get('/reservations/{id}', [ReservationController::class, 'show']);
+
+// 予約関連
+// CSRFトークン検証をスキップするためにミドルウェアを指定
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+// Route::get('/reservations/{id}', [ReservationController::class, 'show']);
 //     Route::post('/reservations', [ReservationController::class, 'store']);
 //     Route::put('/reservations/{id}/cancel', [ReservationController::class, 'cancel']);
     

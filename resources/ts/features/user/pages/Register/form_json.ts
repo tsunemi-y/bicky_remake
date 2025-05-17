@@ -84,7 +84,7 @@ export const json = {
             { "name": "childName", "title": "利用児氏名", "cellType": "text", "isRequired": true },
             { "name": "childNameKana", "title": "利用児氏名（カナ）", "cellType": "text", "isRequired": true },
             { "name": "childBirthDate", "title": "生年月日", "cellType": "text", "inputType": "date", "isRequired": true },
-            { "name": "gender", "title": "性別", "cellType": "dropdown", "choices": [ "男の子", "女の子" ], "isRequired": true },
+            { "name": "gender", "title": "性別", "cellType": "radiogroup", "choices": [ "男の子", "女の子" ], "isRequired": true },
             { "name": "diagnosis", "title": "診断名", "cellType": "text" }
           ]
         }
