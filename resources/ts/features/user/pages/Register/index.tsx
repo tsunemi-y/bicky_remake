@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Model } from "survey-core";
 import { Survey } from "survey-react-ui";
@@ -41,6 +42,7 @@ declare global {
 
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const survey = new Model(json);
   survey.pagePrevText = "前へ";
@@ -63,6 +65,8 @@ const Register = () => {
         saveSurveyData(sender)
 
         await userService.register(survey.data);
+
+        navigate('/reservation');
       } catch (error) {
         alert(error);
       } finally {

@@ -67,4 +67,9 @@ abstract class Repository
     {
         return $this->model->firstWhere(...$params);
     }
+
+    public function create(array $data): Model
+    {
+        return $this->model->create($data);
+    }
 }

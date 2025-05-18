@@ -46,7 +46,14 @@ export interface ParentData {
 
 export interface RegisterResponse {
   user: AuthUser;
-  token: string;
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+}
+
+type Child = {
+  id: number;
+  name: string;
 }
 
 // ログインサービス
@@ -85,10 +92,11 @@ const getCurrentUser = async (): Promise<AuthUser | null> => {
 // 新規登録サービス
 const register = async (userData: ParentData): Promise<AuthUser> => {
   const response = await apiRequest<ApiResponse<RegisterResponse>>('/users', 'POST', userData);
+  console.table(response);
   
   if (response.success && response.data) {
     // トークンをローカルストレージに保存
-    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('access_token', response.data.access_token);
     return response.data.user;
   }
   
@@ -106,10 +114,17 @@ const update = async (userId: number, userData: Partial<ParentData>): Promise<Au
   throw new Error(response.message || 'ユーザー情報の更新に失敗しました');
 };
 
+// 利用児情報取得サービス
+const getChildren = async (): Promise<Child[]> => {
+  const response = await apiRequest<ApiResponse<Child[]>>(`/me/children`);
+  return response.data || [];
+};
+
 export const userService = {
   login,
   logout,
   getCurrentUser,
   register,
-  update
+  update,
+  getChildren
 };

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 use function response;
 use function auth;
@@ -42,7 +42,7 @@ class UserController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60,
+            'expires_in' => config('jwt.ttl') * 60,
             'user' => auth('api')->user()
         ]);
     }
@@ -55,46 +55,66 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $userParams = [
-            'name' => $request->parentName,
-            'name_kana' => $request->parentNameKana,
-            'email' => $request->email,
-            'tel' => $request->tel,
-            'password' => Hash::make($request->password),
-            'post_code' => $request->postCode,
-            'address' => $request->address,
-            'introduction' => $request->introduction,
-        ];
+        DB::beginTransaction();
 
-        $user = $this->userService->createUser($userParams);
-        Log::info($user);
+        try {
+            $userParams = [
+                'parentName'     => $request->parentName,
+                'parent_name_kana' => $request->parentNameKana,
+                'email'          => $request->email,
+                'tel'            => $request->tel,
+                'password'       => Hash::make($request->password),
+                'address'        => $request->address,
+                'introduction'   => $request->introduction,
+            ];
 
-        // ====ループして登録====
-        if (is_array($request->children)) {
-            foreach ($request->children as $child) {
-                $childParams = [
-                    'user_id'           => $user->id,
-                    'name'              => $child['childName'] ?? null,
-                    'name_kana'         => $child['childNameKana'] ?? null,
-                    'birth_date'        => $child['childBirthDate'] ?? null,
-                    'gender'            => $child['gender'] ?? null,
-                    'diagnosis'         => $child['diagnosis'] ?? null,
-                    'has_questionnaire' => 0,
-                ];
-                $this->userService->createChild($childParams);
+            $user = $this->userService->createUser($userParams);
+
+            // ====ループして登録====
+            if (is_array($request->children)) {
+                foreach ($request->children as $child) {
+                    $childParams = [
+                        'user_id'           => $user->id,
+                        'name'              => $child['childName'] ?? null,
+                        'name_kana'         => $child['childNameKana'] ?? null,
+                        'birth_date'        => $child['childBirthDate'] ?? null,
+                        'gender'            => $child['gender'] ?? null,
+                        'diagnosis'         => $child['diagnosis'] ?? null,
+                    ];
+                    $this->userService->createChild($childParams);
+                }
             }
+            // ====ループして登録====
+
+            // 登録後すぐにJWTトークンを生成してログイン状態にする
+            $credentials = [
+                'email' => $request->email,
+                'password' => $request->password,
+            ];
+
+            $token = auth('api')->attempt($credentials);
+            
+            DB::commit();
+
+            return response()->json([
+                'message' => '登録が完了しました',
+                'success' => true,
+                'data' => [     
+                    'access_token' => $token,
+                    'token_type' => 'bearer',
+                    'expires_in' => config('jwt.ttl') * 60,
+                    'user' => auth('api')->user()
+                ]
+            ], 201);
+        } catch (\Exception $e) {
+            // エラーメッセージをログに記録
+            \Log::error('UserController@store: ' . $e->getMessage());
+
+            DB::rollBack();
+            return response()->json([
+                'message' => '登録処理中にエラーが発生しました',
+                'error' => $e->getMessage(),
+            ], 500);
         }
-        // ====ループして登録====
-
-        // 登録後すぐにJWTトークンを生成してログイン状態にする
-        $token = auth('api')->login($user);
-
-        return response()->json([
-            'message' => '登録が完了しました',
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60,
-            'user' => auth('api')->user()
-        ], 201);
     }
 }

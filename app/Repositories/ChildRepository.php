@@ -2,9 +2,13 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Collection;
+
 use App\Models\Child;
 
-class ChildRepository
+use App\Repositories\Repository;
+
+class ChildRepository extends Repository
 {
     public function getChildren(int $userId): Collection
     {

@@ -7,8 +7,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
@@ -99,5 +100,21 @@ class User extends Authenticatable
         if ($id != '') {
             return $query->where('id', '=', $id);
         }
+    }
+
+    /**
+     * JWTで必要な識別子を返す
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * JWTに含めるカスタムクレームを返す
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

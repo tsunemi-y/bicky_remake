@@ -25,8 +25,6 @@ class UserService
 
         private ReservationRepository $reservationRepository,
         private AvailableReservationDatetimeRepository $availableReservationDatetimeRepository,
-        private UserRepository $userRepository,
-        private ChildRepository $childRepository
     ) {
     }
 
@@ -39,7 +37,7 @@ class UserService
         }
     }
 
-    public function createUser($userParams)
+    public function createUser(array $userParams): User
     {
         $repository = new UserRepository(User::class);
         return $repository->create($userParams);
@@ -71,7 +69,7 @@ class UserService
 
     public function createChild($childParams)
     {
-        $repository = new Repository(Child::class);
+        $repository = new ChildRepository(Child::class);
         return $repository->create($childParams);
     }
 
