@@ -33,9 +33,10 @@ class ReservationController extends Controller
 
         $availableDatesAndTimes = $this->reservationService->getMappingAvailableDatesAndTimes($user->use_time);
 
-        $children = $this->userService->getChildren($user->id);
-
-        return response()->json(compact('availableDatesAndTimes', 'children'));
+        return response()->json([
+            'success' => true,
+            'data' => $availableDatesAndTimes,
+        ]);
     }
 
     public function store(ReservationFormRequest $request, Reservation $reservation)

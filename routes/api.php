@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\ReservationController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\Api\ReservationController as ApiReservationController;
 
 /*
@@ -16,20 +17,24 @@ use App\Http\Controllers\Api\ReservationController as ApiReservationController;
 |
 */
 
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+
 // 認証が必要なルート
-// Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:api')->group(function () {
 
 // 予約関連
 // CSRFトークン検証をスキップするためにミドルウェアを指定
-Route::post('/users', [UserController::class, 'store'])->name('users.store');
+
 Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+Route::get('/users/me/children', [UserController::class, 'getChildren'])->name('users.getChildren');
+Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
 // Route::get('/reservations/{id}', [ReservationController::class, 'show']);
 //     Route::post('/reservations', [ReservationController::class, 'store']);
 //     Route::put('/reservations/{id}/cancel', [ReservationController::class, 'cancel']);
     
 //     // 空き状況確認
 //     Route::post('/availability', [ReservationController::class, 'checkAvailability']);
-// });
+});
 
 // Route::prefix('admin')->name('admin.')->group(function () {
 //     Route::get('/reservation', [ReservationController::class, 'index'])->name('getReservation');

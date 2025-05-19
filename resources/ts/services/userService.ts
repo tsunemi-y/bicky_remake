@@ -92,7 +92,6 @@ const getCurrentUser = async (): Promise<AuthUser | null> => {
 // 新規登録サービス
 const register = async (userData: ParentData): Promise<AuthUser> => {
   const response = await apiRequest<ApiResponse<RegisterResponse>>('/users', 'POST', userData);
-  console.table(response);
   
   if (response.success && response.data) {
     // トークンをローカルストレージに保存
@@ -116,8 +115,17 @@ const update = async (userId: number, userData: Partial<ParentData>): Promise<Au
 
 // 利用児情報取得サービス
 const getChildren = async (): Promise<Child[]> => {
-  const response = await apiRequest<ApiResponse<Child[]>>(`/me/children`);
-  return response.data || [];
+  try {
+    const response = await apiRequest<ApiResponse<Child[]>>(`/users/me/children`);
+
+    if (response.success && response.data) {
+      return response.data;
+    }
+
+    throw new Error(response.message || '利用児情報の取得に失敗しました');
+  } catch (error: any) {
+    throw new Error(error?.message || '利用児情報の取得に失敗しました');
+  }
 };
 
 export const userService = {

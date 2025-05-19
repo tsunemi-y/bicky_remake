@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\Child;
 use App\Consts\ConstUser;
+use Illuminate\Support\Collection;
 
 use App\Services\MailService;
 use App\Services\LineMessengerServices;
@@ -45,7 +46,7 @@ class UserService
 
     public function getLoginUser(): User | null
     { 
-        return auth('api')->user();
+        return \Auth::guard('api')->user() ?? null;
     }
 
     /**
@@ -62,9 +63,10 @@ class UserService
         return sprintf('%d歳%dヶ月', $diff->y, $diff->m);
     }
 
-    public function getChildren($userId)
+    public function getChildrenByUserId($userId): Collection
     {
-        return $this->ChildRepository->getChildren($userId);
+        $repository = new ChildRepository(Child::class);
+        return $repository->getChildrenByUserId($userId);
     }
 
     public function createChild($childParams)
@@ -75,6 +77,7 @@ class UserService
 
     public function getChildrenByChildIds(array $childIds): Collection
     {
-        return $this->ChildRepository->getChildrenByChildIds($childIds);
+        $repository = new ChildRepository(Child::class);
+        return $repository->getSelectedChildren($childIds);
     }
 }

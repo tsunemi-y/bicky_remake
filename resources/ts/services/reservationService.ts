@@ -1,10 +1,14 @@
 import { apiRequest, ApiResponse } from './api';
 
 // 予約関連の型定義
+// サーバーから返るデータ構造に合わせて修正
+// 例: { avaTimes: { "2023-01-14": ["10:00:00", ...], ... } }
 export type AvailableReservation = {
-  available_date: string;
-  available_times: string[];
-}
+  avaDates: string[];
+  avaTimes: {
+    [date: string]: string[];
+  };
+};
 
 export type Reservation = {
   date: string;
@@ -14,8 +18,8 @@ export type Reservation = {
 };
 
 // 予約一覧を取得
-const getAvailableReservations = async (): Promise<AvailableReservation[]> => {
-  const response = await apiRequest<ApiResponse<AvailableReservation[]>>('/reservations');
+const getAvailableReservations = async (): Promise<AvailableReservation> => {
+  const response = await apiRequest<ApiResponse<AvailableReservation>>('/reservations');
   
   if (response.success && response.data) {
     return response.data;
@@ -37,13 +41,17 @@ const createReservation = async (data: Reservation): Promise<Reservation> => {
 
 // コース一覧を取得
 const getCourse = async (): Promise<any[]> => {
-  const response = await apiRequest<ApiResponse<any[]>>('/courses');
-  
-  if (response.success && response.data) {
-    return response.data;
+  try {
+    const response = await apiRequest<ApiResponse<any[]>>('/courses');
+    
+    if (response.success && response.data) {
+      return response.data;
+    }
+    
+    throw new Error(response.message || 'コース情報の取得に失敗しました');
+  } catch (error: any) {
+    throw new Error(error?.message || 'コース情報の取得に失敗しました');
   }
-  
-  throw new Error(response.message || 'コース情報の取得に失敗しました');
 };
 
 export const reservationService = {

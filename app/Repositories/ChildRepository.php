@@ -10,7 +10,7 @@ use App\Repositories\Repository;
 
 class ChildRepository extends Repository
 {
-    public function getChildren(int $userId): Collection
+    public function getChildrenByUserId(int $userId): Collection
     {
         return Child::where('user_id', $userId)->get();
     }
