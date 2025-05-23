@@ -17,6 +17,10 @@ export type Reservation = {
   course: number;
 };
 
+export type ReservationResponse = {
+  message: string;
+};
+
 // 予約一覧を取得
 const getAvailableReservations = async (): Promise<AvailableReservation> => {
   const response = await apiRequest<ApiResponse<AvailableReservation>>('/reservations');
@@ -29,14 +33,18 @@ const getAvailableReservations = async (): Promise<AvailableReservation> => {
 };
 
 // 予約作成
-const createReservation = async (data: Reservation): Promise<Reservation> => {
-  const response = await apiRequest<ApiResponse<Reservation>>('/reservations', 'POST', data);
-  
-  if (response.success && response.data) {
-    return response.data;
+const createReservation = async (data: Reservation): Promise<ReservationResponse> => {
+  try {
+    const response = await apiRequest<ApiResponse<ReservationResponse>>('/reservations', 'POST', data);
+
+    if (response.success && response.data) {
+      return response.data;
+    }
+
+    throw new Error(response.message || '予約の作成に失敗しました');
+  } catch (error: any) {
+    throw new Error(error?.message || '予約の作成に失敗しました');
   }
-  
-  throw new Error(response.message || '予約の作成に失敗しました');
 };
 
 // コース一覧を取得

@@ -24,7 +24,6 @@ class UserService
         private LineMessengerServices $lineMessengerServices,
         private AvailableReservationDatetimeService $availableReservationDatetimeService,
 
-        private ReservationRepository $reservationRepository,
         private AvailableReservationDatetimeRepository $availableReservationDatetimeRepository,
     ) {
     }

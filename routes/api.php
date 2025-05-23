@@ -29,7 +29,7 @@ Route::get('/reservations', [ReservationController::class, 'index'])->name('rese
 Route::get('/users/me/children', [UserController::class, 'getChildren'])->name('users.getChildren');
 Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
 // Route::get('/reservations/{id}', [ReservationController::class, 'show']);
-//     Route::post('/reservations', [ReservationController::class, 'store']);
+Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
 //     Route::put('/reservations/{id}/cancel', [ReservationController::class, 'cancel']);
     
 //     // 空き状況確認

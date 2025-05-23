@@ -18,28 +18,6 @@ declare global {
   }
 }
 
-// {
-//   "tel": "11111111111",
-//   "password": "11111111111",
-//   "parentName": "親",
-//   "parentNameKana": "オヤ",
-//   "email": "tatataabcd@gmail.com",
-//   "passwordConfirm": "11111111",
-//   "postCode": "6180015",
-//   "address": "大阪府三島郡",
-//   "introduction": "区役所",
-//   "consaltation": "癇癪",
-//   "children": [
-//      {
-//         "childName": "子ども",
-//         "childNameKana": "コドモ",
-//         "childBirthDate": "2025-04-08",
-//         "gender": "男の子",
-//         "diagnosis": "a"
-//      }
-//   ]
-// }
-
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();

@@ -1,3 +1,13 @@
+/**
+ * TODO
+ * 利用時選択したらその利用時は兄弟児セレクトボックスに表示されないようにする
+ * 年齢・人数によって表示するコースを制御
+ * feeTableのデータをサーバーから取得する（定数化）
+ * 先にコースと人数選択してもらって利用時間決まってから時間しぼらなあかん
+ * 
+ * 
+ */
+
 import React,{ useState, useEffect } from "react";
 
 import FullCalendar from "@fullcalendar/react"; // FullCalendarコンポーネント
@@ -16,16 +26,19 @@ import {
   Select,
   Typography,
   IconButton,
-  Stack
+  Stack,
+  Snackbar,
+  Alert
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 
-
 import Modal from "../../../../components/Modal";
+import Loading from "../../../../components/Loading";
 
 import { reservationService } from "../../../../services/reservationService";
 import { userService } from "../../../../services/userService";
+import { calculateIsTablet } from "survey-core/typings/src/utils/devices";
 
 type Event = {
   id: string;
@@ -49,6 +62,8 @@ type Reservation = {
   time: string;
   children: number[];
   course: number;
+  fee?: number;
+  useTime?: number;
 }
 
 const UserReservation: React.FC = () => {
@@ -58,6 +73,10 @@ const UserReservation: React.FC = () => {
   const [selectedChildren, setSelectedChildren] = useState<number[]>([0]);
   const [selectedCourse, setSelectedCourse] = useState<number>(0);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "info" | "warning" | "error">("success");
   const [date, setDate] = useState<string>("");
   const [time, setTime] = useState<string>("");
 
@@ -130,17 +149,111 @@ const UserReservation: React.FC = () => {
     loadEvents();
     loadChildrenOptions();
     loadCourseOptions();
-  }, []); 
+  }, []);
+
+  type UseTimeTable = {
+    [courseId: number]: number | { [childrenCount: number]: number };
+  };
+
+  const useTimeTable: UseTimeTable = {
+    1: 60,
+    4: 60,
+    5: 90,
+    2: {
+      2: 90,
+      3: 120,
+    },
+    3: {
+      2: 120,
+      3: 180,
+    },
+  };
+
+
+  // コースごとの料金テーブルを定義し、保守性・可読性を向上
+  type FeeTable = {
+    [courseId: number]: number | { [childrenCount: number]: number }
+  };
+
+  const feeTable: FeeTable = {
+    1: 8800,
+    4: 8800,
+    5: 13200,
+    2: {
+      2: 13200,
+      3: 19800,
+    },
+    3: {
+      2: 17600,
+      3: 26400,
+    },
+  };
+
+  const calculateFee = (children: number[], course: number): number => {
+    const feeInfo = feeTable[course];
+    if (typeof feeInfo === "number") {
+      return feeInfo;
+    }
+    if (typeof feeInfo === "object" && feeInfo !== null) {
+      return feeInfo[children.length] ?? 0;
+    }
+    return 0;
+  }
+
+  const calculateUseTime = (children: number[], course: number): number => {
+    const useTime = useTimeTable[course];
+    if (typeof useTime === "number") {
+      return useTime;
+    }
+    if (typeof useTime === "object" && useTime !== null) {
+      return useTime[children.length] ?? 0;
+    }
+    return 0;
+  }
 
   const createReservation = async (data: Reservation) => {
+    const fee = calculateFee(data.children, data.course)
+    const useTime = calculateUseTime(data.children, data.course);
+
+    const confirmMessage = `
+        予約を作成しますか？
+
+        利用日時: ${data.date} ${data.time}
+        利用児: ${data.children.map(child => childrenOptions.find(c => c.id === child)?.name).join(", ")}
+        コース: ${courseOptions.find(c => c.id === data.course)?.name}
+        料金: ${fee.toLocaleString()}円
+        利用時間: ${useTime}分
+      `;
+      
+    const confirmed = confirm(confirmMessage);
+    if (!confirmed) {
+      return;
+    }
+
+    data.fee = fee;
+    data.useTime = useTime;
+
     try {
-      await reservationService.createReservation(data);
+      setModalOpen(false);
+      setIsLoading(true);
+      const reservation = await reservationService.createReservation(data);
+
+      setSnackbarMessage(reservation.message);
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
+
     } catch (error) {
       if (error instanceof Error) {
-        alert(error.message);
+        setSnackbarMessage(error.message);
+        setSnackbarSeverity("error");
+        setSnackbarOpen(true);
       } else {
-        alert(String(error));
+        setSnackbarMessage(String(error));
+        setSnackbarSeverity("error");
+        setSnackbarOpen(true);
       }
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -293,6 +406,17 @@ const UserReservation: React.FC = () => {
           contents={renderModalContents(date, time)}
         />
       )}
+      <Loading is_loading={isLoading} />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </React.Fragment>
   );
 };

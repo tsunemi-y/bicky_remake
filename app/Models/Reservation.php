@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Child;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -28,20 +29,15 @@ class Reservation extends Model
     }
 
     /**
-     * 予約時間フォーマット変換
-     * ※秒数部分を削除
-     * 
-     * <実例>
-     * 21:00:00　⇛　21:00
+     * 利用児（子供）との多対多リレーション
      *
-     * @param  string  $value
-     * @return string
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    // public function getReservationTimeAttribute($value)
-    // {
-    //     return substr($value, 0, -3);
-    // }
-
+    public function children()
+    {
+        return $this->belongsToMany(Child::class, 'child_reservation');
+    }
+    
     public function scopeJoinUsers($query)
     {
         return $query->join('users', 'users.id', '=', 'reservations.user_id');

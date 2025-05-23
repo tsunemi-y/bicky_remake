@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ReservationTableSeeder::class);
         $this->call(AvailableReservationDatetimesTableSeeder::class);
         $this->call(FeesTableSeeder::class);
+        $this->call(CoursesTableSeeder::class);
     }
 }

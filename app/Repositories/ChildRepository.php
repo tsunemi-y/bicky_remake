@@ -19,12 +19,12 @@ class ChildRepository extends Repository
     {
         return Child::create([
             'user_id' => $userId,
-            'name' => $request->name,
+            'name' => $name,
         ]);
     }
 
     public function getSelectedChildren(array $childIds): Collection
     {
-        return Child::whereIn('child_id', $childIds)->get();
+        return Child::whereIn('id', $childIds)->get();
     }
 }

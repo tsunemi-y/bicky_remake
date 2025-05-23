@@ -55,7 +55,7 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 // Route::get('/reservationFormUsed', [ReservationController::class, 'dispReservationFormUsed'])->name('reservationFormUsed');
 
 // // キャンセル画面
-// Route::get('/show/{reservation}', [ReservationController::class, 'show'])->name('show');
+Route::get('/show/{reservation}', [ReservationController::class, 'show'])->name('show');
 // Route::post('/destroy/{reservation}', [ReservationController::class, 'destroy'])->name('destroy');
 
 // Route::post('/store', [ReservationController::class, 'store'])->name('store')->middleware('auth');

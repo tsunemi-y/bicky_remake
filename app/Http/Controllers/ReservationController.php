@@ -31,8 +31,15 @@ class ReservationController extends Controller
 
     public function store(ReservationFormRequest $request, Reservation $reservation)
     {
+        $date = $request->date;
+        $time = $request->time;
+        $children = $request->children;
+        $course = $request->course;
+        $fee = $request->fee;
+        $useTime = $request->useTime;
+
         // 指定した日時がすでに埋まっている場合、予約トップにリダイレクト
-        $isReserved = $this->reservationService->existsDuplicateReservation($request);
+        $isReserved = $this->reservationService->existsDuplicateReservation($date, $time);
         if ($isReserved) {
             return redirect(route('reservationTop'))
                 ->with('failedReservation', '選択された日時はすでにご予約がございます。</br>違う日時でご予約ください。');
@@ -40,9 +47,17 @@ class ReservationController extends Controller
 
         $userId = \Auth::id();
 
-        $endTime = $this->reservationService->calculateReservationEndTime($request, $userId);
+        $endTime = $this->reservationService->calculateReservationEndTime($time, $useTime);
 
-        $reservedInfo = $this->reservationService->createReservation($reservation, $request, $userId, $endTime);
+        $reservationData = [
+            'user_id' => $userId,
+            'reservation_date' => $date,
+            'reservation_time' => $time,
+            'end_time' => $endTime,
+            'fee' => $fee,
+            'use_time' => $useTime,
+        ];
+        $reservedInfo = $this->reservationService->createReservation($reservationData);
 
         $userInfo = User::find($userId);
 

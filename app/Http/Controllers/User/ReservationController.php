@@ -12,9 +12,10 @@ use App\Services\ReservationService;
 use App\Services\GoogleCalendarService;
 use App\Services\LineMessengerServices;
 use App\Services\UserService;
+use App\Services\CourseService;
 use App\Http\Requests\ReservationFormRequest;
 use App\Http\Requests\ReservationCalenderFormRequest;
-
+use Illuminate\Http\Request;
 class ReservationController extends Controller
 {
     public function __construct(
@@ -23,6 +24,7 @@ class ReservationController extends Controller
         private MailService $mailService, 
         private LineMessengerServices $lineMessengerServices,
         private UserService $userService,
+        private CourseService $courseService,
     )
     {
     }
@@ -41,64 +43,81 @@ class ReservationController extends Controller
 
     public function store(ReservationFormRequest $request, Reservation $reservation)
     {
-        // 指定した日時がすでに埋まっている場合、予約トップにリダイレクト
-        $isReserved = $this->reservationService->existsDuplicateReservation($request);
-        if ($isReserved) {
-            return response()->json([
-                'success' => false,
-                'message' => '選択された日時はすでにご予約がございます。</br>違う日時でご予約ください。'
-            ], 422);
-        } 
-
-        $userId = \Auth::id();
-
-        $childIds = $request->childIds;
-
-        $endTime = $this->reservationService->calculateReservationEndTime($request, $userId);
-
-        $reservedInfo = $this->reservationService->createReservation($reservation, $request, $userId, $endTime);
-
-        // 予約と子供の関連付け
-        $this->reservationService->attachChildrenToReservation($reservedInfo, $childIds);
-
-        // リクエスト中の利用児idから利用児データ取得
-        $selectedChildren = $this->userService->getChildrenByChildIds($childIds);
-
-        // 利用料計算
-        $usageFee = $this->reservationService->calculateUsageFee($childIds);
-
-        if ($usageFee === ConstReservation::RESERVATION_NO_FEE) {
-            return response()->json([
-                'success' => false,
-                'message' => '利用児が選択されていません。</br>利用児を選択してください。'
-            ], 422);
-        }
-
-        $userInfo = User::find($userId);
+        \DB::beginTransaction();
         
-        $messageData = [
-            'reservationDate' => formatDate($request->avaDate),
-            'reservationTime' => formatTime($request->avaTime),
-            'email' => $userInfo->email,
-            'reservationId' => $reservedInfo->id,
-            // 'usageFee' => $usageFee,
-        ];
+        try {
+            $childIds = $request->children;
+            $courseId = $request->course;
+            $fee = $request->fee;
+            $useTime = $request->useTime;
+            $time = $request->time;
+            $date = $request->date;
 
-        // 管理者へ予約通知のLINEメッセージ送信
-        $this->lineMessengerServices->sendReservationMessage($messageData['reservationDate'], $messageData['reservationTime'], $selectedChildren, $usageFee);
+            // 指定した日時がすでに埋まっている場合、予約トップにリダイレクト
+            $isReserved = $this->reservationService->existsDuplicateReservation($date, $time);
+            if ($isReserved) {
+                return response()->json([
+                    'success' => false,
+                    'message' => '選択された日時はすでにご予約がございます。</br>違う日時でご予約ください。',
+                ], 422);
+            } 
 
-        $this->lineMessengerServices->sendMonthlyFeeMessage();
+            $userId = \Auth::id();
 
-        $viewFile = 'emails.reservations.user';
-        $subject = '予約を受け付けました';
-        $this->mailService->sendMailToUser($messageData, $viewFile, $subject);
+            $endTime = $this->reservationService->calculateReservationEndTime($time, $useTime);
 
-        $this->googleCalendarService->store($userInfo->parentName, $request->avaDate. $request->avaTime, $request->avaDate. $endTime, $reservedInfo->id);
+            $reservationData = [
+                'user_id' => $userId,
+                'reservation_date' => $date,
+                'reservation_time' => $time,
+                'end_time' => $endTime,
+            ];
+            $reservedInfo = $this->reservationService->createReservation($reservationData);
 
-        return response()->json([
-            'success' => true,
-            'message' => '予約を受け付けました。</br>予約内容確認のメールをお送りしました。'
-        ]);
+            // 予約と子供の関連付け
+            $this->reservationService->attachChildrenToReservation($reservedInfo, $childIds);
+
+            // リクエスト中の利用児idから利用児データ取得
+            $selectedChildren = $this->userService->getChildrenByChildIds($childIds);
+
+            $userInfo = $this->userService->getLoginUser();
+            
+            $messageData = [
+                'date' => formatDate($date),
+                'time' => formatTime($time),
+                'email' => $userInfo->email,
+                'reservationId' => $reservedInfo->id,
+                // 'usageFee' => $usageFee,
+            ];
+
+            // 管理者へ予約通知のLINEメッセージ送信
+            $this->lineMessengerServices->sendReservationMessage($messageData['date'], $messageData['time'], $selectedChildren);
+
+            $this->lineMessengerServices->sendMonthlyFeeMessage();
+
+            $viewFile = 'emails.reservations.user';
+            $subject = '予約を受け付けました';
+            $this->mailService->sendMailToUser($messageData, $viewFile, $subject);
+
+            // $this->googleCalendarService->store($userInfo->parentName, $date. $time, $date. $endTime, $reservedInfo->id);
+
+            \DB::commit();
+
+            $response = [
+                'success' => true,
+                'data' => [
+                    'message' => "予約が完了しました。<br>予約内容をメールで送信しました。",
+                ]
+            ];
+
+            return response()->json($response);
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function show(Reservation $reservation)

@@ -12,7 +12,7 @@ class LineMessengerServices
 {
     private $userId;
 
-    public function __construct(private ReservationRepository $reservationRepository,)
+    public function __construct()
     {
         $this->userId = config('services.line.admin_id');
     }
@@ -57,13 +57,14 @@ class LineMessengerServices
     }
 
     // 予約があった場合にメッセージ送信
-    public function sendReservationMessage($name, $name2, $reservationDate, $reservationTime)
+    public function sendReservationMessage($date, $time, $children)
     {
         $message = 'ご予約を受け付けました。' . "\n" . "\n";
-        $message .= "利用児氏名：　{$name}" . "\n";
-        if (!empty($name2)) $message .= "利用児2氏名：　{$name2}" . "\n";
-        $message .= "予約日時：　{$reservationDate}" . "\n";
-        $message .= "予約時間：　{$reservationTime}";
+        foreach ($children as $child) {
+            $message .= "利用児氏名：　{$child->name}" . "\n";
+        }
+        $message .= "予約日時：　{$date}" . "\n";
+        $message .= "予約時間：　{$time}";
 
         $this->sendMessage($message);
     }
@@ -109,7 +110,8 @@ class LineMessengerServices
     // 月の利用料集計
     public function sendMonthlyFeeMessage()
     {
-        $monthlityFeeCount = $this->reservationRepository->getMonthlyFee();
+        $reservationRepository = new ReservationRepository(Reservation::class);
+        $monthlityFeeCount = $reservationRepository->getMonthlyFee();
         $fee = number_format($monthlityFeeCount);
 
         $message = "今月の売り上げは、{$fee}円です。";
