@@ -7,7 +7,10 @@ import UserHome from './features/user/pages/Home';
 import UserReservation from './features/user/pages/Reservation';
 import UserRegister from './features/user/pages/Register';
 import UserLogin from './features/user/pages/Login';
-// import UserFee from './features/user/pages/Fee';
+import UserFee from './features/user/pages/Fee';
+import UserAccess from './features/user/pages/Access';
+import UserIntroduction from './features/user/pages/Introduction';
+import UserGreeting from './features/user/pages/Greeting';
 
 // // 管理者
 // import AdminLayout from './features/admin/components/AdminLayout';
@@ -24,6 +27,10 @@ export const router = createBrowserRouter([
       { path: 'reservation', element: <UserReservation /> },
       { path: 'register', element: <UserRegister /> },
       { path: 'login', element: <UserLogin /> },
+      { path: 'fee', element: <UserFee /> },
+      { path: 'access', element: <UserAccess /> },
+      { path: 'introduction', element: <UserIntroduction /> },
+      { path: 'greeting', element: <UserGreeting /> },
       // 他のユーザーページ
     ]
   },
