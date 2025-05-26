@@ -1,3 +1,8 @@
+/**
+ * 成功したあと、予約画面に新規登録成功しましたとだす
+ * スタッフにライン通知
+ */
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

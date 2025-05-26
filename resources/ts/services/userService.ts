@@ -16,7 +16,9 @@ export interface AuthUser {
 
 export interface AuthResponse {
   user: AuthUser;
-  token: string;
+  access_token: string;
+  token_type: string;
+  expires_in: number;
 }
 
 // 親ユーザー情報の型定義
@@ -58,11 +60,11 @@ type Child = {
 
 // ログインサービス
 const login = async (credentials: LoginCredentials): Promise<AuthUser> => {
-  const response = await apiRequest<ApiResponse<AuthResponse>>('/login', 'POST', credentials);
+  const response = await apiRequest<ApiResponse<AuthResponse>>('/users/login', 'POST', credentials);
   
   if (response.success && response.data) {
     // トークンをローカルストレージに保存
-    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('access_token', response.data.access_token);
     return response.data.user;
   }
   

@@ -1,59 +1,75 @@
 import React, { useState } from 'react';
-import './style.css';
+import { useNavigate } from 'react-router-dom';
 
-const Register = () => {
-  // フォームの状態
-  const [formValues, setFormValues] = useState({
-    parentName: '',
-    parentNameKana: '',
-    email: '',
-    tel: '',
-    password: '',
-    passwordConfirmation: '',
-    childName: '',
-    childNameKana: '',
-    age: '',
-    gender: '男の子',
-    diagnosis: '',
-    postCode: '',
-    address: '',
-    lineConsultation: false,
-    introduction: '',
-    consultation: ''
+import { Model } from "survey-core";
+import { Survey } from "survey-react-ui";
+import "survey-core/survey-core.min.css";
+
+import { userService } from "../../../../services/userService";
+
+import Loading from "../../../../components/Loading";
+
+import { json } from "./form_json";
+import './styles.module.css';
+
+declare global {
+  interface Window {
+    csrfToken: string;
+  }
+}
+
+const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const survey = new Model(json);
+  survey.pagePrevText = "前へ";
+  survey.completeText = "ログイン";
+
+  // ローカルストレージ名（ログインは基本不要だが、Registerに合わせて一応用意）
+  var storageName = "survey_login";
+  function saveSurveyData(survey: Model) {
+      var data = survey.data;
+      data.pageNo = survey.currentPageNo;
+      window.localStorage.setItem(storageName, JSON.stringify(data));
+  }
+  survey.onPartialSend.add(function(sender){
+      saveSurveyData(sender);
   });
 
-  // エラー状態
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+  survey.onComplete.add(async function(sender, options){
+      setIsLoading(true);
 
-  // フォームの入力変更ハンドラ
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target as HTMLInputElement;
-    setFormValues({
-      ...formValues,
-      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
-    });
-  };
+      try {
+        saveSurveyData(sender);
 
-  // フォーム送信ハンドラ
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // バリデーション
-    const newErrors: Record<string, string> = {};
-    
-    // 必須項目チェック
-    if (!formValues.parentName) newErrors.parentName = '保護者氏名は必須';
+        // ログインAPI呼び出し
+        await userService.login(survey.data);
 
-    // エラー状態の更新
-    setErrors(newErrors);
-  };
+        navigate('/reservation', { state: { snackbar: { message: 'ログインに成功しました', severity: 'success' } } });
+      } catch (error) {
+        alert(error);
+      } finally {
+        setIsLoading(false);
+      }
+  });
+
+  survey.partialSendEnabled = true;
+  var prevData = window.localStorage.getItem(storageName) || null;
+  if(prevData) {
+      var data = JSON.parse(prevData);
+      survey.data = data;
+      if(data.pageNo) {
+          survey.currentPageNo = data.pageNo;
+      }
+  }
 
   return (
-    <div>
-      {/* フォームのHTML部分 */}
-    </div>
+    <>
+      <Survey model={survey} />
+      <Loading is_loading={isLoading} />
+    </>
   );
 };
 
-export default Register;
+export default Login;

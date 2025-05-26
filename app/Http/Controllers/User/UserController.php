@@ -40,10 +40,14 @@ class UserController extends Controller
 
         // トークンを含むレスポンスを返す
         return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => config('jwt.ttl') * 60 * 6000,
-            'user' => auth('api')->user()
+            'success' => true,
+            'message' => 'ログインに成功しました',
+            'data' => [
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => config('jwt.ttl') * 60 * 6000,
+                'user' => auth('api')->user()
+            ]
         ]);
     }
 
@@ -102,7 +106,7 @@ class UserController extends Controller
                 'data' => [     
                     'access_token' => $token,
                     'token_type' => 'bearer',
-                    'expires_in' => config('jwt.ttl') * 60,
+                    'expires_in' => config('jwt.ttl') * 60 * 6000,
                     'user' => auth('api')->user()
                 ]
             ], 201);

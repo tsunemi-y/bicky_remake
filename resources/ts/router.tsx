@@ -6,6 +6,7 @@ import UserLayout from './features/user/components/UserLayout';
 import UserHome from './features/user/pages/Home';
 import UserReservation from './features/user/pages/Reservation';
 import UserRegister from './features/user/pages/Register';
+import UserLogin from './features/user/pages/Login';
 // import UserFee from './features/user/pages/Fee';
 
 // // 管理者
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
       { index: true, element: <UserHome /> },
       { path: 'reservation', element: <UserReservation /> },
       { path: 'register', element: <UserRegister /> },
+      { path: 'login', element: <UserLogin /> },
       // 他のユーザーページ
     ]
   },
