@@ -18,6 +18,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import './styles.module.css';
 
 const navLinks = [
+  { label: '新規登録', to: '/register' },
+  { label: 'ログイン', to: '/login' },
   { label: 'ご挨拶', to: '/greeting' },
   { label: '指導員紹介', to: '/introduction' },
   { label: '料金・プラン', to: '/fee' },

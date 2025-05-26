@@ -9,6 +9,7 @@
  */
 
 import React,{ useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import FullCalendar from "@fullcalendar/react"; // FullCalendarコンポーネント
 import dayGridPlugin from "@fullcalendar/daygrid"; // 月間カレンダー    
@@ -67,6 +68,8 @@ type Reservation = {
 }
 
 const UserReservation: React.FC = () => {
+  const navigate = useNavigate();
+
   const [events, setEvents] = useState<Event[]>([]);
   const [childrenOptions, setChildrenOptions] = useState<Child[]>([]);
   const [courseOptions, setCourseOptions] = useState<Course[]>([]);
@@ -79,7 +82,6 @@ const UserReservation: React.FC = () => {
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "info" | "warning" | "error">("success");
   const [date, setDate] = useState<string>("");
   const [time, setTime] = useState<string>("");
-
 
   useEffect(() => {
     const loadEvents = async () => {
@@ -145,6 +147,11 @@ const UserReservation: React.FC = () => {
         }
       }
     };
+    
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      navigate("/login", { replace: true });
+    }
 
     loadEvents();
     loadChildrenOptions();
