@@ -46,9 +46,13 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 // // 料金画面
 // Route::get('fee', [FeeController::class, 'index'])->name('fee');
 
-// Route::get('introduction', function () {
-//     return view('pages.introduction');
-// })->name('introduction');
+Route::get('inquiry', function () {
+    return view('pages.inquiry');
+})->name('inquiry');
+
+Route::get('introduction', function () {
+    return view('pages.introduction');
+})->name('introduction');
 
 // Route::get('/reservation', [ReservationController::class, 'index'])->name('reservationTop')->middleware('auth');
 // Route::get('/reservationForm', [ReservationController::class, 'dispReservationForm'])->name('reservationForm');

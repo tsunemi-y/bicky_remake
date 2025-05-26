@@ -12,6 +12,7 @@
         <div><a href="{{ route('remote') }}" class="menu-inner__link">遠方の方へ</a></div>
         <div><a href="{{ route('introduction') }}" class="menu-inner__link">指導員紹介</a></div>
         <div><a href="{{ route('access') }}" class="menu-inner__link">アクセス</a></div>
+        <div><a href="{{ route('inquiry') }}" class="menu-inner__link">お問い合わせ</a></div>
     </div>
     {{-- spメニュー中身 ここまで --}}
 
@@ -40,6 +41,7 @@
                 <div><a href="{{ route('remote') }}" class="pc-header__item">遠方の方へ</a></div>
                 <div><a href="{{ route('introduction') }}" class="pc-header__item">指導員紹介</a></div>
                 <div><a href="{{ route('access') }}" class="pc-header__item">アクセス</a></div>
+                <div><a href="{{ route('inquiry') }}" class="pc-header__item">お問い合わせ</a></div>
             </div>
             {{-- pcメニュー　ここまで --}}
         </div>
