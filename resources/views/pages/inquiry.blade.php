@@ -20,9 +20,14 @@
             <h1 class="main-title">お問い合わせ</h1>
 
             <p class="mb-4">
-                お問い合わせは以下メールアドレスまでお願いいたします。<br>
+                メールでのお問い合わせは以下までお願いいたします。<br>
                 <a href="mailto:hattatsushien0724@gmail.com">hattatsushien0724@gmail.com</a>
             </p>
+            <p class="mb-4">
+                お電話でのお問い合わせは以下までお願いいたします。<br>
+                <a href="tel:090-7350-1929">090-7350-1929</a>
+            </p>
+
         </div>
     </div>
 @endsection
