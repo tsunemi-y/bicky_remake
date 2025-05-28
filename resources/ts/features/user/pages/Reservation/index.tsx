@@ -1,15 +1,13 @@
 /**
  * TODO
- * 利用時選択したらその利用時は兄弟児セレクトボックスに表示されないようにする
- * 年齢・人数によって表示するコースを制御
  * feeTableのデータをサーバーから取得する（定数化）
  * 先にコースと人数選択してもらって利用時間決まってから時間しぼらなあかん
  * 
  * 
  */
 
-import React,{ useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React,{ useState, useEffect, useMemo } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import FullCalendar from "@fullcalendar/react"; // FullCalendarコンポーネント
 import dayGridPlugin from "@fullcalendar/daygrid"; // 月間カレンダー    
@@ -29,7 +27,9 @@ import {
   IconButton,
   Stack,
   Snackbar,
-  Alert
+  Alert,
+  Breadcrumbs,
+  Link as MuiLink,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
@@ -40,6 +40,9 @@ import Loading from "../../../../components/Loading";
 import { reservationService } from "../../../../services/reservationService";
 import { userService } from "../../../../services/userService";
 import { calculateIsTablet } from "survey-core/typings/src/utils/devices";
+import { Link as RouterLink } from "react-router-dom";
+
+import useAuthGuard from "../../services/useAuthGuard";
 
 type Event = {
   id: string;
@@ -69,6 +72,16 @@ type Reservation = {
 
 const UserReservation: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isAuthed = useAuthGuard();
+  
+  useEffect(() => {
+    if (!isAuthed) {
+      navigate("/login");
+    }
+  }, [isAuthed, navigate]);
+  if (!isAuthed) return null;
 
   const [events, setEvents] = useState<Event[]>([]);
   const [childrenOptions, setChildrenOptions] = useState<Child[]>([]);
@@ -82,6 +95,27 @@ const UserReservation: React.FC = () => {
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "info" | "warning" | "error">("success");
   const [date, setDate] = useState<string>("");
   const [time, setTime] = useState<string>("");
+
+  // 追加: 遷移時のsnackbar表示
+  useEffect(() => {
+    if (
+      location.state &&
+      typeof location.state === "object" &&
+      "snackbar" in location.state &&
+      location.state.snackbar &&
+      typeof location.state.snackbar === "object"
+    ) {
+      const { message, severity } = location.state.snackbar;
+      if (message) {
+        setSnackbarMessage(message);
+        setSnackbarSeverity(severity || "success");
+        setSnackbarOpen(true);
+        // 履歴のstateを消す（再表示防止）
+        navigate(location.pathname, { replace: true, state: {} });
+      }
+    }
+    
+  }, [location.state, navigate, location.pathname]);
 
   useEffect(() => {
     const loadEvents = async () => {
@@ -104,9 +138,13 @@ const UserReservation: React.FC = () => {
         setEvents(mapped);
       } catch (error) {
         if (error instanceof Error) {
-          alert(error.message);
+          setSnackbarMessage(error.message);
+          setSnackbarSeverity("error");
+          setSnackbarOpen(true);
         } else {
-          alert(String(error));
+          setSnackbarMessage(String(error));
+          setSnackbarSeverity("error");
+          setSnackbarOpen(true);
         }
       }
     };
@@ -122,9 +160,13 @@ const UserReservation: React.FC = () => {
         setChildrenOptions(options);
       } catch (error) {
         if (error instanceof Error) {
-          alert(error.message);
+          setSnackbarMessage(error.message);
+          setSnackbarSeverity("error");
+          setSnackbarOpen(true);
         } else {
-          alert(String(error));
+          setSnackbarMessage(String(error));
+          setSnackbarSeverity("error");
+          setSnackbarOpen(true);
         }
       }
     };
@@ -141,17 +183,16 @@ const UserReservation: React.FC = () => {
         setCourseOptions(options);
       } catch (error) {
         if (error instanceof Error) {
-          alert(error.message);
+          setSnackbarMessage(error.message);
+          setSnackbarSeverity("error");
+          setSnackbarOpen(true);
         } else {
-          alert(String(error));
+          setSnackbarMessage(String(error));
+          setSnackbarSeverity("error");
+          setSnackbarOpen(true);
         }
       }
     };
-    
-    const token = localStorage.getItem("access_token");
-    if (!token) {
-      navigate("/login", { replace: true });
-    }
 
     loadEvents();
     loadChildrenOptions();
@@ -245,9 +286,7 @@ const UserReservation: React.FC = () => {
       setIsLoading(true);
       const reservation = await reservationService.createReservation(data);
 
-      setSnackbarMessage(reservation.message);
-      setSnackbarSeverity("success");
-      setSnackbarOpen(true);
+      navigate("/", { state: { snackbar: { message: reservation.message, severity: "success" } } });
 
     } catch (error) {
       if (error instanceof Error) {
@@ -263,6 +302,39 @@ const UserReservation: React.FC = () => {
       setIsLoading(false);
     }
   }
+
+  // 利用児セレクトボックスで既に選択されている子は他のセレクトボックスで選択肢に出さない
+  const getAvailableChildrenOptions = (index: number) => {
+    // index番目のセレクトボックスは自分自身の値は選択肢に含める
+    const selectedExceptCurrent = selectedChildren.filter((_, i) => i !== index);
+    return childrenOptions.filter(child => !selectedExceptCurrent.includes(child.id));
+  };
+
+  // 利用人数によって表示するコースを制御
+  // 1人のときは1,4,5、2人以上のときは2,3
+  const getFilteredCourseOptions = useMemo(() => {
+    const count = selectedChildren.filter(id => !!id).length;
+    if (count === 1) {
+      // 1人のとき
+      return courseOptions.filter(course => [1, 4, 5].includes(course.id));
+    } else if (count >= 2) {
+      // 2人以上のとき
+      return courseOptions.filter(course => [2, 3].includes(course.id));
+    } else {
+      // 0人のときは全て非表示
+      return [];
+    }
+  }, [courseOptions, selectedChildren]);
+
+  // 選択児童数とコースの整合性を保つ（人数変更時に選択中コースが選択不可になったらリセット）
+  useEffect(() => {
+    if (
+      selectedCourse &&
+      !getFilteredCourseOptions.some(course => course.id === selectedCourse)
+    ) {
+      setSelectedCourse(0);
+    }
+  }, [selectedChildren, getFilteredCourseOptions, selectedCourse]);
 
   const renderModalContents = (date: string, time: string) => {
     return (
@@ -289,7 +361,7 @@ const UserReservation: React.FC = () => {
                     <MenuItem value="">
                       <em>選択してください</em>
                     </MenuItem>
-                    {childrenOptions.map(child => (
+                    {getAvailableChildrenOptions(index).map(child => (
                       <MenuItem key={child.id} value={child.id}>
                         {child.name}
                       </MenuItem>
@@ -305,6 +377,7 @@ const UserReservation: React.FC = () => {
                     updated.splice(index, 1);
                     setSelectedChildren(updated);
                   }}
+                  disabled={selectedChildren.length === 1}
                 >
                   <DeleteIcon />
                 </IconButton>
@@ -315,6 +388,7 @@ const UserReservation: React.FC = () => {
               startIcon={<AddIcon />}
               onClick={() => setSelectedChildren([...selectedChildren, 0])}
               sx={{ alignSelf: "flex-start" }}
+              disabled={selectedChildren.length >= childrenOptions.length}
             >
               兄弟児を追加
             </Button>
@@ -336,7 +410,7 @@ const UserReservation: React.FC = () => {
               <MenuItem value="">
                 <em>選択してください</em>
               </MenuItem>
-              {courseOptions.map(course => (
+              {getFilteredCourseOptions.map(course => (
                 <MenuItem key={course.id} value={course.id}>
                   {course.name}
                 </MenuItem>
@@ -389,6 +463,14 @@ const UserReservation: React.FC = () => {
 
   return (
     <React.Fragment>
+      <Box sx={{ mt: 3, mb: 2 }}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <MuiLink component={RouterLink} underline="hover" color="inherit" to="/user">
+            マイページ
+          </MuiLink>
+          <Typography color="text.primary">予約日選択</Typography>
+        </Breadcrumbs>
+      </Box>
       <div style={{ margin: "50px auto", textAlign: "center" }}>
         <h1>予約日選択</h1>
         <FullCalendar

@@ -1,9 +1,4 @@
-/**
- * 成功したあと、予約画面に新規登録成功しましたとだす
- * スタッフにライン通知
- */
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Model } from "survey-core";
@@ -11,11 +6,14 @@ import { Survey } from "survey-react-ui";
 import "survey-core/survey-core.min.css";
 
 import { userService } from "../../../../services/userService";
+import useAuthGuard from '../../services/useAuthGuard';
 
 import Loading from "../../../../components/Loading";
 
 import { json } from "./form_json";
 import './style.module.css';
+
+import { Snackbar, Alert } from "@mui/material";
 
 declare global {
   interface Window {
@@ -24,8 +22,19 @@ declare global {
 }
 
 const Register = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const isAuthed = useAuthGuard();
+  
+  useEffect(() => {
+    if (isAuthed) {
+      navigate("/reservation");
+    }
+  }, [isAuthed, navigate]);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "info" | "warning" | "error">("error");
 
   const survey = new Model(json);
   survey.pagePrevText = "前へ";
@@ -49,9 +58,17 @@ const Register = () => {
 
         await userService.register(survey.data);
 
-        navigate('/reservation');
+        navigate('/reservation', { state: { snackbar: { message: '新規登録に成功しました', severity: 'success' } } });
       } catch (error) {
-        alert(error);
+        let message = "新規登録に失敗しました";
+        if (error instanceof Error) {
+          message = error.message;
+        } else if (typeof error === "string") {
+          message = error;
+        }
+        setSnackbarMessage(message);
+        setSnackbarSeverity("error");
+        setSnackbarOpen(true);
       } finally {
         setIsLoading(false);
       }
@@ -67,10 +84,30 @@ const Register = () => {
       }
   }
 
+  const handleSnackbarClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
+
   return (
     <>
       <Survey model={survey} />
       <Loading is_loading={isLoading} />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

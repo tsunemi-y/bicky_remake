@@ -49,7 +49,8 @@ const GreetingPage: React.FC = () => {
               >
                 <span itemProp="name">{item.label}</span>
               </a>
-              <meta itemProp="position" content={idx + 1} />
+              {/* 修正: content属性にstring型を渡す */}
+              <meta itemProp="position" content={(idx + 1).toString()} />
               {idx < breadcrumbItems.length - 1 && (
                 <span style={{ margin: "0 8px", color: "#888" }}>{">"}</span>
               )}

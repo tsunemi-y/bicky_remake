@@ -36,7 +36,7 @@ const Footer = () => {
       <Container maxWidth="lg">
         <Grid container spacing={4} justifyContent="center">
           {menuItems.map((section, idx) => (
-            <Grid item xs={12} sm={4} key={idx}>
+            <Grid key={idx}>
               <Typography
                 variant="subtitle1"
                 fontWeight="bold"
