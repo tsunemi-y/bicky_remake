@@ -134,9 +134,6 @@ const UserHome = () => {
                   <Typography variant="h5" gutterBottom>{svc.title}</Typography>
                   <Typography variant="body2" color="textSecondary">{svc.description}</Typography>
                 </CardContent>
-                <Box textAlign="center" pb={2}>
-                  <Button component={RouterLink} to={svc.to} variant="outlined">詳しくはこちら</Button>
-                </Box>
               </Card>
             </Grid>
           ))}
