@@ -9,8 +9,10 @@ use App\Services\UserService;
 use App\Consts\ConstReservation;
 use App\Repositories\ReservationRepository;
 use App\Models\AvailableReservationDatetime;
+use App\Models\ChildReservation;
+use App\Models\Child;
 use App\Repositories\AvailableReservationDatetimeRepository;
-
+use App\Repositories\ChildRepository;
 
 class ReservationService
 {
@@ -116,6 +118,22 @@ class ReservationService
         $reservationRepository->attachChildrenToReservation($reservation, $childIds);
     }
 
+    public function getUserReservations($userId)
+    {
+        $reservationRepository = new ReservationRepository(Reservation::class);
+        $reservations = $reservationRepository->getUserReservations($userId);
+        return $reservations;
+    }
+
+    public function getChildrenReservationByReservationId($reservationId)
+    {        
+        $childRepository = new ChildRepository(Child::class);
+        $children = $childRepository->getChildrenByReservationId($reservationId);
+        $a = $children->reservations;
+        return $children;
+    }
+
+
     private function bulkInsert($monthCount, $nonDayDate, $targetInsertWeeks)
     {
         $holidays = Yasumi::create('Japan', date('Y'), 'ja_JP');
@@ -134,5 +152,11 @@ class ReservationService
         }
         
         $this->availableReservationDatetimeRepository->bulkInsert($insertDatetimes);
+    }
+
+    public function deleteReservation($reservationId)
+    {
+        $reservationRepository = new ReservationRepository(Reservation::class);
+        $reservationRepository->delete($reservationId);
     }
 }

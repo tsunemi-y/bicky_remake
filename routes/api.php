@@ -29,9 +29,11 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
     Route::get('/users/me/children', [UserController::class, 'getChildren'])->name('users.getChildren');
     Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+    Route::get('/reservations/user', [ReservationController::class, 'getUserReservations'])->name('reservations.getUserReservations');
     // Route::get('/reservations/{id}', [ReservationController::class, 'show']);
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
-//     Route::put('/reservations/{id}/cancel', [ReservationController::class, 'cancel']);
+    
+    Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
     
 //     // 空き状況確認
 //     Route::post('/availability', [ReservationController::class, 'checkAvailability']);

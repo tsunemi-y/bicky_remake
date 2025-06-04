@@ -27,4 +27,11 @@ class ChildRepository extends Repository
     {
         return Child::whereIn('id', $childIds)->get();
     }
+
+    public function getChildrenByReservationId($reservationId): Collection
+    {
+        return \DB::table('child_reservation')
+        ->where('reservation_id', $reservationId)
+        ->get();
+    }
 }

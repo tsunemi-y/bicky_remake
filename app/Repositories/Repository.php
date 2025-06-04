@@ -72,4 +72,9 @@ abstract class Repository
     {
         return $this->model->create($data);
     }
+
+    public function delete(int $id): bool
+    {
+        return $this->model->where('id', $id)->delete();
+    }
 }

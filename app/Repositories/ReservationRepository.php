@@ -74,4 +74,9 @@ class ReservationRepository extends Repository
     {
         $reservation->children()->attach($childIds);
     }
+
+    public function getUserReservations($userId)
+    {
+        return Reservation::where('user_id', $userId)->get();
+    }
 }

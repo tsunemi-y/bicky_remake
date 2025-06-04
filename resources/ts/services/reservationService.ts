@@ -17,9 +17,27 @@ export type Reservation = {
   course: number;
 };
 
+export type UserReservation = {
+  id: number;
+  date: string;
+  time: string;
+};
+
 export type ReservationResponse = {
   message: string;
 };
+
+// export type UserReservationResponse = {
+//   id: number;
+//   user_id: number;
+//   reservation_date: string;
+//   reservation_time: string;
+//   use_time: number;
+//   created_at: string;
+//   updated_at: string;
+// };
+
+export type UserReservationResponse = any;
 
 // 予約一覧を取得
 const getAvailableReservations = async (): Promise<AvailableReservation> => {
@@ -62,8 +80,30 @@ const getCourse = async (): Promise<any[]> => {
   }
 };
 
+const getUserReservations = async (): Promise<UserReservation[]> => {
+  const response = await apiRequest<ApiResponse<UserReservation[]>>('/reservations/user');
+
+  if (response.success && response.data) {
+    return response.data;
+  }
+
+  throw new Error(response.message || '予約情報の取得に失敗しました');
+};
+
+const cancelReservation = async (reservationId: number): Promise<UserReservationResponse> => {
+  const response = await apiRequest<ApiResponse<UserReservationResponse>>(`/reservations/${reservationId}`, 'DELETE');
+
+  if (response.success && response.data) {
+    return response.data;
+  }
+
+  throw new Error(response.message || '予約のキャンセルに失敗しました');
+};
+
 export const reservationService = {
   getAvailableReservations,
   createReservation,
   getCourse,
+  getUserReservations,
+  cancelReservation,
 };

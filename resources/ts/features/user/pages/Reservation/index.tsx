@@ -1,11 +1,3 @@
-/**
- * TODO
- * feeTableのデータをサーバーから取得する（定数化）
- * 先にコースと人数選択してもらって利用時間決まってから時間しぼらなあかん
- * 
- * 
- */
-
 import React,{ useState, useEffect, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 

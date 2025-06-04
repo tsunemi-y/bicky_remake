@@ -11,6 +11,7 @@ import UserFee from './features/user/pages/Fee';
 import UserAccess from './features/user/pages/Access';
 import UserIntroduction from './features/user/pages/Introduction';
 import UserGreeting from './features/user/pages/Greeting';
+import UserCancel from './features/user/pages/Cancel';
 
 // // 管理者
 // import AdminLayout from './features/admin/components/AdminLayout';
@@ -31,6 +32,7 @@ export const router = createBrowserRouter([
       { path: 'access', element: <UserAccess /> },
       { path: 'introduction', element: <UserIntroduction /> },
       { path: 'greeting', element: <UserGreeting /> },
+      { path: 'cancel', element: <UserCancel /> },
       // 他のユーザーページ
     ]
   },
