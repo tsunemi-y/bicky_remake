@@ -5,7 +5,11 @@ import {
   Paper,
   Stack,
   Divider,
+  Breadcrumbs,
+  Link as MuiLink,
 } from "@mui/material";
+
+import { Link as RouterLink } from "react-router-dom";
 
 const breadcrumbItems = [
   { label: "TOP", href: "/" },
@@ -15,49 +19,14 @@ const breadcrumbItems = [
 const GreetingPage: React.FC = () => {
   return (
     <Box sx={{ maxWidth: 800, mx: "auto", p: { xs: 2, sm: 4 } }}>
-      {/* パンくずリスト（モダン・リッチスニペット対応） */}
-      <nav aria-label="breadcrumb" style={{ marginBottom: 16 }}>
-        <ol
-          itemScope
-          itemType="https://schema.org/BreadcrumbList"
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            listStyle: "none",
-            padding: 0,
-            margin: 0,
-            gap: 8,
-          }}
-        >
-          {breadcrumbItems.map((item, idx) => (
-            <li
-              key={item.href}
-              itemProp="itemListElement"
-              itemScope
-              itemType="https://schema.org/ListItem"
-              style={{ display: "flex", alignItems: "center" }}
-            >
-              <a
-                href={item.href}
-                itemProp="item"
-                style={{
-                  color: idx === breadcrumbItems.length - 1 ? "#1976d2" : "#1976d2",
-                  textDecoration: "none",
-                  fontWeight: 500,
-                  fontSize: 15,
-                }}
-              >
-                <span itemProp="name">{item.label}</span>
-              </a>
-              {/* 修正: content属性にstring型を渡す */}
-              <meta itemProp="position" content={(idx + 1).toString()} />
-              {idx < breadcrumbItems.length - 1 && (
-                <span style={{ margin: "0 8px", color: "#888" }}>{">"}</span>
-              )}
-            </li>
-          ))}
-        </ol>
-      </nav>
+      <Box sx={{ mt: 3, mb: 2 }}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <MuiLink component={RouterLink} underline="hover" color="inherit" to="/">
+            TOP
+          </MuiLink>
+          <Typography color="text.primary">ご挨拶</Typography>
+        </Breadcrumbs>
+      </Box>
 
       <Typography
         variant="h4"

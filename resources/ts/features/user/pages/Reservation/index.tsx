@@ -458,8 +458,8 @@ const UserReservation: React.FC = () => {
     <React.Fragment>
       <Box sx={{ mt: 3, mb: 2 }}>
         <Breadcrumbs aria-label="breadcrumb">
-          <MuiLink component={RouterLink} underline="hover" color="inherit" to="/user">
-            マイページ
+          <MuiLink component={RouterLink} underline="hover" color="inherit" to="/">
+            TOP
           </MuiLink>
           <Typography color="text.primary">予約</Typography>
         </Breadcrumbs>

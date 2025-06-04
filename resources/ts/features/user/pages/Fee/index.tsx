@@ -11,8 +11,12 @@ import {
   Paper,
   Stack,
   Divider,
-  Alert
+  Alert,
+  Breadcrumbs,
+  Link as MuiLink,
 } from "@mui/material";
+
+import { Link as RouterLink } from "react-router-dom";
 
 const normalPlanRows = [
   {
@@ -59,26 +63,14 @@ const juniorPlanRows = [
 const FeePage: React.FC = () => {
   return (
     <Box sx={{ maxWidth: 800, mx: "auto", p: { xs: 2, sm: 4 } }}>
-      {/* パンくずリスト */}
-      <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
-        <Typography
-          component="a"
-          href="/"
-          color="primary"
-          sx={{ textDecoration: "none", fontWeight: 500 }}
-        >
-          TOP
-        </Typography>
-        <Typography color="text.disabled">{">"}</Typography>
-        <Typography
-          component="a"
-          href="/fee"
-          color="primary"
-          sx={{ textDecoration: "none", fontWeight: 500 }}
-        >
-          料金・プラン
-        </Typography>
-      </Stack>
+      <Box sx={{ mt: 3, mb: 2 }}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <MuiLink component={RouterLink} underline="hover" color="inherit" to="/">
+            TOP
+          </MuiLink>
+          <Typography color="text.primary">料金・プラン</Typography>
+        </Breadcrumbs>
+      </Box>
 
       <Typography variant="h4" component="h1" fontWeight="bold" gutterBottom>
         料金・プラン

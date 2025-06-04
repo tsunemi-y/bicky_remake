@@ -6,22 +6,24 @@ import {
   Divider,
   Paper,
   Link,
-  Alert
+  Alert,
+  Breadcrumbs,
+  Link as MuiLink,
 } from "@mui/material";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
+
+import { Link as RouterLink } from "react-router-dom";
 
 const AccessPage: React.FC = () => {
   return (
     <Box sx={{ maxWidth: 800, mx: "auto", p: { xs: 2, sm: 4 } }}>
-      {/* パンくずリスト */}
-      <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
+      <Box sx={{ mt: 3, mb: 2 }}>
         <Breadcrumbs aria-label="breadcrumb">
-          <Link underline="hover" color="primary" href="/">
+          <MuiLink component={RouterLink} underline="hover" color="inherit" to="/">
             TOP
-          </Link>
+          </MuiLink>
           <Typography color="text.primary">アクセス</Typography>
         </Breadcrumbs>
-      </Stack>
+      </Box>
 
       <Typography variant="h4" component="h1" fontWeight="bold" gutterBottom>
         アクセス
