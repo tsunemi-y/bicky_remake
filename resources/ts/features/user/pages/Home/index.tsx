@@ -105,7 +105,7 @@ const UserHome = () => {
       </Box>
 
       {/* おしらせセクション */}
-      <Container maxWidth="lg" sx={{ py: 5 }}>
+      <Container maxWidth="lg">
         <Typography variant="h4" gutterBottom>おしらせ</Typography>
         <Paper elevation={0}>
           <List>
