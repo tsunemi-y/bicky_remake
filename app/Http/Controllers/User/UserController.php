@@ -45,7 +45,7 @@ class UserController extends Controller
             'data' => [
                 'access_token' => $token,
                 'token_type' => 'bearer',
-                'expires_in' => config('jwt.ttl') * 60 * 6000,
+                'expires_in' => config('jwt.ttl') * 60,
                 'user' => auth('api')->user()
             ]
         ]);
@@ -106,7 +106,7 @@ class UserController extends Controller
                 'data' => [     
                     'access_token' => $token,
                     'token_type' => 'bearer',
-                    'expires_in' => config('jwt.ttl') * 60 * 6000,
+                    'expires_in' => config('jwt.ttl') * 60,
                     'user' => auth('api')->user()
                 ]
             ], 201);

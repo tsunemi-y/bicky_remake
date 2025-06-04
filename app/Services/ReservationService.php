@@ -154,9 +154,9 @@ class ReservationService
         $this->availableReservationDatetimeRepository->bulkInsert($insertDatetimes);
     }
 
-    public function deleteReservation($reservationId)
+    public function deleteReservation(int $reservationId): bool
     {
         $reservationRepository = new ReservationRepository(Reservation::class);
-        $reservationRepository->delete($reservationId);
+        return $reservationRepository->delete($reservationId);
     }
 }

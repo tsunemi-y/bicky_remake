@@ -1,0 +1,36 @@
+/* FullCalendar全体を角丸に */
+.fc {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+/* ヘッダーの背景色を緑に */
+.fc-prev-button.fc-button.fc-button-primary {
+  background-color: #6FCF97 !important;
+  border-radius: 16px 0 0 0;
+  color: #fff !important;
+  padding: 8px 16px;
+}
+
+/* ヘッダー内のボタン色も緑に */
+.fc .fc-button, .fc .fc-button-primary {
+  background: #6FCF97 !important;
+  border: none !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+.fc .fc-button:disabled {
+  background: #b2e5c7 !important;
+  color: #fff !important;
+}
+
+/* タイトルの文字色 */
+.fc-toolbar-title {
+  color: #fff !important;
+}
+
+/* 右上の「月」などのボタンを非表示 */
+.fc-toolbar-chunk:last-child {
+  display: none !important;
+}

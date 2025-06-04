@@ -35,6 +35,7 @@ import { calculateIsTablet } from "survey-core/typings/src/utils/devices";
 import { Link as RouterLink } from "react-router-dom";
 
 import useAuthGuard from "../../services/useAuthGuard";
+import "./styles.module.css";
 
 type Event = {
   id: string;
@@ -460,19 +461,18 @@ const UserReservation: React.FC = () => {
           <MuiLink component={RouterLink} underline="hover" color="inherit" to="/user">
             マイページ
           </MuiLink>
-          <Typography color="text.primary">予約日選択</Typography>
+          <Typography color="text.primary">予約</Typography>
         </Breadcrumbs>
       </Box>
-      <div style={{ margin: "50px auto", textAlign: "center" }}>
-        <h1>予約日選択</h1>
+      <div>
         <FullCalendar
           locale={jaLocale}
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           headerToolbar={{
-            left: "prev,next today",
+            left: "prev",
             center: "title",
-            right: "dayGridMonth,timeGridWeek,timeGridDay",
+            right: "next",
           }}
           events={events}
           editable={true}
