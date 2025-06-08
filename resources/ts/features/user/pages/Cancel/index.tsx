@@ -81,17 +81,14 @@ const Cancel = () => {
       // 予約キャンセルAPIを呼び出し
       await reservationService.cancelReservation(selectedReservationId);
 
+      navigate("/", { state: { snackbar: { message: "予約をキャンセルしました。", severity: "success" } } });
+
       // 予約一覧を更新
       // setReservations(reservations.map(reservation =>
       //   reservation.id === selectedReservationId
       //     ? { ...reservation, status: 'cancelled' }
       //     : reservation
       // ));
-      
-      setSnackbarMessage("予約をキャンセルしました。");
-      setSnackbarSeverity("success");
-      setSnackbarOpen(true);
-      
     } catch (error) {
       if (error instanceof Error) {
         setSnackbarMessage(error.message);

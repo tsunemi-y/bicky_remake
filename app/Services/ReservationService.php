@@ -129,7 +129,6 @@ class ReservationService
     {        
         $childRepository = new ChildRepository(Child::class);
         $children = $childRepository->getChildrenByReservationId($reservationId);
-        $a = $children->reservations;
         return $children;
     }
 

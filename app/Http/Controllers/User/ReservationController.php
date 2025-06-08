@@ -133,25 +133,25 @@ class ReservationController extends Controller
         try {
             $this->reservationService->deleteReservation($reservation->id);
 
-            // $messageData = [
-            //     'reservationDate' => formatDate($reservation->reservation_date),
-            //     'reservationTime' => formatTime($reservation->reservation_time),
-            //     'email'           => $reservation->user->email,
-            // ];
+            $messageData = [
+                'reservationDate' => formatDate($reservation->reservation_date),
+                'reservationTime' => formatTime($reservation->reservation_time),
+                'email'           => $reservation->user->email,
+            ];
 
             // 予約IDから利用児データ取得
             $selectedChildren = $this->reservationService->getChildrenReservationByReservationId($reservation->id);
 
-            // // 管理者へ予約キャンセルのLINEメッセージ送信
-            // $this->lineMessengerServices->sendCancelReservationMessage($messageData['childName'], $messageData['childName2'], $messageData['reservationDate'], $messageData['reservationTime'], $selectedChildren);
+            // 管理者へ予約キャンセルのLINEメッセージ送信
+            $this->lineMessengerServices->sendCancelReservationMessage($messageData['reservationDate'], $messageData['reservationTime'], $selectedChildren);
 
-            // $this->lineMessengerServices->sendMonthlyFeeMessage();
+            $this->lineMessengerServices->sendMonthlyFeeMessage();
 
-            // $viewFile = 'emails.reservations.cancel';
-            // $subject = '予約をキャンセルしました';
-            // $this->mailService->sendMailToUser($messageData, $viewFile, $subject);
+            $viewFile = 'emails.reservations.cancel';
+            $subject = '予約をキャンセルしました';
+            $this->mailService->sendMailToUser($messageData, $viewFile, $subject);
 
-            // $this->googleCalendarService->delete($reservation->id);
+            $this->googleCalendarService->delete($reservation->id);
 
             \DB::commit();
 
