@@ -30,6 +30,9 @@ const services = [
   // { title: '吃音(きつおん)のご相談', subtitle: 'THERAPY FOR FLUENCY', description: 'どもりにお悩みの方への支援と訓練を提供します。', to: '/services/stuttering', image: '../img/hero-img.jpg' }
 ];
 
+const MAIL_ADDRESS = 'mailto:info@hattatsushien0724@gmail.com';
+const RESERVE_URL = '/reservation';
+
 const UserHome = () => {
   const location = useLocation();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -48,7 +51,7 @@ const UserHome = () => {
   }, [location.state]);
 
   return (
-    <Box>
+    <Box sx={{ pb: 10 }}>
       {/* ヒーローセクション */}
       <Box className="hero-section">
         <Container maxWidth="lg" disableGutters sx={{ px: 0 }}>
@@ -170,6 +173,87 @@ const UserHome = () => {
           {snackbarMessage}
         </Alert>
       </Snackbar>
+
+      {/* スティッキーフッター */}
+      <Box
+        sx={{
+          position: 'fixed',
+          left: 0,
+          bottom: 0,
+          width: '100vw',
+          bgcolor: '#fff',
+          borderTop: '1px solid #e0e0e0',
+          boxShadow: '0 -4px 20px rgba(0,0,0,0.1)',
+          zIndex: 2000,
+          py: { xs: 2, md: 2.5 },
+          px: { xs: 1, md: 3 },
+        }}
+      >
+        <Container maxWidth="lg" sx={{ p: '0 !important' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: { xs: 2, md: 4 },
+              flexWrap: 'nowrap',
+              width: '100%',
+              px: { xs: 0.5, md: 0 },
+            }}
+          >
+            <Button
+              variant="contained"
+              href={MAIL_ADDRESS}
+              sx={{
+                minWidth: { xs: 140, md: 200 },
+                maxWidth: { xs: 180, md: 220 },
+                minHeight: { xs: 52, md: 56 },
+                backgroundColor: '#1976d2',
+                color: '#fff',
+                fontWeight: 'bold',
+                fontSize: { xs: '0.9rem', md: '1rem' },
+                borderRadius: { xs: 3, md: 4 },
+                textTransform: 'none',
+                boxShadow: '0 3px 12px rgba(25, 118, 210, 0.3)',
+                '&:hover': {
+                  backgroundColor: '#1565c0',
+                  boxShadow: '0 5px 16px rgba(25, 118, 210, 0.4)',
+                  transform: 'translateY(-2px)',
+                },
+                transition: 'all 0.3s ease-in-out',
+              }}
+            >
+              メールで相談
+            </Button>
+            
+            <Button
+              variant="contained"
+              component={RouterLink}
+              to={RESERVE_URL}
+              sx={{
+                minWidth: { xs: 140, md: 200 },
+                maxWidth: { xs: 180, md: 220 },
+                minHeight: { xs: 52, md: 56 },
+                backgroundColor: '#f57c00',
+                color: '#fff',
+                fontWeight: 'bold',
+                fontSize: { xs: '0.9rem', md: '1rem' },
+                borderRadius: { xs: 3, md: 4 },
+                textTransform: 'none',
+                boxShadow: '0 3px 12px rgba(245, 124, 0, 0.3)',
+                '&:hover': {
+                  backgroundColor: '#ef6c00',
+                  boxShadow: '0 5px 16px rgba(245, 124, 0, 0.4)',
+                  transform: 'translateY(-2px)',
+                },
+                transition: 'all 0.3s ease-in-out',
+              }}
+            >
+              予約ページへ
+            </Button>
+          </Box>
+        </Container>
+      </Box>
     </Box>
   );
 };
