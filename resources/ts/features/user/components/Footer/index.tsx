@@ -1,55 +1,62 @@
 // features/user/components/Footer/index.tsx
 import React from 'react';
-import { Box, Container, Grid, Typography, Link } from '@mui/material';
+import { Box, Container, Grid, Typography, Link, Divider } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
-const Footer = () => {
-  const menuItems = [
-    {
-      title: '相談・指導内容',
-      items: [
-        { label: 'ことばのご相談', path: '/services/language' },
-        { label: '学習のご相談', path: '/services/learning' },
-        { label: '発音の指導・大人の発音矯正', path: '/services/pronunciation' },
-        { label: '吃音(きつおん)のご相談', path: '/services/stuttering' },
-        { label: 'よくある質問', path: '/faq' }
-      ]
-    },
-    {
-      title: '相談室について',
-      items: [
-        { label: '代表あいさつ', path: '/about/greeting' },
-        { label: 'スタッフ紹介', path: '/about/staff' },
-        { label: 'ご利用規定', path: '/about/terms' },
-        { label: '所在地', path: '/about/location' }
-      ]
-    },
-    {
-      title: '料金',
-      items: [
-        { label: 'ご相談料金', path: '/fee/consultation' },
-        { label: '各種検査にかかる費用', path: '/fee/examination' },
-        { label: 'コトリドリル', path: '/fee/drill' }
-      ]
-    }
-  ];
+const menuItems = [
+  {
+    title: 'ご相談・指導内容',
+    items: [
+      { label: 'ご挨拶', path: '/greeting' },
+      { label: '指導員紹介', path: '/introduction' },
+      { label: '料金・プラン', path: '/fee' },
+      { label: 'アクセス', path: '/access' },
+    ],
+  },
+  {
+    title: 'ご予約・お問い合わせ',
+    items: [
+      { label: 'ご予約はこちら', path: '/reservation' },
+      // { label: 'よくある質問', path: '/faq' },
+    ],
+  },
+];
 
+const Footer = () => {
   return (
-    <Box component="footer" sx={{ bgcolor: 'background.paper', py: 6 }}>
+    <Box
+      component="footer"
+      sx={{
+        borderTop: '4px solid #72cc82',
+        mt: 8,
+        pt: 6,
+        pb: 3,
+      }}
+    >
       <Container maxWidth="lg">
-        <Grid container spacing={4}>
-          {menuItems.map((section, index) => (
-            <Grid key={index}>
-              <Typography variant="h6" gutterBottom>
+        <Grid container spacing={4} justifyContent="center">
+          {menuItems.map((section, idx) => (
+            <Grid key={idx}>
+              <Typography
+                variant="subtitle1"
+                fontWeight="bold"
+                color="primary"
+                gutterBottom
+                sx={{ letterSpacing: 1, mb: 1 }}
+              >
                 {section.title}
               </Typography>
-              {section.items.map((item, itemIndex) => (
-                <Typography variant="body2" key={itemIndex}>
+              {section.items.map((item, itemIdx) => (
+                <Typography variant="body2" key={itemIdx} sx={{ mb: 0.5 }}>
                   <Link
                     component={RouterLink}
                     to={item.path}
-                    color="textSecondary"
-                    sx={{ textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                    color="inherit"
+                    sx={{
+                      textDecoration: 'none',
+                      '&:hover': { textDecoration: 'underline', color: '#72cc82' },
+                      transition: 'color 0.2s',
+                    }}
                   >
                     {item.label}
                   </Link>
@@ -59,22 +66,30 @@ const Footer = () => {
           ))}
         </Grid>
 
-        <Box mt={5}>
-          <Typography variant="h6" gutterBottom>
-            ことばの相談室ことり
+        <Divider sx={{ my: 4, borderColor: '#72cc82', opacity: 0.5 }} />
+
+        <Box textAlign="center" sx={{ mb: 2 }}>
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            color="primary"
+            sx={{ letterSpacing: 2, mb: 1 }}
+          >
+            ビッキーことば塾
           </Typography>
-          <Typography variant="body2" color="textSecondary">
-            〒111-0051<br />
-            東京都台東区蔵前3丁目21−1 カーサ蔵前 1103号室
-          </Typography>
-          <Typography variant="body2" color="textSecondary" mt={2}>
-            〒860-0805<br />
-            熊本県熊本市中央区桜町1-28 桜町センタービル 406号室
+          <Typography variant="body2" color="text.secondary">
+            〒618-0015 大阪府三島郡島本町青葉1-7-6
           </Typography>
         </Box>
 
-        <Typography variant="body2" color="textSecondary" align="center" mt={3}>
-          © KOTOBANOSOUDANSHITSU KOTORI
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          align="center"
+          display="block"
+          sx={{ mt: 2, letterSpacing: 1 }}
+        >
+          Copyright (c) bicky All Rights Reserved.
         </Typography>
       </Container>
     </Box>

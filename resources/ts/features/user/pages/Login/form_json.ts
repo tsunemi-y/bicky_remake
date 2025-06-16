@@ -21,6 +21,6 @@ export const json = {
       ]
     }
   ],
-  "showProgressBar": false,
+  "showProgressBar": "top",
   "title": "ログイン"
 };

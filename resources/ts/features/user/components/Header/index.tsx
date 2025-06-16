@@ -18,10 +18,13 @@ import { Link as RouterLink } from 'react-router-dom';
 import './styles.module.css';
 
 const navLinks = [
-  { label: '相談室について', to: '/about' },
-  { label: 'サービス内容', to: '/services' },
-  { label: '料金', to: '/fee' },
-  { label: 'よくある質問', to: '/faq' },
+  { label: '新規登録', to: '/register' },
+  { label: 'ログイン', to: '/login' },
+  { label: 'ご挨拶', to: '/greeting' },
+  { label: '指導員紹介', to: '/introduction' },
+  { label: '料金・プラン', to: '/fee' },
+  { label: 'アクセス', to: '/access' },
+  // { label: 'よくある質問', to: '/faq' },
 ];
 
 const Header = () => {
@@ -31,16 +34,9 @@ const Header = () => {
     setMobileOpen((prev) => !prev);
   };
 
+  // サイドバー（Drawer）からタイトルを削除
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ width: 250 }}>
-      <Typography
-        variant="h6"
-        component={RouterLink}
-        to="/"
-        sx={{ my: 2, textAlign: 'center', textDecoration: 'none', color: 'inherit' }}
-      >
-        ことばの相談室 ことり
-      </Typography>
       <List>
         {navLinks.map(({ label, to }) => (
           <ListItem key={to} disablePadding>
@@ -68,7 +64,7 @@ const Header = () => {
             to="/"
             sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}
           >
-            ことばの相談室 ことり
+            ビッキーことば塾
           </Typography>
           {/* SP: ハンバーガーメニュー */}
           <Box sx={{ display: { xs: 'block', md: 'none' } }}>

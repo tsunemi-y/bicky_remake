@@ -16,7 +16,9 @@ export interface AuthUser {
 
 export interface AuthResponse {
   user: AuthUser;
-  token: string;
+  access_token: string;
+  token_type: string;
+  expires_in: number;
 }
 
 // 親ユーザー情報の型定義
@@ -46,16 +48,23 @@ export interface ParentData {
 
 export interface RegisterResponse {
   user: AuthUser;
-  token: string;
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+}
+
+type Child = {
+  id: number;
+  name: string;
 }
 
 // ログインサービス
 const login = async (credentials: LoginCredentials): Promise<AuthUser> => {
-  const response = await apiRequest<ApiResponse<AuthResponse>>('/login', 'POST', credentials);
+  const response = await apiRequest<ApiResponse<AuthResponse>>('/users/login', 'POST', credentials);
   
   if (response.success && response.data) {
     // トークンをローカルストレージに保存
-    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('access_token', response.data.access_token);
     return response.data.user;
   }
   
@@ -84,11 +93,11 @@ const getCurrentUser = async (): Promise<AuthUser | null> => {
 
 // 新規登録サービス
 const register = async (userData: ParentData): Promise<AuthUser> => {
-  const response = await apiRequest<ApiResponse<RegisterResponse>>('/register', 'POST', userData);
+  const response = await apiRequest<ApiResponse<RegisterResponse>>('/users', 'POST', userData);
   
   if (response.success && response.data) {
     // トークンをローカルストレージに保存
-    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('access_token', response.data.access_token);
     return response.data.user;
   }
   
@@ -107,9 +116,18 @@ const update = async (userId: number, userData: Partial<ParentData>): Promise<Au
 };
 
 // 利用児情報取得サービス
-const getChildren = async (): Promise<AuthUser[]> => {
-  const response = await apiRequest<ApiResponse<AuthUser[]>>(`/me/children`);
-  return response.data || [];
+const getChildren = async (): Promise<Child[]> => {
+  try {
+    const response = await apiRequest<ApiResponse<Child[]>>(`/users/me/children`);
+
+    if (response.success && response.data) {
+      return response.data;
+    }
+
+    throw new Error(response.message || '利用児情報の取得に失敗しました');
+  } catch (error: any) {
+    throw new Error(error?.message || '利用児情報の取得に失敗しました');
+  }
 };
 
 export const userService = {
@@ -118,5 +136,5 @@ export const userService = {
   getCurrentUser,
   register,
   update,
-  getChildren,
+  getChildren
 };

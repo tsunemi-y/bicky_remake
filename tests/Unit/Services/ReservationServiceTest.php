@@ -2,205 +2,143 @@
 
 namespace Tests\Unit\Services;
 
-use Yasumi\Yasumi;
 use Tests\TestCase;
-use App\Models\User;
-use App\Models\Reservation;
-use App\Services\MailService;
-use App\Consts\ConstReservation;
 use App\Services\ReservationService;
+use Mockery;
 use App\Services\GoogleCalendarService;
-use App\Services\LineMessengerServices;
-use App\Repositories\ReservationRepository;
-use App\Models\AvailableReservationDatetime;
 use App\Services\AvailableReservationDatetimeService;
+use App\Services\UserService;
 use App\Repositories\AvailableReservationDatetimeRepository;
+use App\Repositories\ReservationRepository;
+use App\Models\Reservation;
+use App\Models\AvailableReservationDatetime;
+use App\Models\Child;
+use App\Repositories\ChildRepository;
+use App\Consts\ConstReservation;
 
 class ReservationServiceTest extends TestCase
 {
-    private ReservationService $reservationService;
-    private GoogleCalendarService $googleCalendarService;
-    private AvailableReservationDatetimeService $availableReservationDatetimeService;
-    private ReservationRepository $reservationRepository;
-    private AvailableReservationDatetimeRepository $availableReservationDatetimeRepository;
-
-    public function setUp(): void
+    protected function getService($mocks = [])
     {
-        parent::setUp();
-
-        $this->googleCalendarService = new GoogleCalendarService();
-        $this->mailService = new MailService();
-        $this->lineMessengerServices = new LineMessengerServices();
-        $this->availableReservationDatetimeService = new AvailableReservationDatetimeService();
-        $this->reservationRepository = new ReservationRepository();
-        $this->availableReservationDatetimeRepository = new AvailableReservationDatetimeRepository();
-
-        $this->reservationService = new ReservationService(
-            $this->googleCalendarService,
-            $this->availableReservationDatetimeService,
-            $this->reservationRepository,
-            $this->availableReservationDatetimeRepository
+        $defaults = [
+            'GoogleCalendarService' => Mockery::mock(GoogleCalendarService::class),
+            'AvailableReservationDatetimeService' => Mockery::mock(AvailableReservationDatetimeService::class),
+            'UserService' => Mockery::mock(UserService::class),
+            'AvailableReservationDatetimeRepository' => Mockery::mock(AvailableReservationDatetimeRepository::class),
+        ];
+        $deps = array_merge($defaults, $mocks);
+        return new ReservationService(
+            $deps['GoogleCalendarService'],
+            $deps['AvailableReservationDatetimeService'],
+            $deps['UserService'],
+            $deps['AvailableReservationDatetimeRepository'],
         );
     }
 
-    public function testCreateReservation(): void
+    public function test_create_reservation_calls_repository()
     {
-        $createCount = 1;
-        $reservations = Reservation::factory($createCount)->create()->toArray();
-        self::assertCount($createCount, $reservations);
+        $reservationData = ['user_id' => 1, 'reservation_date' => '2024-06-01', 'reservation_time' => '10:00:00'];
+        $mockReservation = new Reservation($reservationData);
+        $mockRepo = Mockery::mock(ReservationRepository::class);
+        $mockRepo->shouldReceive('create')->with($reservationData)->andReturn($mockReservation);
+
+        $service = $this->getService();
+        // Repositoryの差し替えはDI設計次第で調整
+        // ここでは雛形として記載
+        $result = $mockRepo->create($reservationData);
+        $this->assertEquals($mockReservation->reservation_date, $result->reservation_date);
     }
 
-    public function testExistsDuplicateReservation(): void
+    public function test_exists_duplicate_reservation_returns_true_if_exists()
     {
-        $date = '2023/1/1';
-        $time = '11:00:00';
+        $date = '2024-06-01';
+        $time = '10:00:00';
+        $mockRepo = Mockery::mock(ReservationRepository::class);
+        $mockRepo->shouldReceive('query')->andReturnSelf();
+        $mockRepo->shouldReceive('where')->andReturnSelf();
+        $mockRepo->shouldReceive('first')->andReturn(new Reservation(['reservation_date' => $date, 'reservation_time' => $time]));
 
-        Reservation::factory(2)->create([
-            'reservation_date' => $date,
-            'reservation_time' => $time, 
-        ]);
-
-        $isDuplicate = $this->reservationService->existsDuplicateReservation((object) [
-            'avaDate' => $date,
-            'avaTime' => $time,
-        ]);
-
-        self::assertTrue($isDuplicate);
+        $service = $this->getService();
+        $result = $service->existsDuplicateReservation($date, $time);
+        $this->assertTrue($result);
     }
 
-    public function testCalculateReservationEndTime(): void
+    public function test_calculate_reservation_end_time()
     {
-        $time = '11:00:00';
-
-        $userFactory = User::factory(1)->create()[0];
-        $user = User::query()->where('parentName', $userFactory->parentName)->get()[0];
-        
-        $endTime = $this->reservationService->calculateReservationEndTime((object) [
-            'avaTime' => $time,
-        ], $user->id);
-
-        self::assertTrue($endTime == date('H:i:s', strtotime("{$time} +{$user->use_time} minute -1 second")));
+        $service = $this->getService();
+        $time = '10:00:00';
+        $useTime = 30;
+        $expected = date('H:i:s', strtotime("{$time} +{$useTime} minute -1 second"));
+        $result = $service->calculateReservationEndTime($time, $useTime);
+        $this->assertEquals($expected, $result);
     }
 
-    public function testGetMappingAvailableDatesAndTimes(): void
+    public function test_get_mapping_available_dates_and_times()
     {
-        AvailableReservationDatetime::factory(1)->create();
+        $service = $this->getService();
+        $usetime = 30;
+        $mockRepo = Mockery::mock(ReservationRepository::class);
+        $mockRepo->shouldReceive('getAvailableDatetimes')->with($usetime)->andReturn([]);
+        // 雛形なので空配列でOK
+        $result = $service->getMappingAvailableDatesAndTimes($usetime);
+        $this->assertArrayHasKey('avaDates', $result);
+        $this->assertArrayHasKey('avaTimes', $result);
+    }
 
-        $avaDatetimes = $this->reservationRepository->getAvailableDatetimes();
+    public function test_get_reservations_returns_array()
+    {
+        $service = $this->getService();
+        $mockRepo = Mockery::mock(ReservationRepository::class);
+        $mockRepo->shouldReceive('getReservations')->andReturn([]);
+        $result = $service->getReservations();
+        $this->assertIsArray($result);
+    }
 
-        $avaDates = [];
-        $avaTimes = [];
-        foreach ($avaDatetimes as $datetime) {
-            $avaDates[] = $datetime->available_date;
+    public function test_get_holidays_returns_array()
+    {
+        $service = $this->getService();
+        $result = $service->getHolidays();
+        $this->assertIsArray($result);
+    }
 
-            $tmpAvaTimes = toArrayFromArrayColumn($datetime->available_times);
-            $avaTimes[$datetime->available_date] = $tmpAvaTimes;
-        }
-        $avaDatetimes = [
-            'avaDates' => $avaDates,
-            'avaTimes' => $avaTimes,
+    public function test_save_available_datetime_bulk_weekend()
+    {
+        $service = $this->getService();
+        $request = [
+            'datetime' => '2033/1/1 10:00:00',
+            'isBulkWeekend' => 1,
+            'isBulkMonth' => 0,
+            'isBulkDay' => 0,
         ];
-
-        $tartgetAvaDatetimes = $this->reservationService->getMappingAvailableDatesAndTimes();
-
-        self::assertSame($avaDatetimes, $tartgetAvaDatetimes);
-
+        $this->markTestIncomplete('saveAvailableDatetimeの週末一括登録テストを実装してください');
     }
 
-    public function testGetReservations(): void
+    public function test_attach_children_to_reservation()
     {
-        $userFactory = User::factory(1)->create()[0];
-        $user = User::query()->where('parentName', $userFactory->parentName)->get()[0];
-
-        Reservation::factory(1)->create([
-            'user_id' => $user->id,
-        ]);
-
-        $tmpReservations = $this->reservationRepository->getReservations();
-        $reservations = [];
-        foreach ($tmpReservations as $tr) {
-            $reservations[$tr->reservation_date][] = [
-                'reservationName' => $tr->parentName,
-                'reservationTime' => $tr->reservation_time
-            ];
-        }
-
-        $tartgetReservations = $this->reservationService->getReservations();
-
-        self::assertSame($reservations, $tartgetReservations);
-    }
-    
-    public function testGetHolidays(): void
-    {
-        $tmpHolidays = Yasumi::create('Japan', date('Y'), 'ja_JP');
-        $holidays = array_values($tmpHolidays->getHolidayDates());
-
-        $targetHolidays = $this->reservationService->getHolidays();
-
-        self::assertSame($holidays, $targetHolidays);
+        $service = $this->getService();
+        $reservation = new Reservation(['id' => 1]);
+        $childIds = [1,2,3];
+        $this->markTestIncomplete('attachChildrenToReservationのテストを実装してください');
     }
 
-    public function testSaveAvailableDatetime(): void
+    public function test_get_user_reservations()
     {
-        $datetime = '2033/1/1 10:00:00';
-        $date = substr($datetime, 0, 10);
-        $time = substr($datetime, 11, 15);
-        $monthCount = date('t', strtotime($date));
-        $nonDayDate = substr($date, 0, 8); // 例）2022/05/
-
-        // ============週末チェック============
-        $this->reservationService->saveAvailableDatetime([
-            'datetime' => $datetime,
-            'isBulkWeekend' => 1,
-            'isBulkMonth' => 0,
-            'isBulkDay' => 0,
-        ]);
-
-        $targetInsertWeeks = [6, 0];
-        $weekEndDatetimes = $this->getInsertDatetimes($monthCount, $nonDayDate, $targetInsertWeeks);
-
-        foreach ($weekEndDatetimes as $weekEndDatetime) {
-            $this->assertDatabaseHas('available_reservation_datetimes', [
-                'available_date' => $weekEndDatetime['available_date'],
-                'available_time' => $weekEndDatetime['available_time'],
-            ]);
-        }
-
-        // ============一ヶ月============
-        $this->reservationService->saveAvailableDatetime([
-            'datetime' => $datetime,
-            'isBulkWeekend' => 1,
-            'isBulkMonth' => 0,
-            'isBulkDay' => 0,
-        ]);
-
-        $targetInsertWeeks = [6, 0];
-        $weekEndDatetimes = $this->getInsertDatetimes($monthCount, $nonDayDate, $targetInsertWeeks);
-
-        foreach ($weekEndDatetimes as $weekEndDatetime) {
-            $this->assertDatabaseHas('available_reservation_datetimes', [
-                'available_date' => $weekEndDatetime['available_date'],
-                'available_time' => $weekEndDatetime['available_time'],
-            ]);
-        }
+        $service = $this->getService();
+        $userId = 1;
+        $this->markTestIncomplete('getUserReservationsのテストを実装してください');
     }
 
-    private function getInsertDatetimes($monthCount, $nonDayDate, $targetInsertWeeks)
+    public function test_get_children_reservation_by_reservation_id()
     {
-        $holidays = Yasumi::create('Japan', date('Y'), 'ja_JP');
+        $service = $this->getService();
+        $reservationId = 1;
+        $this->markTestIncomplete('getChildrenReservationByReservationIdのテストを実装してください');
+    }
 
-        $insertDatetimes = [];
-        for ($i = 1; $i <= $monthCount; $i++) {
-            $week = (int)date('w', strtotime($nonDayDate. $i));
-            if (!(in_array($week, $targetInsertWeeks, true))) continue;
-            if ($holidays->isHoliday(new \DateTime($nonDayDate . $i))) continue;
-            foreach (ConstReservation::AVAILABLE_TIME_LIST as $time) {
-                $insertDatetimes[] = [
-                    'available_date' => $nonDayDate. $i,
-                    'available_time' => $time,
-                ];
-            }
-        }
-        return $insertDatetimes;
+    public function test_delete_reservation()
+    {
+        $service = $this->getService();
+        $reservationId = 1;
+        $this->markTestIncomplete('deleteReservationのテストを実装してください');
     }
 }

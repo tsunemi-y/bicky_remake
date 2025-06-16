@@ -19,6 +19,7 @@ abstract class Repository
      *
      * @param string $modelClass  The model class or binding to resolve.
      */
+    // $modelClass には User::class や Child::class など、Eloquentモデルのクラス名（例: 'App\Models\User'）が渡ってくる想定です
     public function __construct(string $modelClass)
     {
         $this->model = app($modelClass);
@@ -67,14 +68,13 @@ abstract class Repository
         return $this->model->firstWhere(...$params);
     }
 
-    /**
-     * Create a new record in the database.
-     *
-     * @param  array  $attributes
-     * @return Model
-     */
-    public function create(array $attributes): Model
+    public function create(array $data): Model
     {
-        return $this->model->create($attributes);
+        return $this->model->create($data);
+    }
+
+    public function delete(int $id): bool
+    {
+        return $this->model->where('id', $id)->delete();
     }
 }

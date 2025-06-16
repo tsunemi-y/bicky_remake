@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\Child;
 use App\Consts\ConstUser;
+use Illuminate\Support\Collection;
 
 use App\Services\MailService;
 use App\Services\LineMessengerServices;
@@ -23,10 +24,7 @@ class UserService
         private LineMessengerServices $lineMessengerServices,
         private AvailableReservationDatetimeService $availableReservationDatetimeService,
 
-        private ReservationRepository $reservationRepository,
         private AvailableReservationDatetimeRepository $availableReservationDatetimeRepository,
-        private UserRepository $userRepository,
-        private ChildRepository $childRepository
     ) {
     }
 
@@ -39,15 +37,15 @@ class UserService
         }
     }
 
-    public function createUser($userParams)
+    public function createUser(array $userParams): User
     {
-        $repository = new Repository(User::class);
+        $repository = new UserRepository(User::class);
         return $repository->create($userParams);
     }
 
     public function getLoginUser(): User | null
     { 
-        return auth('api')->user();
+        return \Auth::guard('api')->user() ?? null;
     }
 
     /**
@@ -64,19 +62,21 @@ class UserService
         return sprintf('%d歳%dヶ月', $diff->y, $diff->m);
     }
 
-    public function getChildren($userId)
+    public function getChildrenByUserId($userId): Collection
     {
-        return $this->ChildRepository->getChildren($userId);
+        $repository = new ChildRepository(Child::class);
+        return $repository->getChildrenByUserId($userId);
     }
 
     public function createChild($childParams)
     {
-        $repository = new Repository(Child::class);
+        $repository = new ChildRepository(Child::class);
         return $repository->create($childParams);
     }
 
     public function getChildrenByChildIds(array $childIds): Collection
     {
-        return $this->ChildRepository->getChildrenByChildIds($childIds);
+        $repository = new ChildRepository(Child::class);
+        return $repository->getSelectedChildren($childIds);
     }
 }

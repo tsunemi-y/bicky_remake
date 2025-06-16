@@ -6,8 +6,9 @@ use App\Models\Reservation;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use App\Models\AvailableReservationDatetime;
+use App\Repositories\Repository;
 
-class ReservationRepository
+class ReservationRepository extends Repository
 {
     public function getAvailableDatetimes($useTime)
     {
@@ -74,10 +75,8 @@ class ReservationRepository
         $reservation->children()->attach($childIds);
     }
 
-    public function getChildrenByReservationId(int $reservationId): Collection
+    public function getUserReservations($userId)
     {
-        return Reservation::with('children')
-            ->findOrFail($reservationId)
-            ->children;
+        return Reservation::where('user_id', $userId)->get();
     }
 }

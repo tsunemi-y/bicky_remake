@@ -71,14 +71,14 @@ Route::get('/{any?}', function () {
 
 // ===============管理画面画面　ここから============
 
-Route::prefix('admin')->name('admin.')->group(function () {
+// Route::prefix('admin')->name('admin.')->group(function () {
 
-    //　ログイン画面
-    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [LoginController::class, 'login'])->name('login');
+//     //　ログイン画面
+//     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+//     Route::post('/login', [LoginController::class, 'login'])->name('login');
 
-    // react画面
-    Route::get('/{any}', function () {
-        return view('admin.top');
-    })->where('any', '^(?!login).+$')->name('top')->middleware('auth:admin');
-});
+//     // react画面
+//     Route::get('/{any}', function () {
+//         return view('admin.top');
+//     })->where('any', '^(?!login).+$')->name('top')->middleware('auth:admin');
+// });

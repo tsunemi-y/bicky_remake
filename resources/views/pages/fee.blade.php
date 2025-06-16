@@ -26,21 +26,52 @@
             
             {{-- 料金・プラン --}}
             <section class="mb-4">
-                <h2>料金・プラン</h2>
+                <h2>中学生未満</h2>
                 <section class="mb-4">
-                    <table border="1" class="text-center mb-2" width="100%">
+                    <p>
+                        中学生未満の場合は、通常利用と兄弟同時利用の2種類があります。<br>
+                        通常利用は、60分利用と同じ料金です。<br>
+                        兄弟同時利用は、90分利用と同じ料金です。
+                    </p>
+                    <table border="1" class="text-center mb-2 mt-2" width="100%">
                         <thead>
                             <tr class="table-header">
-                                <th class="bg-white"></th>
-                                <th class="font-weight-bold">通常利用</th>
-                                <th class="font-weight-bold">兄弟同時利用</th>
+                                <th class="bg-white" width="20%"></th>
+                                <th class="font-weight-bold" width="40%">通常利用（60分）</th>
+                                <th class="font-weight-bold">兄弟同時利用（90分）</th>
                             </tr>
                         </thead>
                         <tbody>    
                             <tr class="table-height">
                                 <th style="background-color: #fdffe5;">料金</th>
                                 <th>8,800円</th>
-                                <th>13,200円（6,600円/人）</th>
+                                <th>13,200円</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="mb-4">
+                <h2>中学生</h2>
+                <section class="mb-4">
+                    <p>
+                        中学生の場合は、60分利用と90分利用の2種類があります。<br>
+                        60分利用は、通常利用と同じ料金です。<br>
+                        90分利用は、兄弟同時利用と同じ料金です。
+                    </p>
+                    <table border="1" class="text-center mb-2 mt-2" width="100%">
+                        <thead>
+                            <tr class="table-header">
+                                <th class="bg-white" width="20%"></th>
+                                <th class="font-weight-bold" width="40%">60分利用</th>
+                                <th class="font-weight-bold">90分利用</th>
+                            </tr>
+                        </thead>
+                        <tbody>    
+                            <tr class="table-height">
+                                <th style="background-color: #fdffe5;">料金</th>
+                                <th>8,800円</th>
+                                <th>13,200円</th>
                             </tr>
                         </tbody>
                     </table>
@@ -50,7 +81,6 @@
                         現金のみ受け付けております。
                         来所時にお支払いをよろしくお願い致します。
                     </p>
-
                 </section>
 
             </section>

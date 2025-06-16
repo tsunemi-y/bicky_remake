@@ -2,11 +2,15 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Collection;
+
 use App\Models\Child;
 
-class ChildRepository
+use App\Repositories\Repository;
+
+class ChildRepository extends Repository
 {
-    public function getChildren(int $userId): Collection
+    public function getChildrenByUserId(int $userId): Collection
     {
         return Child::where('user_id', $userId)->get();
     }
@@ -15,12 +19,19 @@ class ChildRepository
     {
         return Child::create([
             'user_id' => $userId,
-            'name' => $request->name,
+            'name' => $name,
         ]);
     }
 
     public function getSelectedChildren(array $childIds): Collection
     {
-        return Child::whereIn('child_id', $childIds)->get();
+        return Child::whereIn('id', $childIds)->get();
+    }
+
+    public function getChildrenByReservationId($reservationId): Collection
+    {
+        return \DB::table('child_reservation')
+            ->where('reservation_id', $reservationId)
+            ->get();
     }
 }

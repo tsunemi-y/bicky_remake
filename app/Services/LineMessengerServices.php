@@ -4,7 +4,6 @@ namespace App\Services;
 
 use LINE\LINEBot;
 use App\Models\Reservation;
-use App\Services\UserService;
 use App\Repositories\ReservationRepository;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
@@ -13,10 +12,7 @@ class LineMessengerServices
 {
     private $userId;
 
-    public function __construct(
-        private ReservationRepository $reservationRepository,
-        private UserService $userService
-    )
+    public function __construct()
     {
         $this->userId = config('services.line.admin_id');
     }
@@ -61,40 +57,25 @@ class LineMessengerServices
     }
 
     // 予約があった場合にメッセージ送信
-    public function sendReservationMessage($reservationDate, $reservationTime, $selectedChildren, $usageFee)
+    public function sendReservationMessage($date, $time, $children)
     {
         $message = 'ご予約を受け付けました。' . "\n" . "\n";
-
-        $serialNumber = 1;
-        foreach ($selectedChildren as $child) {
-            $serialNumber++;
-
-            $ageAndMonths = $this->userService->calculateAgeAndMonths($child->birth_date);
-
-            $message .= "利用児氏名{$serialNumber}：　{$child->name}({$ageAndMonths})" . "\n";
+        foreach ($children as $child) {
+            $message .= "利用児氏名：　{$child->name}" . "\n";
         }
-
-        $message .= "予約日時：　{$reservationDate}" . "\n";
-        $message .= "予約時間：　{$reservationTime}" . "\n";
-        $message .= "利用料：　{$usageFee}";
+        $message .= "予約日時：　{$date}" . "\n";
+        $message .= "予約時間：　{$time}";
 
         $this->sendMessage($message);
     }
 
     // 予約キャンセルがあった場合にメッセージ送信
-    public function sendCancelReservationMessage($reservationDate, $reservationTime, $selectedChildren)
+    public function sendCancelReservationMessage($reservationDate, $reservationTime, $children)
     {
         $message = 'ご予約がキャンセルされました。' . "\n" . "\n";
-        
-        $serialNumber = 1;
-        foreach ($selectedChildren as $child) {
-            $serialNumber++;
-
-            $ageAndMonths = $this->userService->calculateAgeAndMonths($child->birth_date);
-
-            $message .= "利用児氏名{$serialNumber}：　{$child->name}({$ageAndMonths})" . "\n";
+        foreach ($children as $child) {
+            $message .= "利用児氏名：　{$child->name}" . "\n";
         }
-        
         $message .= "予約日時：　{$reservationDate}" . "\n";
         $message .= "予約時間：　{$reservationTime}";
 
@@ -130,7 +111,8 @@ class LineMessengerServices
     // 月の利用料集計
     public function sendMonthlyFeeMessage()
     {
-        $monthlityFeeCount = $this->reservationRepository->getMonthlyFee();
+        $reservationRepository = new ReservationRepository(Reservation::class);
+        $monthlityFeeCount = $reservationRepository->getMonthlyFee();
         $fee = number_format($monthlityFeeCount);
 
         $message = "今月の売り上げは、{$fee}円です。";

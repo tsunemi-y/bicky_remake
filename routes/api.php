@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\ReservationController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\ReservationController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\Api\ReservationController as ApiReservationController;
 
 /*
@@ -16,37 +17,39 @@ use App\Http\Controllers\Api\ReservationController as ApiReservationController;
 |
 */
 
-// 認証不要のルート
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [RegisterController::class, 'register']);
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::post('/users/login', [UserController::class, 'login'])->name('users.login');
 
 // 認証が必要なルート
-Route::middleware('auth:sanctum')->group(function () {
-    // ユーザー情報
-    Route::get('/user', [AuthController::class, 'user']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+Route::middleware('auth:api')->group(function () {
+
+// 予約関連
+// CSRFトークン検証をスキップするためにミドルウェアを指定
+
+    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+    Route::get('/users/me/children', [UserController::class, 'getChildren'])->name('users.getChildren');
+    Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+    Route::get('/reservations/user', [ReservationController::class, 'getUserReservations'])->name('reservations.getUserReservations');
+    // Route::get('/reservations/{id}', [ReservationController::class, 'show']);
+    Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
     
-    // 予約関連
-    Route::get('/reservations', [ReservationController::class, 'index']);
-    Route::get('/reservations/{id}', [ReservationController::class, 'show']);
-    Route::post('/reservations', [ReservationController::class, 'store']);
-    Route::put('/reservations/{id}/cancel', [ReservationController::class, 'cancel']);
+    Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
     
-    // 空き状況確認
-    Route::post('/availability', [ReservationController::class, 'checkAvailability']);
+//     // 空き状況確認
+//     Route::post('/availability', [ReservationController::class, 'checkAvailability']);
 });
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/reservation', [ReservationController::class, 'index'])->name('getReservation');
-    Route::post('/saveReservation', [ReservationController::class, 'store'])->name('saveReservation');
-    Route::post('/deleteReservation', [ReservationController::class, 'destroy'])->name('deleteDatetime');
+// Route::prefix('admin')->name('admin.')->group(function () {
+//     Route::get('/reservation', [ReservationController::class, 'index'])->name('getReservation');
+//     Route::post('/saveReservation', [ReservationController::class, 'store'])->name('saveReservation');
+//     Route::post('/deleteReservation', [ReservationController::class, 'destroy'])->name('deleteDatetime');
 
-    Route::get('/users', [UserController::class, 'index'])->name('users');
-    Route::put('/updateFee/{user}', [UserController::class, 'updateFee'])->name('updateFee');
-    Route::post('/sendEvaluation', [UserController::class, 'sendEvaluation'])->name('sendEvaluation');
-    Route::post('/sendReceipt', [UserController::class, 'sendReceipt'])->name('sendReceipt');
-});
+//     Route::get('/users', [UserController::class, 'index'])->name('users');
+//     Route::put('/updateFee/{user}', [UserController::class, 'updateFee'])->name('updateFee');
+//     Route::post('/sendEvaluation', [UserController::class, 'sendEvaluation'])->name('sendEvaluation');
+//     Route::post('/sendReceipt', [UserController::class, 'sendReceipt'])->name('sendReceipt');
+// });
 
-Route::middleware('api.key')->group(function () {
-    Route::post('/reservation', [ApiReservationController::class, 'getTodayReservations'])->name('getTodayReservations');
-});
+// Route::middleware('api.key')->group(function () {
+//     Route::post('/reservation', [ApiReservationController::class, 'getTodayReservations'])->name('getTodayReservations');
+// });

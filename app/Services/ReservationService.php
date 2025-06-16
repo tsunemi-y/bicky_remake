@@ -3,18 +3,16 @@
 namespace App\Services;
 
 use \Yasumi\Yasumi;
-
-use App\Consts\ConstReservation;
-
 use App\Models\User;
 use App\Models\Reservation;
-use App\Models\AvailableReservationDatetime;
-
 use App\Services\UserService;
-
-use App\Repositories\Repository;
+use App\Consts\ConstReservation;
 use App\Repositories\ReservationRepository;
+use App\Models\AvailableReservationDatetime;
+use App\Models\ChildReservation;
+use App\Models\Child;
 use App\Repositories\AvailableReservationDatetimeRepository;
+use App\Repositories\ChildRepository;
 
 class ReservationService
 {
@@ -22,122 +20,37 @@ class ReservationService
         private GoogleCalendarService $googleCalendarService, 
         private AvailableReservationDatetimeService $availableReservationDatetimeService,
         private UserService $userService,
-
-        private ReservationRepository $reservationRepository,
         private AvailableReservationDatetimeRepository $availableReservationDatetimeRepository
     ) {
     }
 
-    /**
-     * 必要データ
-     * 利用可能日 - 予約日した日付と時間
-     * 
-     * ■注意事項
-     */
-    public function createCalender($request)
+    public function createReservation($reservationData)
     {
-        $user = $this->userService->getLoginUser();
+        $repository = new ReservationRepository(Reservation::class);
+        $reservation = $repository->create($reservationData);
 
-        $avaDatetimes = $this->getMappingAvailableDatesAndTimes($user->use_time);
-        $avaDates = $avaDatetimes['avaDates'];
-        $avaTimes = $avaDatetimes['avaTimes'];
-
-        // カレンダーに必要な情報取得
-        if (!empty($request->ym)) {
-            $targetYearMonth = $request->ym;
-        } else {
-            $targetYearMonth = date('Y-m');
-        }
-
-        // カレンダーに必要な情報取得
-        $timestamp = strtotime($targetYearMonth . '-01');
-        $today = date('Y-m-j');
-        $calenderTitle = date('Y年n月', $timestamp);
-        $dayCount = date('t', $timestamp);
-        $week = date('w', $timestamp);
-        $saturdayNum = 6;
-        $sundayNum = 0;
-        $dayAfterTomorrow = date('Y-m-d', strtotime('+2 day'));
-        $prevMonth = date('Y-m', strtotime('-1 month', $timestamp));
-        $nextMonth = date('Y-m', strtotime('+1 month', $timestamp));
-
-        // 祝日取得
-        $holidays = Yasumi::create('Japan', date('Y'), 'ja_JP');
-
-        // カレンダーの中身を格納する変数
-        $calenders = [];
-        $calender = '';
-
-        // 初日と曜日の位置調整
-        $calender .= str_repeat('<td></td>', $week);
-
-        for ($day = 1; $day <= $dayCount; $day++, $week++) {
-            /*============================
-                    日付処理　ここから
-            ============================*/
-            $day = str_pad($day, 2, '0', STR_PAD_LEFT); //　一桁の日の場合、０詰め
-            $displayedDate = $targetYearMonth . '-' . $day;
-
-            $isAvailableDate = false;
-            if (in_array($displayedDate, $avaDates, true)) $isAvailableDate = true;
-
-            // 条件に応じてクラス付与
-            $calender .= '<td ';
-            if ($today == $displayedDate) $calender .= 'class="today" ';
-            if ($holidays->isHoliday(new \DateTime($displayedDate)) || $week == 0) $calender .= 'class="holiday" ';
-            if ($week == $saturdayNum) $calender .= 'class="saturday" ';
-            $calender .= '>' . $day;
-            if (strtotime($displayedDate) <= strtotime($dayAfterTomorrow)) {
-                $calender .= "<p class='hyphen'>-</p>";
-            } else if ($isAvailableDate && !$holidays->isHoliday(new \DateTime($displayedDate))) {
-                $calender .= "<p class='circle day-ok' data-date='$displayedDate'>○</p>";
-            } else {
-                $calender .= "<p class='cross'>×</p>";
-            }
-
-            $calender .= '</td>';
-            //月の最終日の後に空セルを追加
-            if ($day == $dayCount) $calender .= str_repeat('<td></td>', $saturdayNum - $week);
-
-            //週・月終わりの場合、改行
-            if ($week == $saturdayNum || $day == $dayCount) {
-                $calenders[] = '<tr>' . $calender . '</tr>';
-                $calender = '';
-            }
-            /*============================
-                    日付処理　ここまで
-            ============================*/
-
-            if ($week == $saturdayNum) $week = -1; // 土曜日の次は改行
-        }
-        return compact('calenders', 'calenderTitle', 'prevMonth', 'nextMonth', 'avaTimes');
+        return $reservation;
     }
 
-    public function createReservation($params)
-    {
-        return Reservation::create($reservationParams);
-    }
-
-    public function existsDuplicateReservation($request)
+    public function existsDuplicateReservation($date, $time)
     {
         $reservedDateTime = Reservation::query()
-            ->where('reservation_date', $request->avaDate)
-            ->where('reservation_time', $request->avaTime)
+            ->where('reservation_date', $date)
+            ->where('reservation_time', $time)
             ->first();
 
         return !empty($reservedDateTime);
     }
 
-    public function calculateReservationEndTime($request, $userId)
+    public function calculateReservationEndTime($time, $useTime)
     {
-        $useTime = User::find($userId)->use_time;
-
-        return date('H:i:s', strtotime("{$request->avaTime} +{$useTime} minute -1 second"));
+        return date('H:i:s', strtotime("{$time} +{$useTime} minute -1 second"));
     }
 
     public function getMappingAvailableDatesAndTimes($usetime)
     {
-        $avaDatetimes = $this->reservationRepository->getAvailableDatetimes($usetime);
+        $reservationRepository = new ReservationRepository(Reservation::class);
+        $avaDatetimes = $reservationRepository->getAvailableDatetimes($usetime);
 
         $avaDates = [];
         $avaTimes = [];
@@ -153,7 +66,8 @@ class ReservationService
 
     public function getReservations()
     {
-        $tmpReservations = $this->reservationRepository->getReservations();
+        $reservationRepository = new ReservationRepository(Reservation::class);
+        $tmpReservations = $reservationRepository->getReservations();
 
         $reservations = [];
         foreach ($tmpReservations as $tr) {
@@ -198,6 +112,27 @@ class ReservationService
         }
     }
 
+    public function attachChildrenToReservation($reservation, $childIds)
+    {
+        $reservationRepository = new ReservationRepository(Reservation::class);
+        $reservationRepository->attachChildrenToReservation($reservation, $childIds);
+    }
+
+    public function getUserReservations($userId)
+    {
+        $reservationRepository = new ReservationRepository(Reservation::class);
+        $reservations = $reservationRepository->getUserReservations($userId);
+        return $reservations;
+    }
+
+    public function getChildrenReservationByReservationId($reservationId)
+    {        
+        $childRepository = new ChildRepository(Child::class);
+        $children = $childRepository->getChildrenByReservationId($reservationId);
+        return $children;
+    }
+
+
     private function bulkInsert($monthCount, $nonDayDate, $targetInsertWeeks)
     {
         $holidays = Yasumi::create('Japan', date('Y'), 'ja_JP');
@@ -218,40 +153,9 @@ class ReservationService
         $this->availableReservationDatetimeRepository->bulkInsert($insertDatetimes);
     }
 
-    public function attachChildrenToReservation($reservation, $childIds)
+    public function deleteReservation(int $reservationId): bool
     {
-        $this->reservationRepository->attachChildrenToReservation($reservation, $childIds);
-    }
-
-    public function calculateUsageFee(array $childIds, int $courseId):int
-    {
-        // TODO: コースIDに応じた料金を取得する
-        
-        $childCount = count($childIds);
-
-        if ($childCount === 1) {
-            return ConstReservation::RESERVATION_FEE_ONE_CHILD;
-        } 
-
-        if ($childCount === 2) {
-            return ConstReservation::RESERVATION_FEE_TWO_CHILD;
-        }
-
-        if ($childCount === 3) {
-            return ConstReservation::RESERVATION_FEE_THREE_CHILD;
-        }
-
-        return ConstReservation::RESERVATION_NO_FEE;
-    }
-
-    public function getChildrenByReservationId(int $reservationId):Collection
-    {
-        return $this->reservationRepository->getChildrenByReservationId($reservationId);
-    }
-
-    public function createReservation(array $params):Reservation
-    {
-        $repository = new Repository(Reservation::class);
-        return $repository->create($params);
+        $reservationRepository = new ReservationRepository(Reservation::class);
+        return $reservationRepository->delete($reservationId);
     }
 }

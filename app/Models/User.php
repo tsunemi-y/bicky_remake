@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use App\Models\Reservation;
-use App\Models\Child;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
@@ -24,16 +24,16 @@ class User extends Authenticatable
         'email',
         'tel',
         'password',
-        // 'childName',
-        // 'child_name_kana',
-        // 'age',
-        // 'gender',
-        // 'diagnosis',
-        // 'childName2',
-        // 'child_name2_kana',
-        // 'age2',
-        // 'gender2',
-        // 'diagnosis2',
+        'childName',
+        'child_name_kana',
+        'age',
+        'gender',
+        'diagnosis',
+        'childName2',
+        'child_name2_kana',
+        'age2',
+        'gender2',
+        'diagnosis2',
         'address',
         'introduction',
         'coursePlan',
@@ -75,16 +75,6 @@ class User extends Authenticatable
     }
 
     /**
-     * 子どもテーブルとのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function children()
-    {
-        return $this->hasMany(Child::class);
-    }
-
-    /**
      * 利用児の曖昧検索
      *
      * @param [type] $query
@@ -110,5 +100,21 @@ class User extends Authenticatable
         if ($id != '') {
             return $query->where('id', '=', $id);
         }
+    }
+
+    /**
+     * JWTで必要な識別子を返す
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * JWTに含めるカスタムクレームを返す
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

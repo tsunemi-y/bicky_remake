@@ -31,7 +31,7 @@ class MailService
 
     /**
      * 利用者へのメール
-     * @param $param
+     * @param $params
      */
     public function sendMailToUser($params, $viewFile, $subject, $attachFile = null)
     {
@@ -39,21 +39,29 @@ class MailService
         $mailData = [];
         foreach ($params as $key => $value) {
             $mailData[$key] = $value;
-        };
+        }
+
+        // $params['email']が存在しない、またはnullの場合にエラーになる可能性があります
+        if (empty($params['email'])) {
+            // エラー内容をログに記録するか、例外を投げる
+            \Log::error('メール送信先(email)が指定されていません。', ['params' => $params]);
+            throw new \InvalidArgumentException('メール送信先(email)が指定されていません。');
+        }
 
         Mail::send(
             ['text' => $viewFile],
             $mailData,
             function ($message) use ($params, $subject, $attachFile) {
+                $message->to($params['email'])->subject($subject);
                 if (!empty($attachFile)) {
-                    $message
-                        ->to($params['email'])
-                        ->subject($subject)
-                        ->attach(storage_path($attachFile));
-                } else {
-                    $message
-                        ->to($params['email'])
-                        ->subject($subject);
+                    // ファイルパスが正しいかどうかも要注意
+                    $filePath = storage_path($attachFile);
+                    if (file_exists($filePath)) {
+                        $message->attach($filePath);
+                    } else {
+                        // 添付ファイルが存在しない場合はログに記録
+                        \Log::warning('添付ファイルが存在しません: ' . $filePath);
+                    }
                 }
             }
         );
