@@ -23,6 +23,15 @@ jobs:
         composer update --no-dev --optimize-autoloader
         composer install --no-dev --optimize-autoloader
     
+    - name: Code Quality Check
+      run: |
+        # PHPStan static analysis
+        if [ -f "vendor/bin/phpstan" ]; then
+          vendor/bin/phpstan analyse --error-format=github
+        else
+          echo "PHPStan not installed, skipping static analysis"
+        fi
+    
     - name: Run tests
       run: echo "Tests skipped - CI pipeline check passed"
 
