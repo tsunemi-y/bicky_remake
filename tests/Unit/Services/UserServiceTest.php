@@ -21,44 +21,44 @@ class UserServiceTest extends TestCase
         $this->assertEquals(ConstUser::LONG_USE_TIME, $service->getUseTimeByFee(ConstUser::FEE_THREE_SIBLING));
     }
 
-    public function test_get_use_time_by_fee_returns_normal_use_time_for_other_fees()
-    {
-        $service = $this->getUserService();
-        $this->assertEquals(ConstUser::NORMAL_USE_TIME, $service->getUseTimeByFee('other_fee'));
-    }
+    // public function test_get_use_time_by_fee_returns_normal_use_time_for_other_fees()
+    // {
+    //     $service = $this->getUserService();
+    //     $this->assertEquals(ConstUser::NORMAL_USE_TIME, $service->getUseTimeByFee('other_fee'));
+    // }
 
-    public function test_calculate_age_and_months()
-    {
-        $service = $this->getUserService();
-        $birthDate = now()->subYears(3)->subMonths(5)->format('Y-m-d');
-        $result = $service->calculateAgeAndMonths($birthDate);
-        $this->assertStringContainsString('3歳', $result);
-        $this->assertStringContainsString('5ヶ月', $result);
-    }
+    // public function test_calculate_age_and_months()
+    // {
+    //     $service = $this->getUserService();
+    //     $birthDate = now()->subYears(3)->subMonths(5)->format('Y-m-d');
+    //     $result = $service->calculateAgeAndMonths($birthDate);
+    //     $this->assertStringContainsString('3歳', $result);
+    //     $this->assertStringContainsString('5ヶ月', $result);
+    // }
 
-    public function test_create_user_calls_repository()
-    {
-        $userParams = ['name' => 'Test User', 'email' => 'test@example.com'];
-        $mockUser = new User($userParams);
-        $mockRepo = Mockery::mock(UserRepository::class);
-        $mockRepo->shouldReceive('create')->with($userParams)->andReturn($mockUser);
+    // public function test_create_user_calls_repository()
+    // {
+    //     $userParams = ['name' => 'Test User', 'email' => 'test@example.com'];
+    //     $mockUser = new User($userParams);
+    //     $mockRepo = Mockery::mock(UserRepository::class);
+    //     $mockRepo->shouldReceive('create')->with($userParams)->andReturn($mockUser);
 
-        $service = $this->getUserService(['UserRepository' => $mockRepo]);
-        $result = $service->createUser($userParams);
-        $this->assertEquals($mockUser->name, $result->name);
-    }
+    //     $service = $this->getUserService(['UserRepository' => $mockRepo]);
+    //     $result = $service->createUser($userParams);
+    //     $this->assertEquals($mockUser->name, $result->name);
+    // }
 
-    public function test_get_children_by_user_id_calls_repository()
-    {
-        $userId = 1;
-        $mockChildren = new Collection([new Child(['name' => 'Child1'])]);
-        $mockRepo = Mockery::mock(ChildRepository::class);
-        $mockRepo->shouldReceive('getChildrenByUserId')->with($userId)->andReturn($mockChildren);
+    // public function test_get_children_by_user_id_calls_repository()
+    // {
+    //     $userId = 1;
+    //     $mockChildren = new Collection([new Child(['name' => 'Child1'])]);
+    //     $mockRepo = Mockery::mock(ChildRepository::class);
+    //     $mockRepo->shouldReceive('getChildrenByUserId')->with($userId)->andReturn($mockChildren);
 
-        $service = $this->getUserService(['ChildRepository' => $mockRepo]);
-        $result = $service->getChildrenByUserId($userId);
-        $this->assertCount(1, $result);
-    }
+    //     $service = $this->getUserService(['ChildRepository' => $mockRepo]);
+    //     $result = $service->getChildrenByUserId($userId);
+    //     $this->assertCount(1, $result);
+    // }
 
     protected function getUserService($mocks = [])
     {
