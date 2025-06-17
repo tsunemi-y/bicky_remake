@@ -257,7 +257,7 @@ const UserReservation: React.FC = () => {
     const useTime = calculateUseTime(data.children, data.course);
 
     const confirmMessage = `
-        予約を作成しますか？
+        以下の内容で予約を確定しますか？
 
         利用日時: ${data.date} ${data.time}
         利用児: ${data.children.map(child => childrenOptions.find(c => c.id === child)?.name).join(", ")}
