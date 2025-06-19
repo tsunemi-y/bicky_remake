@@ -44,9 +44,10 @@ class sendMonthlyFeeMessage extends Command
     {
         // 月末じゃなければ終了
         if (!$this->datetimeServices->checkLastDayOfMonth()) {
-            return;
+            return 0;
         }
         
         $this->lineMessengerServices->sendMonthlyFeeMessage();
+        return 0;
     }
 }
