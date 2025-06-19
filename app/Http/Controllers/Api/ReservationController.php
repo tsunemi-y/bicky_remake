@@ -11,7 +11,7 @@ class ReservationController extends Controller
 {
     public function getTodayReservations()
     {
-        $repository = new ReservationRepository();
+        $repository = new ReservationRepository(\App\Models\Reservation::class);
         $reservations = $repository->getTodayReservations();
         return response()->json($reservations);
     }

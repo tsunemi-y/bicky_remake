@@ -179,6 +179,9 @@ class RegisterController extends Controller
             if ($coursePlan === ConstUser::COURSE_WEEKDAY) return ConstUser::FEE_TWO_WEEKDAY;
             if ($coursePlan === ConstUser::COURSE_HOLIDAY) return ConstUser::FEE_TWO_HOLIDAY;
         }
+        
+        // デフォルト値を返す
+        return ConstUser::FEE_ONE_WEEKDAY;
     }
 
     /**
