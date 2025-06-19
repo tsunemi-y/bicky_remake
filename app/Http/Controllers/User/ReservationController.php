@@ -45,7 +45,7 @@ class ReservationController extends Controller
 
     public function store(ReservationFormRequest $request, Reservation $reservation)
     {
-        \DB::beginTransaction();
+        DB::beginTransaction();
         
         try {
             $childIds = $request->children;
@@ -64,7 +64,7 @@ class ReservationController extends Controller
                 ], 422);
             } 
 
-            $userId = \Auth::id();
+            $userId = Auth::id();
 
             $endTime = $this->reservationService->calculateReservationEndTime($time, $useTime);
 
@@ -103,7 +103,7 @@ class ReservationController extends Controller
 
             // $this->googleCalendarService->store($userInfo->parentName, $date. $time, $date. $endTime, $reservedInfo->id);
 
-            \DB::commit();
+            DB::commit();
 
             $response = [
                 'success' => true,
@@ -114,7 +114,7 @@ class ReservationController extends Controller
 
             return response()->json($response);
         } catch (\Exception $e) {
-            \DB::rollBack();
+            DB::rollBack();
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
@@ -130,7 +130,7 @@ class ReservationController extends Controller
 
     public function destroy(Reservation $reservation)
     {
-        \DB::beginTransaction();
+        DB::beginTransaction();
 
         try {
             $this->reservationService->deleteReservation($reservation->id);
@@ -155,7 +155,7 @@ class ReservationController extends Controller
 
             $this->googleCalendarService->delete($reservation->id);
 
-            \DB::commit();
+            DB::commit();
 
             return response()->json([
                 'success' => true,
@@ -164,7 +164,7 @@ class ReservationController extends Controller
                 ]
             ]);
         } catch (\Exception $e) {
-            \DB::rollBack();
+            DB::rollBack();
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),

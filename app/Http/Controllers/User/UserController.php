@@ -113,7 +113,7 @@ class UserController extends Controller
             ], 201);
         } catch (\Exception $e) {
             // エラーメッセージをログに記録
-            \Log::error('UserController@store: ' . $e->getMessage());
+            Log::error('UserController@store: ' . $e->getMessage());
 
             DB::rollBack();
             return response()->json([

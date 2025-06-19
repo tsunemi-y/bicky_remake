@@ -50,7 +50,7 @@ class GoogleCalendarService
                 'event_id' => $eventId,
             ]);
         } catch (\Exception $e) {
-            \Log::info($e);
+            Log::info($e);
         }
     }
 
@@ -66,7 +66,7 @@ class GoogleCalendarService
 
             $googleCalendar->delete($reservationId);
         } catch (\Exception $e) {
-            \Log::info($e);
+            Log::info($e);
         }
     }
 

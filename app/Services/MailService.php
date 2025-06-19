@@ -45,7 +45,7 @@ class MailService
         // $params['email']が存在しない、またはnullの場合にエラーになる可能性があります
         if (empty($params['email'])) {
             // エラー内容をログに記録するか、例外を投げる
-            \Log::error('メール送信先(email)が指定されていません。', ['params' => $params]);
+            Log::error('メール送信先(email)が指定されていません。', ['params' => $params]);
             throw new \InvalidArgumentException('メール送信先(email)が指定されていません。');
         }
 
@@ -61,7 +61,7 @@ class MailService
                         $message->attach($filePath);
                     } else {
                         // 添付ファイルが存在しない場合はログに記録
-                        \Log::warning('添付ファイルが存在しません: ' . $filePath);
+                        Log::warning('添付ファイルが存在しません: ' . $filePath);
                     }
                 }
             }
