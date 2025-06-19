@@ -6,12 +6,11 @@ use App\Models\User;
 use App\Models\Child;
 use App\Consts\ConstUser;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 use App\Services\MailService;
 use App\Services\LineMessengerServices;
 
-use App\Repositories\Repository;
-use App\Repositories\ReservationRepository;
 use App\Repositories\AvailableReservationDatetimeRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\ChildRepository;
@@ -23,8 +22,9 @@ class UserService
         private MailService $mailService, 
         private LineMessengerServices $lineMessengerServices,
         private AvailableReservationDatetimeService $availableReservationDatetimeService,
-
         private AvailableReservationDatetimeRepository $availableReservationDatetimeRepository,
+        private ?UserRepository $userRepository = null,
+        private ?ChildRepository $childRepository = null,
     ) {
     }
 
@@ -39,13 +39,13 @@ class UserService
 
     public function createUser(array $userParams): User
     {
-        $repository = new UserRepository(User::class);
+        $repository = $this->userRepository ?? new UserRepository(User::class);
         return $repository->create($userParams);
     }
 
     public function getLoginUser(): User | null
     { 
-        return \Auth::guard('api')->user() ?? null;
+        return Auth::guard('api')->user();
     }
 
     /**
@@ -64,7 +64,7 @@ class UserService
 
     public function getChildrenByUserId($userId): Collection
     {
-        $repository = new ChildRepository(Child::class);
+        $repository = $this->childRepository ?? new ChildRepository(Child::class);
         return $repository->getChildrenByUserId($userId);
     }
 

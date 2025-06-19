@@ -20,13 +20,15 @@ class ReservationService
         private GoogleCalendarService $googleCalendarService, 
         private AvailableReservationDatetimeService $availableReservationDatetimeService,
         private UserService $userService,
-        private AvailableReservationDatetimeRepository $availableReservationDatetimeRepository
+        private AvailableReservationDatetimeRepository $availableReservationDatetimeRepository,
+        private ?ReservationRepository $reservationRepository = null,
+        private ?ChildRepository $childRepository = null
     ) {
     }
 
     public function createReservation($reservationData)
     {
-        $repository = new ReservationRepository(Reservation::class);
+        $repository = $this->reservationRepository ?? new ReservationRepository(Reservation::class);
         $reservation = $repository->create($reservationData);
 
         return $reservation;
@@ -34,7 +36,8 @@ class ReservationService
 
     public function existsDuplicateReservation($date, $time)
     {
-        $reservedDateTime = Reservation::query()
+        $repository = $this->reservationRepository ?? new ReservationRepository(Reservation::class);
+        $reservedDateTime = $repository->query()
             ->where('reservation_date', $date)
             ->where('reservation_time', $time)
             ->first();
@@ -49,7 +52,7 @@ class ReservationService
 
     public function getMappingAvailableDatesAndTimes($usetime)
     {
-        $reservationRepository = new ReservationRepository(Reservation::class);
+        $reservationRepository = $this->reservationRepository ?? new ReservationRepository(Reservation::class);
         $avaDatetimes = $reservationRepository->getAvailableDatetimes($usetime);
 
         $avaDates = [];
@@ -66,7 +69,7 @@ class ReservationService
 
     public function getReservations()
     {
-        $reservationRepository = new ReservationRepository(Reservation::class);
+        $reservationRepository = $this->reservationRepository ?? new ReservationRepository(Reservation::class);
         $tmpReservations = $reservationRepository->getReservations();
 
         $reservations = [];
@@ -114,20 +117,20 @@ class ReservationService
 
     public function attachChildrenToReservation($reservation, $childIds)
     {
-        $reservationRepository = new ReservationRepository(Reservation::class);
+        $reservationRepository = $this->reservationRepository ?? new ReservationRepository(Reservation::class);
         $reservationRepository->attachChildrenToReservation($reservation, $childIds);
     }
 
     public function getUserReservations($userId)
     {
-        $reservationRepository = new ReservationRepository(Reservation::class);
+        $reservationRepository = $this->reservationRepository ?? new ReservationRepository(Reservation::class);
         $reservations = $reservationRepository->getUserReservations($userId);
         return $reservations;
     }
 
     public function getChildrenReservationByReservationId($reservationId)
     {        
-        $childRepository = new ChildRepository(Child::class);
+        $childRepository = $this->childRepository ?? new ChildRepository(Child::class);
         $children = $childRepository->getChildrenByReservationId($reservationId);
         return $children;
     }
@@ -155,7 +158,7 @@ class ReservationService
 
     public function deleteReservation(int $reservationId): bool
     {
-        $reservationRepository = new ReservationRepository(Reservation::class);
+        $reservationRepository = $this->reservationRepository ?? new ReservationRepository(Reservation::class);
         return $reservationRepository->delete($reservationId);
     }
 }
