@@ -60,11 +60,16 @@ class GoogleCalendarService
             $googleCalendar = new GoogleCaleandar();
             $googleCalendar = $googleCalendar->where('reservation_id', $reservationId)->first();
 
+            if (!$googleCalendar) {
+                \Log::info("GoogleCalendar record not found for reservation ID: {$reservationId}");
+                return;
+            }
+
             $eventId = explode(' ', base64_decode($googleCalendar->event_id))[0];
 
             $this->service->events->delete($this->calendarId, $eventId);
 
-            $googleCalendar->delete($reservationId);
+            $googleCalendar->delete();
         } catch (\Exception $e) {
             Log::info($e);
         }

@@ -101,7 +101,7 @@ class ReservationController extends Controller
             $subject = '予約を受け付けました';
             $this->mailService->sendMailToUser($messageData, $viewFile, $subject);
 
-            // $this->googleCalendarService->store($userInfo->parentName, $date. $time, $date. $endTime, $reservedInfo->id);
+            $this->googleCalendarService->store($userInfo->parentName, $date. $time, $date. $endTime, $reservedInfo->id);
 
             DB::commit();
 
@@ -133,8 +133,6 @@ class ReservationController extends Controller
         DB::beginTransaction();
 
         try {
-            $this->reservationService->deleteReservation($reservation->id);
-
             $messageData = [
                 'reservationDate' => formatDate($reservation->reservation_date),
                 'reservationTime' => formatTime($reservation->reservation_time),
@@ -143,6 +141,8 @@ class ReservationController extends Controller
 
             // 予約IDから利用児データ取得
             $selectedChildren = $this->reservationService->getChildrenReservationByReservationId($reservation->id);
+
+            $this->reservationService->deleteReservation($reservation->id);
 
             // 管理者へ予約キャンセルのLINEメッセージ送信
             $this->lineMessengerServices->sendCancelReservationMessage($messageData['reservationDate'], $messageData['reservationTime'], $selectedChildren);
