@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Reservation;
+use Illuminate\Support\Facades\Auth;
 
 use App\Services\MailService;
 use App\Services\ReservationService;
@@ -45,7 +46,7 @@ class ReservationController extends Controller
                 ->with('failedReservation', '選択された日時はすでにご予約がございます。</br>違う日時でご予約ください。');
         } 
 
-        $userId = \Auth::id();
+        $userId = Auth::id();
 
         $endTime = $this->reservationService->calculateReservationEndTime($time, $useTime);
 

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 
 use App\Models\User;
 use App\Models\Reservation;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use App\Services\MailService;
 use App\Services\ReservationService;

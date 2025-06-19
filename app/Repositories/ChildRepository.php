@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Child;
 
@@ -30,7 +31,7 @@ class ChildRepository extends Repository
 
     public function getChildrenByReservationId($reservationId): Collection
     {
-        return \DB::table('child_reservation')
+        return DB::table('child_reservation')
             ->where('reservation_id', $reservationId)
             ->get();
     }

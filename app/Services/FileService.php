@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use PDF;
+
 class FileService
 {
     public function delete($fileName)
@@ -11,7 +13,7 @@ class FileService
 
     public function putPDF($param, $view, $fileName)
     {
-        $pdf = \PDF::loadView($view, $param);
+        $pdf = PDF::loadView($view, $param);
         $downloadedPdf = $pdf->output();
         file_put_contents(storage_path($fileName), $downloadedPdf);
     }
