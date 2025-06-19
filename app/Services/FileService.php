@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use PDF;
+use Barryvdh\DomPDF\PDF as DomPDF;
 
 class FileService
 {
@@ -13,7 +13,8 @@ class FileService
 
     public function putPDF($param, $view, $fileName)
     {
-        $pdf = PDF::loadView($view, $param);
+        $pdf = app(DomPDF::class);
+        $pdf->loadView($view, $param);
         $downloadedPdf = $pdf->output();
         file_put_contents(storage_path($fileName), $downloadedPdf);
     }
