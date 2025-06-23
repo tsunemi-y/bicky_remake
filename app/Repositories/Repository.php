@@ -77,4 +77,14 @@ abstract class Repository
     {
         return $this->model->where('id', $id)->delete();
     }
+
+    /**
+     * Get a new query builder instance.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function query()
+    {
+        return $this->model->query();
+    }
 }

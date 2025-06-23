@@ -60,7 +60,7 @@ class ReservationController extends Controller
             if ($isReserved) {
                 return response()->json([
                     'success' => false,
-                    'message' => '選択された日時はすでにご予約がございます。</br>違う日時でご予約ください。',
+                    'message' => "選択された日時はすでにご予約がございます。\n違う日時でご予約ください。",
                 ], 422);
             } 
 
@@ -108,7 +108,7 @@ class ReservationController extends Controller
             $response = [
                 'success' => true,
                 'data' => [
-                    'message' => "予約が完了しました。<br>予約内容をメールで送信しました。",
+                    'message' => "予約が完了しました。\n予約内容をメールで送信しました。",
                 ]
             ];
 

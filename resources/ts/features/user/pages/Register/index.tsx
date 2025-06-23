@@ -105,7 +105,12 @@ const Register = () => {
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
         <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
-          {snackbarMessage}
+          {snackbarMessage.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              {index !== snackbarMessage.split('\n').length - 1 && <br />}
+            </React.Fragment>
+          ))}
         </Alert>
       </Snackbar>
     </>

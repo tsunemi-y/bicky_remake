@@ -173,7 +173,12 @@ const Cancel = () => {
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
           >
             <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
-              {snackbarMessage}
+              {snackbarMessage.split('\n').map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  {index !== snackbarMessage.split('\n').length - 1 && <br />}
+                </React.Fragment>
+              ))}
             </Alert>
           </Snackbar>
         </>

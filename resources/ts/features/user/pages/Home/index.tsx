@@ -51,7 +51,7 @@ const UserHome = () => {
   }, [location.state]);
 
   return (
-    <Box sx={{ pb: 10 }}>
+    <Box sx={{ pb: 0 }}>
       {/* ヒーローセクション */}
       <Box className="hero-section">
         <Container maxWidth="lg" disableGutters sx={{ px: 0 }}>
@@ -170,7 +170,12 @@ const UserHome = () => {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
-          {snackbarMessage}
+          {snackbarMessage.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              {index !== snackbarMessage.split('\n').length - 1 && <br />}
+            </React.Fragment>
+          ))}
         </Alert>
       </Snackbar>
 
@@ -178,14 +183,15 @@ const UserHome = () => {
       <Box
         sx={{
           position: 'fixed',
-          left: 0,
+          left: '50%',
           bottom: 0,
+          transform: 'translateX(-50%)',
           width: '100vw',
           bgcolor: '#fff',
           borderTop: '1px solid #e0e0e0',
           boxShadow: '0 -4px 20px rgba(0,0,0,0.1)',
           zIndex: 2000,
-          py: { xs: 2, md: 2.5 },
+          py: { xs: 1, md: 1.5 },
           px: { xs: 1, md: 3 },
         }}
       >
@@ -207,7 +213,7 @@ const UserHome = () => {
               sx={{
                 minWidth: { xs: 140, md: 200 },
                 maxWidth: { xs: 180, md: 220 },
-                minHeight: { xs: 52, md: 56 },
+                minHeight: { xs: 42, md: 48 },
                 backgroundColor: '#1976d2',
                 color: '#fff',
                 fontWeight: 'bold',
@@ -233,7 +239,7 @@ const UserHome = () => {
               sx={{
                 minWidth: { xs: 140, md: 200 },
                 maxWidth: { xs: 180, md: 220 },
-                minHeight: { xs: 52, md: 56 },
+                minHeight: { xs: 42, md: 48 },
                 backgroundColor: '#f57c00',
                 color: '#fff',
                 fontWeight: 'bold',

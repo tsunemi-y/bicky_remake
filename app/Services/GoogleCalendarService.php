@@ -65,6 +65,11 @@ class GoogleCalendarService
                 return;
             }
 
+            if (!$googleCalendar->event_id) {
+                \Log::info("GoogleCalendar event_id is null for reservation ID: {$reservationId}");
+                return;
+            }
+
             $eventId = explode(' ', base64_decode($googleCalendar->event_id))[0];
 
             $this->service->events->delete($this->calendarId, $eventId);

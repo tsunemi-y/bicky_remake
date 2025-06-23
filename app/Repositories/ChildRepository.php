@@ -32,7 +32,9 @@ class ChildRepository extends Repository
     public function getChildrenByReservationId($reservationId): Collection
     {
         return DB::table('child_reservation')
-            ->where('reservation_id', $reservationId)
+            ->join('children', 'child_reservation.child_id', '=', 'children.id')
+            ->where('child_reservation.reservation_id', $reservationId)
+            ->select('children.*')
             ->get();
     }
 }
