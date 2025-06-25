@@ -14,10 +14,10 @@
     <meta name="google-site-verification" content="gQkqjp1HDVjt2wJ91BNgxsdqcyvYqvAeWQbb88tU4jI" />
     {{-- サーチコンソールここまで --}}
 
-<script src="{{ asset('js/index.js') }}" defer></script>
-<script>
-    window.csrfToken = '{{ csrf_token() }}';
-</script>
+    <script src="{{ asset('js/index.js') }}?v={{ filemtime(public_path('js/index.js')) }}" defer></script>
+    <script>
+        window.csrfToken = '{{ csrf_token() }}';
+    </script>
 
     <!-- @yield('title') -->
 
