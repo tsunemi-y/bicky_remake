@@ -56,6 +56,8 @@ jobs:
           cd ${{ secrets.PROJECT_PATH }} &&
           git pull origin master &&
           composer install --no-dev --optimize-autoloader &&
+          npm install &&
+          npm run prod &&
           php artisan migrate --force &&
           php artisan config:clear &&
           php artisan cache:clear &&

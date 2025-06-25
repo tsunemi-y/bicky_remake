@@ -7,6 +7,8 @@
     "test": "tests"
   },
   "scripts": {
+    "dev": "cross-env NODE_ENV=development NODE_OPTIONS='--openssl-legacy-provider' webpack --config=node_modules/laravel-mix/setup/webpack.config.js --watch",
+    "prod": "cross-env NODE_ENV=production NODE_OPTIONS='--openssl-legacy-provider' webpack --config=node_modules/laravel-mix/setup/webpack.config.js --mode=production",
     "watch": "cross-env NODE_ENV=development NODE_OPTIONS='--openssl-legacy-provider' webpack --config=node_modules/laravel-mix/setup/webpack.config.js --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
