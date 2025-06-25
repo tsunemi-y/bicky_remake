@@ -61,7 +61,6 @@ type Child = {
 // ログインサービス
 const login = async (credentials: LoginCredentials): Promise<AuthUser> => {
   const response = await apiRequest<ApiResponse<AuthResponse>>('/users/login', 'POST', credentials);
-  alert(JSON.stringify(response));
   
   if (response.success && response.data) {
     // トークンをローカルストレージに保存

@@ -57,6 +57,7 @@ export const apiRequest = async <T>(
     }
     // TypeError（ネットワークエラー）の場合
     if (error instanceof TypeError) {
+      alert(JSON.stringify(error));
       throw new Error('ネットワークエラーが発生しました。接続を確認してください。');
     }
     if (error instanceof Error) {
