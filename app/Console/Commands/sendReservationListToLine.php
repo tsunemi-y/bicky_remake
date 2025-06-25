@@ -39,6 +39,6 @@ class SendReservationListToLine extends Command
     public function handle()
     {
         $this->lineMessengerServices->sendReservationListMessage();
-        return 0;  
+        return 0;
     }
 }
