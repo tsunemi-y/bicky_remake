@@ -34,6 +34,14 @@ class UserController extends Controller
      */
     public function login(LoginFormRequest $request)
     {
+        Log::info('エンドポイントに到達', [
+            'url' => $request->url(),
+            'method' => $request->method(),
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'params' => $request->all()
+        ]);
+
         // JWT認証を試みる
         if (!$token = auth('api')->attempt($request->only(['email', 'password']))) {
             return response()->json(['error' => 'メールアドレスまたはパスワードが正しくありません'], 401);
