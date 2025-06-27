@@ -1,5 +1,5 @@
 // API基本設定
-const API_BASE_URL = process.env.MIX_API_URL || `${window.location.protocol}//${window.location.host}/api`;
+const API_BASE_URL = 'http://localhost/api';
 
 // 共通ヘッダー
 const getHeaders = () => {
@@ -33,16 +33,7 @@ export const apiRequest = async <T>(
       body: data ? JSON.stringify(data) : undefined,
     };
 
-    // モバイルデバイス用のタイムアウト設定
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30秒タイムアウト
-    
-    const response = await fetch(url, {
-      ...options,
-      signal: controller.signal,
-    });
-    
-    clearTimeout(timeoutId);
+    const response = await fetch(url, options);
     const responseData = await response.json();
 
     if (!response.ok) {
@@ -51,15 +42,6 @@ export const apiRequest = async <T>(
 
     return responseData as T;
   } catch (error) {
-    // AbortErrorの場合はタイムアウトエラーとして扱う
-    if (error instanceof Error && error.name === 'AbortError') {
-      throw new Error('リクエストがタイムアウトしました。ネットワーク接続を確認してください。');
-    }
-    // TypeError（ネットワークエラー）の場合
-    if (error instanceof TypeError) {
-      alert(JSON.stringify(error));
-      throw new Error('ネットワークエラーが発生しました。接続を確認してください。');
-    }
     if (error instanceof Error) {
       throw new Error(error.message);
     }
