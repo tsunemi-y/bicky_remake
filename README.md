@@ -47,6 +47,11 @@
 - GitHub Actions
 - AWS
 
+##  インフラ構成図
+
+![インフラ構成図](./infrastructure.drawio.png)
+
+
 ## 実装の際に意識したこと
 
 - Backend
