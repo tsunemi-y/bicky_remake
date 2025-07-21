@@ -62,7 +62,7 @@ const UserHome = () => {
               right: '50%',
               width: '100vw',
               height: { xs: 300, md: 450 },
-              backgroundImage: 'url(../img/hero-img.jpg)',
+              backgroundImage: 'url(https://vicky-s3-bucket-20250722.s3.ap-northeast-1.amazonaws.com/hero-img.jpg)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               mb: 4,

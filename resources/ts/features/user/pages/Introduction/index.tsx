@@ -28,7 +28,7 @@ const IntroductionPage: React.FC = () => {
 
       <Box sx={{ display: "flex", justifyContent: "center", mb: 4 }}>
         <img
-          src="https://bicky.herokuapp.com/img/staff.png"
+          src="https://vicky-s3-bucket-20250722.s3.ap-northeast-1.amazonaws.com/staff.png"
           alt="言語聴覚士・保育士・高等学校教諭の免許を持った指導員です。"
           style={{ maxWidth: "100%", height: "auto", borderRadius: 8 }}
         />
