@@ -6,7 +6,7 @@
 3年程前にローンチしており、毎月、10名程の利用者様が本HPを介して予約してくださっています。
 
 本リポジトリは、まだ本番反映をしていないリプレイス版です。  
-[http://52.196.79.93](http://52.196.79.93)
+[http://vickylanguageschool.com/](http://vickylanguageschool.com/)
 
 実際にローンチしてているプロダクトは以下です。（デザインは、spのみ考慮しています）
 [https://bicky.herokuapp.com/](https://bicky.herokuapp.com/)
